@@ -1,6 +1,8 @@
 pub mod concepts_modules {
+    use std::collections::btree_map::Values;
     use std::collections::HashMap;
     use std::collections::HashSet;
+    use std::hash::Hash;
     use std::iter::Map;
     use std::panic::Location;
     use std::vec;
@@ -668,6 +670,132 @@ pub mod concepts_modules {
         }
         rank_clone
     }
+
+    pub fn number_of_subarrays(nums: Vec<i32>, k: i32) -> i32 {
+        let mut total_counter: i32 = 0;
+        let new_vec: Vec<i32> = nums
+            .into_iter()
+            .map(|val| {
+                if val % 2 == 0 {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            })
+            .collect();
+
+        let mut end: usize = 0;
+        let mut start: usize = 0;
+        let mut subarray_counter: i32 = 0;
+        let mut local_counter: i32 = 0;
+        fn odd_check(num: &i32) -> bool {
+            if num % 2 == 1 { true } else { false }
+        }
+        while end < new_vec.len() {
+            if odd_check(&new_vec[end]) {
+                local_counter += 1;
+            }
+            if local_counter == k {
+                // it is only updated if the subarray counter again reaches k
+                subarray_counter = 0;
+            }
+            while local_counter >= k {
+                if odd_check(&new_vec[start]) {
+                    local_counter -= 1;
+                }
+                subarray_counter += 1;
+                start += 1;
+            }
+            total_counter += subarray_counter;
+            end += 1;
+        }
+        total_counter
+    }
+
+    pub fn min_steps(mut s: String, mut t: String) -> i32 {
+        let mut count: i32 = 0;
+
+        fn gen_occurence_hash(string: &String) -> HashMap<char, i32> {
+            let mut map: HashMap<char, i32> = HashMap::new();
+            let mut string_vec: Vec<char> = string.chars().collect();
+            string_vec.sort_by(|a, b| a.cmp(&b));
+            for curr_char in string_vec.iter() {
+                if let Some(freq) = map.get_mut(&curr_char) {
+                    *freq += 1;
+                } else {
+                    map.insert(*curr_char, 1);
+                }
+            }
+            map
+        }
+
+        let s_hash: HashMap<char, i32> = gen_occurence_hash(&s);
+        let mut t_hash: HashMap<char, i32> = gen_occurence_hash(&t);
+        let mut s_set: HashSet<char> = HashSet::new();
+        for s_char in s.chars(){
+            s_set.insert(s_char);
+        }
+        let s_new: Vec<char> = s_set.into_iter().map(|val| val).collect();
+
+
+        for s_char in s_new.iter() {
+            if t_hash.contains_key(&s_char) {
+                if let Some(s_freq) = s_hash.get(&s_char) {
+                    if let Some(t_freq) = t_hash.get_mut(&s_char) {
+                        *t_freq = *t_freq - *s_freq;
+                    }
+                }
+            }
+        }
+        for (_, value) in t_hash{
+            if value >= 0{
+                count += value
+            }
+        }
+        count
+    }
+
+
+    pub fn sort_by_parity(nums:Vec<i32>) -> Vec<i32>{
+
+        let mut even_vec:Vec<i32> = Vec::new();
+        let mut odd_vec: Vec<i32> = Vec::new();
+        fn odd_check(num: &i32)-> bool{
+            if *num % 2== 0{
+                return true;
+            }else{
+                return false;
+            }
+        }
+        for curr_num in nums.iter(){
+            if odd_check(curr_num){
+                even_vec.push(*curr_num);    
+            }else{
+                odd_vec.push(*curr_num);
+            }
+        };  
+        
+        even_vec.append(&mut odd_vec); // in this case append is taking the ownership of the odd vec
+        even_vec
+    }
+
+    pub fn play_ground_two(){
+        println!("Come and Pkay");
+
+        let array:Vec<i32> = vec![1,2,3,45,5,66];
+
+        fn update_vec(local_vec: &Vec<i32>)-> Vec<i32>{
+            let mut new:Vec<i32> = Vec::new();
+            for item in local_vec.iter(){
+                new.push(*item + 1);
+            }   
+            new
+        }
+
+        let new:Vec<i32> = update_vec( &array);
+        println!("{:?}{:?}",new, array);
+    }
+
 }
 
 // notes

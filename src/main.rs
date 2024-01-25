@@ -8,7 +8,10 @@ mod concepts;
 use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::delete_earn;
 use crate::concepts::concepts_modules::is_anagram;
+use crate::concepts::concepts_modules::min_steps;
+use crate::concepts::concepts_modules::number_of_subarrays;
 use crate::concepts::concepts_modules::play_ground;
+use crate::concepts::concepts_modules::play_ground_two;
 use crate::concepts::concepts_modules::remove_duplicates;
 use crate::concepts::concepts_modules::reverse_vowels;
 
@@ -16,12 +19,15 @@ use crate::concepts::concepts_modules::reverse_vowels;
 // cannot assign values ot a different type after once its declared... unless its mutable
 fn main() {
 
-    play_ground();
-    remove_duplicates(String::from("abbaca"));
-    is_anagram(String::from("anagram"), String::from("nagaram"));
-    delete_earn(vec![2,2,3,3,3,4]);
-    println!("Rank transform");
-    array_rank_transform(vec![37,12,28,9,100,56,80,5,12]);
+    // play_ground();
+    // remove_duplicates(String::from("abbaca"));
+    // is_anagram(String::from("anagram"), String::from("nagaram"));
+    // delete_earn(vec![2,2,3,3,3,4]);
+    // println!("Rank transform");
+    // array_rank_transform(vec![37,12,28,9,100,56,80,5,12]);
+    number_of_subarrays(vec![2,2,2,1,2,2,1,2,2,2], 2);
+    min_steps(String::from("leetcode"), String::from("practice"));
+    play_ground_two();
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
