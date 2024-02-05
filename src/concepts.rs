@@ -1,10 +1,6 @@
 pub mod concepts_modules {
-    use std::collections::btree_map::Values;
     use std::collections::HashMap;
     use std::collections::HashSet;
-    use std::hash::Hash;
-    use std::iter::Map;
-    use std::panic::Location;
     use std::vec;
 
     pub fn str_str(haystack: String, needle: String) -> i32 {
@@ -732,11 +728,13 @@ pub mod concepts_modules {
         let s_hash: HashMap<char, i32> = gen_occurence_hash(&s);
         let mut t_hash: HashMap<char, i32> = gen_occurence_hash(&t);
         let mut s_set: HashSet<char> = HashSet::new();
-        for s_char in s.chars(){
+        for s_char in s.chars() {
             s_set.insert(s_char);
         }
-        let s_new: Vec<char> = s_set.into_iter().map(|val| val).collect();
-
+        let s_new: Vec<char> = s_set
+            .into_iter()
+            .map(|val| val)
+            .collect();
 
         for s_char in s_new.iter() {
             if t_hash.contains_key(&s_char) {
@@ -747,58 +745,686 @@ pub mod concepts_modules {
                 }
             }
         }
-        for (_, value) in t_hash{
-            if value >= 0{
-                count += value
+        for (_, value) in t_hash {
+            if value >= 0 {
+                count += value;
             }
         }
         count
     }
 
-
-    pub fn sort_by_parity(nums:Vec<i32>) -> Vec<i32>{
-
-        let mut even_vec:Vec<i32> = Vec::new();
+    pub fn sort_by_parity(nums: Vec<i32>) -> Vec<i32> {
+        let mut even_vec: Vec<i32> = Vec::new();
         let mut odd_vec: Vec<i32> = Vec::new();
-        fn odd_check(num: &i32)-> bool{
-            if *num % 2== 0{
+        fn odd_check(num: &i32) -> bool {
+            if *num % 2 == 0 {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
-        for curr_num in nums.iter(){
-            if odd_check(curr_num){
-                even_vec.push(*curr_num);    
-            }else{
+        for curr_num in nums.iter() {
+            if odd_check(curr_num) {
+                even_vec.push(*curr_num);
+            } else {
                 odd_vec.push(*curr_num);
             }
-        };  
-        
+        }
+
         even_vec.append(&mut odd_vec); // in this case append is taking the ownership of the odd vec
         even_vec
     }
 
-    pub fn play_ground_two(){
+    // house robber ii
+    pub fn house_robber_ii(nums: Vec<i32>) -> i32 {
+        // edge case for one element
+        if nums.len() == (1 as usize) {
+            if let Some(first) = nums.get(0) {
+                return *first;
+            }
+        }
+
+        fn make_vec(index: i32, array: &Vec<i32>) -> Vec<i32> {
+            if index == 0 {
+                return array
+                    .get(index as usize..array.len() - 1)
+                    .unwrap_or_default()
+                    .to_vec();
+            }
+            return array
+                .get(index as usize..)
+                .unwrap_or_default()
+                .to_vec();
+        }
+
+        let first_vec: Vec<i32> = make_vec(0, &nums);
+        let two_vec: Vec<i32> = make_vec(1, &nums);
+
+        fn get_total_robber(array: Vec<i32>) -> Vec<i32> {
+            let mut dp: Vec<i32> = vec![0; array.len()];
+            for (index, item) in array.iter().enumerate() {
+                let curr_num: i32 = *item;
+                if (index as i32) == 0 {
+                    dp[index] = curr_num;
+                }
+                if (index as i32) == 1 {
+                    dp[index] = curr_num.max(dp[index - 1]);
+                }
+                if (index as i32) > 1 {
+                    dp[index] = dp[index - 1].max(curr_num + dp[index - 2]);
+                }
+            }
+            dp
+        }
+
+        let mut dp_one: Vec<i32> = get_total_robber(first_vec);
+        let mut dp_two: Vec<i32> = get_total_robber(two_vec);
+
+        dp_one.append(&mut dp_two);
+        let mut max: i32 = 0;
+        for item in dp_one.into_iter() {
+            if max < item {
+                max = item;
+            }
+        }
+        max
+    }
+
+    pub fn play_ground_two() {
         println!("Come and Pkay");
 
-        let array:Vec<i32> = vec![1,2,3,45,5,66];
+        let array: Vec<i32> = vec![1, 2, 3, 45, 5, 66];
 
-        fn update_vec(local_vec: &Vec<i32>)-> Vec<i32>{
-            let mut new:Vec<i32> = Vec::new();
-            for item in local_vec.iter(){
+        fn update_vec(local_vec: &Vec<i32>) -> Vec<i32> {
+            let mut new: Vec<i32> = Vec::new();
+            for item in local_vec.iter() {
                 new.push(*item + 1);
-            }   
+            }
             new
         }
 
-        let new:Vec<i32> = update_vec( &array);
-        println!("{:?}{:?}",new, array);
+        let new: Vec<i32> = update_vec(&array);
+        println!("{:?}{:?}", new, array);
     }
 
+    pub fn percentage_letter(s: String, letter: char) -> i32 {
+        let mut portion: i32 = 0;
+        let mut freq_map: HashMap<char, i32> = HashMap::new();
+        for item in s.chars() {
+            if let Some(freq) = freq_map.get_mut(&item) {
+                *freq += 1;
+            } else {
+                freq_map.insert(item, 1);
+            }
+        }
+        for (key, value) in freq_map {
+            if key == letter {
+                portion = (((value as f64) / (s.len() as f64)) * 100.0).floor() as i32; // reconverting is back to i32
+            }
+        }
+        portion
+    }
+
+    // using a sliding window technique in order to solve the minimum recolors and retain the total count
+    pub fn minimum_recolors(blocks: String, k: i32) -> i32 {
+        let mut counter: i32 = std::i32::MAX;
+        let mut w_count: i32 = 0;
+        let mut end: usize = 0;
+        let mut start: usize = 0;
+        let block_vec: Vec<char> = blocks.chars().collect();
+
+        for index in 0..k {
+            if let Some(curr_char) = block_vec.get(index as usize) {
+                if *curr_char == 'W' {
+                    w_count += 1;
+                }
+            }
+        }
+        // sliding the window and acquiring the letters
+        end = k as usize;
+        counter = counter.min(w_count);
+        while end < block_vec.len() {
+            if let Some(w_letter) = block_vec.get(start) {
+                if *w_letter == 'W' {
+                    w_count -= 1;
+                }
+            }
+            if let Some(w_letter_end) = block_vec.get(end) {
+                if *w_letter_end == 'W' {
+                    w_count += 1;
+                }
+            }
+            counter = counter.min(w_count); // recalculating the minimum count in order to keep track of any other combinations that might come
+            start += 1;
+            end += 1;
+        }
+        counter
+    }
+
+    // top example for mutable reference in rust where a tuple and max val is passed as mutable reference
+    pub fn get_longest_palindrome(s: String) -> String {
+        let s_vec: Vec<char> = s.chars().collect();
+        let mut range_tuple: (i32, i32) = (0, 0);
+        let mut max: i32 = 1;
+        fn count_palindromes(
+            mut left: i32,
+            mut right: i32,
+            array: &Vec<char>,
+            tuple: &mut (i32, i32),
+            max: &mut i32
+        ) {
+            while
+                left >= 0 &&
+                right < (array.len() as i32) &&
+                array[left as usize] == array[right as usize]
+            {
+                if right - left + 1 > *max {
+                    *max = right - left + 1;
+                    tuple.1 = right as i32;
+                    tuple.0 = left as i32;
+                }
+                left -= 1;
+                right += 1;
+            }
+        }
+
+        for (index, _) in s_vec.iter().enumerate() {
+            count_palindromes(index as i32, index as i32, &s_vec, &mut range_tuple, &mut max);
+            count_palindromes(index as i32, (index + 1) as i32, &s_vec, &mut range_tuple, &mut max);
+        }
+        let mut result: Vec<char> = Vec::new();
+        if let Some(slice_str) = s_vec.get(range_tuple.0 as usize..(range_tuple.1 + 1) as usize) {
+            result = slice_str.to_vec();
+        }
+        let string: String = result
+            .iter()
+            .map(|val| val.to_string())
+            .collect();
+        string
+    }
+
+    // finding intersection between two arrays
+    pub fn intersection(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
+        let mut set: HashSet<i32> = HashSet::new();
+        // populate one and check against second hash
+        for item in nums1.iter() {
+            set.insert(*item);
+        }
+        let mut result: HashSet<i32> = HashSet::new();
+        for item_two in nums2.iter() {
+            let curr_num: i32 = *item_two;
+            if set.contains(&curr_num) {
+                result.insert(curr_num);
+            }
+        }
+        let array: Vec<i32> = result.into_iter().collect();
+        array
+    }
+
+    // partition labels
+    pub fn partition_labels(s: String) -> Vec<i32> {
+        let s_vec: Vec<char> = s.chars().into_iter().collect();
+        let mut range: Vec<i32> = Vec::new();
+        let mut map: HashMap<char, Vec<i32>> = HashMap::new();
+        let mut start: i32 = 0;
+        let mut end: i32 = 0;
+
+        for (index, item) in s_vec.iter().enumerate() {
+            let curr_index: i32 = index as i32;
+            if !map.contains_key(item) {
+                map.insert(*item, vec![curr_index, curr_index]);
+            } else {
+                if let Some(el_range) = map.get_mut(item) {
+                    el_range[1] = curr_index;
+                }
+            }
+        }
+
+        let mut intervals: Vec<Vec<i32>> = Vec::new();
+        for (_, value) in map.into_iter() {
+            intervals.push(value.to_vec());
+        }
+        intervals.sort_by(|a, b| a[0].cmp(&b[0]));
+
+        //finding the sizes
+        for (index, item) in intervals.iter().enumerate() {
+            let local_start: i32 = item[0];
+            let local_end: i32 = item[1];
+            if (index as i32) == 0 {
+                start = local_start;
+                end = local_end;
+            }
+            if (index as i32) > 0 {
+                if end < local_start {
+                    let local_range: i32 = end - start + 1;
+                    range.push(local_range);
+                    start = local_start;
+                    end = local_end;
+                }
+                // updating the end as the interval progresses
+                if end < local_end {
+                    end = local_end;
+                }
+            }
+            if index == intervals.len() - 1 {
+                let local_range: i32 = end - start + 1;
+                range.push(local_range);
+            }
+        }
+        range
+    }
+
+    pub fn subarray_sum(nums: Vec<i32>, k: i32) -> i32 {
+        let mut count: i32 = 0;
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        let mut sum: i32 = 0;
+        map.insert(0, 1);
+        for item in nums.iter() {
+            let curr_num: i32 = *item;
+            sum += curr_num;
+            if map.contains_key(&(sum - k)) {
+                // here the prefix sum is checked and calculated and sum is incremented accordingly
+                if let Some(found_val) = map.get(&(sum - k)) {
+                    count += *found_val;
+                }
+            }
+            if let Some(found_sum) = map.get(&sum) {
+                map.insert(sum, *found_sum + 1);
+            } else {
+                map.insert(sum, 1);
+            }
+        }
+        count
+    }
+
+    // getting pivot index
+    pub fn pivot_index(nums: Vec<i32>) -> i32 {
+        let pivot_index: i32 = -1;
+        let sum: i32 = nums.iter().sum();
+        let mut sum_left: i32 = 0;
+        for (index, item) in nums.iter().enumerate() {
+            if sum_left == sum - sum_left - *item {
+                return index as i32;
+            }
+            sum_left += *item;
+        }
+        pivot_index
+    }
+
+    pub fn repeated_character(s: String) -> char {
+        let last_char: char = 'c';
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for curr_char in s.chars() {
+            if let Some(char_val) = map.get_mut(&curr_char) {
+                *char_val += 1;
+                return curr_char;
+            } else {
+                map.insert(curr_char, 1);
+            }
+        }
+        last_char
+    }
+
+    // longest character replacement using map to store
+    pub fn longest_char_replacement(s: String, k: i32) -> i32 {
+        let mut total_len: i32 = 0;
+        let mut map: HashMap<char, i32> = HashMap::new();
+        let mut start: usize = 0;
+        let mut end: usize = 0;
+        let s_vec: Vec<char> = s.chars().collect();
+
+        while end < s_vec.len() {
+            if let Some(end_char) = map.get_mut(&s_vec[end]) {
+                *end_char += 1;
+            } else {
+                map.insert(s_vec[end], 1);
+            }
+            if end - start + 1 - (*map.values().max().unwrap() as usize) <= (k as usize) {
+                total_len = total_len.max((end - start + 1) as i32);
+            }
+            //checking for character replacement then add the object
+            while end - start + 1 - (*map.values().max().unwrap() as usize) > (k as usize) {
+                if let Some(map_val) = map.get_mut(&s_vec[start]) {
+                    *map_val -= 1;
+                    if *map_val == 0 {
+                        map.remove(&s_vec[start]);
+                    }
+                }
+                start += 1;
+            }
+
+            end += 1;
+        }
+        total_len
+    }
+
+    // function to find intersection between two arrays while keeping the count of the lowest count of the elements
+    pub fn intersect_array(mut nums1: Vec<i32>, mut nums2: Vec<i32>) -> Vec<i32> {
+        // ugly approach
+        let mut array: Vec<i32> = Vec::new();
+        let set_one: HashSet<i32> = nums1
+            .iter()
+            .map(|val| *val)
+            .collect();
+        let mut map: HashMap<i32, Vec<i32>> = HashMap::new();
+        for item in nums2.iter() {
+            if set_one.contains(item) {
+                map.insert(*item, vec![0, 0]);
+            }
+        }
+        // function to get the occurence of the numbers based on the first or second sector of the map
+        fn get_occurence(
+            ref_map: &mut HashMap<i32, Vec<i32>>,
+            num_vec: &mut Vec<i32>,
+            map_type: String
+        ) {
+            if map_type == "one" {
+                for item in num_vec.iter() {
+                    if let Some(found_vec) = ref_map.get_mut(item) {
+                        found_vec[0] += 1;
+                    }
+                }
+            } else {
+                for item in num_vec.iter() {
+                    if let Some(found_vec) = ref_map.get_mut(item) {
+                        found_vec[1] += 1;
+                    }
+                }
+            }
+        }
+        get_occurence(&mut map, &mut nums1, String::from("one"));
+        get_occurence(&mut map, &mut nums2, String::from("two"));
+
+        // forming the array based on iter count
+        for (key, value) in map {
+            for _ in 0..value[0].min(value[1]) {
+                array.push(key);
+            }
+        }
+
+        array
+    }
+
+    pub fn fucking_function() -> Vec<i32> {
+        let mut array = [1, 2, 3, 4];
+        array[1] = 1;
+        let array_one: Vec<i32> = vec![1, 2, 3, 4];
+
+        for (index, item) in array.iter_mut().enumerate() {
+            *item += 1;
+        }
+        println!("{:?}", array);
+
+        let mut new_array: Vec<i32> = array
+            .iter()
+            .cloned()
+            .map(|a| a + 1)
+            .collect();
+
+        Vec::new()
+    }
+
+    // finding shortest distance to char
+    pub fn shortest_distance_to_char(mut s: String, mut c: char) -> Vec<i32> {
+        let mut result: Vec<i32> = Vec::with_capacity(s.len());
+        let mut left: Vec<i32> = Vec::with_capacity(s.len());
+        let mut right: Vec<i32> = Vec::with_capacity(s.len());
+        let mut common_len: usize = s.len();
+
+        // for filling 0 up
+        fn predefine_vec(local_vec: &mut Vec<i32>, common_len: &mut usize) {
+            for _ in 0..*common_len {
+                local_vec.push(0);
+            }
+        }
+        predefine_vec(&mut left, &mut common_len);
+        predefine_vec(&mut right, &mut common_len);
+
+        fn fill_vec(
+            local_str: &mut String,
+            array: &mut Vec<i32>,
+            common_len: &mut usize,
+            type_iter: String,
+            check_char: &mut char
+        ) {
+            let mut distance: i32 = 0;
+            // switch char here
+            if type_iter == String::from("right") {
+                for (curr_index, curr_item) in local_str.bytes().enumerate().rev() {
+                    if (curr_item as char) == *check_char {
+                        distance = *common_len as i32;
+                        array[curr_index] = distance;
+                    } else {
+                        distance -= 1;
+                        array[curr_index] = distance.max(0);
+                    }
+                }
+            } else {
+                for (curr_index, curr_item) in local_str.chars().enumerate() {
+                    let mut index: usize = 0;
+                    if type_iter == String::from("left") {
+                        index = curr_index;
+                    } else {
+                        index = *common_len - 1 - curr_index;
+                    }
+                    if curr_item == *check_char {
+                        distance = *common_len as i32;
+                        array[index] = distance;
+                    } else {
+                        distance -= 1;
+                        array[index] = distance.max(0);
+                    }
+                }
+            }
+        }
+
+        fill_vec(&mut s, &mut left, &mut common_len, String::from("left"), &mut c);
+        fill_vec(&mut s, &mut right, &mut common_len, String::from("right"), &mut c);
+
+        // comparison
+        for index in 0..common_len {
+            result.push(
+                ((common_len as i32) - left[index]).min((common_len as i32) - right[index])
+            );
+        }
+        result
+    }
+
+    // uncommong stuff
+    pub fn uncommon_from_sentences(mut s1: String, mut s2: String) -> Vec<String> {
+        // clean approach
+        let mut map: HashMap<String, i32> = HashMap::new();
+        let mut result: Vec<String> = Vec::new();
+
+        fn get_occurence(local_str: &mut String, map: &mut HashMap<String, i32>) {
+            let array: Vec<String> = local_str
+                .split_whitespace()
+                .map(|val| val.to_string())
+                .collect();
+            for word in array.into_iter() {
+                match map.get_mut(&word) {
+                    Some(occurence) => {
+                        *occurence += 1;
+                    }
+                    None => {
+                        map.insert(word, 1);
+                    }
+                }
+            }
+        }
+
+        get_occurence(&mut s1, &mut map);
+        get_occurence(&mut s2, &mut map);
+
+        for (key, value) in map {
+            if value == 1 {
+                result.push(key);
+            }
+        }
+
+        result
+    }
+
+    // pushing dominoes
+    pub fn push_dominoes(dominoes: String) -> String {
+        let common_len = dominoes.len();
+        let dominoes_array: Vec<char> = dominoes.chars().into_iter().collect();
+        let mut right: Vec<i32> = vec![0; common_len];
+        let mut left: Vec<i32> = vec![0; common_len];
+        let mut char_force: i32 = 0;
+
+        // right side
+        for (index, item) in dominoes_array.iter().enumerate() {
+            let curr_item: char = *item;
+            if curr_item == '.' {
+                char_force -= 1;
+            }
+            if curr_item == 'L'{
+                char_force = 0;
+            }
+            if curr_item == 'R' {
+                char_force = common_len as i32;
+                right[index] = common_len as i32;
+            }
+            right[index] = char_force.max(0);
+        }
+
+        char_force = 0;
+        // left
+        for (index, item) in dominoes_array.iter().enumerate().rev() {
+            let curr_item = *item;
+            if curr_item == '.' {
+                char_force -= 1;
+            }
+            if curr_item == 'R'{
+                char_force = 0;
+            }
+            if curr_item == 'L' {
+                char_force = common_len as i32;
+                left[index] = common_len as i32;
+            }
+            left[index] = char_force.max(0);
+        }
+
+        // creating a the new dominoes string by comparing the vecs
+        let mut result_dominoes: Vec<char> = vec!['.';  common_len];
+
+        for (index, item) in result_dominoes.iter_mut().enumerate(){
+            let left_val: i32 = left[index];
+            let right_val: i32 = right[index];
+            if right_val == 0 && left_val > 0{
+                *item = 'L';
+            }else if left_val == 0 && right_val > 0{
+                *item = 'R';
+            }else if (left_val == 0 && right_val == 0) || (left_val == right_val){
+                *item = '.';
+            }else if left_val > 0 && right_val > 0{
+                if left_val > right_val{
+                    *item = 'L';
+                }else{
+                    *item = 'R';
+                }
+            }
+
+        }
+        let mut str_result: String = String::from("");
+        for curr_char in result_dominoes.iter(){
+            str_result.push(*curr_char);
+        }
+
+        str_result
+    }
+
+    // checking for word pattern
+    pub fn word_pattern(pattern: String, s: String)->bool{
+        let mut check: bool = true;
+        let pattern_new: Vec<char> = pattern.chars().collect();
+        let s_array: Vec<String> = s.split_whitespace().into_iter().map(|val|val.to_string()).collect();
+        if pattern_new.len() != s_array.len(){
+            return false;
+        }
+        let mut map: HashMap<char, String> = HashMap::new();
+        // populating map
+        for (index, curr_char) in pattern_new.iter().enumerate(){
+            let local_char = *curr_char;
+            match map.get_mut(&local_char){
+                Some(inner_string)=> {
+                    *inner_string = s_array[index].to_string();
+                },
+                None=>{
+                    map.insert(local_char, s_array[index].to_string());
+                }
+            }
+        }
+        for index in 0..pattern_new.len(){
+            let pattern_char: char = pattern_new[index];
+            let s_array_word: String = s_array[index].to_string();
+            match map.get(&pattern_char){
+                Some(mapped_word)=>{
+                    if mapped_word.to_string() != s_array_word{
+                        check = false;
+                        break;
+                    }
+                },
+                None=>{}
+            }
+        }
+        check
+    }
+
+    pub fn frequency_sort_two(nums: Vec<i32>)->Vec<i32>{
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        let mut array: Vec<i32> = Vec::new();
+        for curr_num in nums.iter(){
+            match map.get_mut(&curr_num){
+                Some(occurence)=> {
+                    *occurence += 1;
+                },
+                None=>{
+                    map.insert(*curr_num, 1);s
+                }
+            }
+        }
+        // sort the map
+        let mut map_vec: Vec<(i32, i32)> = map.into_iter().collect(); 
+        // if the frequency is equal then compare the numbers and rearrange them in decreasing else arrange em by increasing of frequency
+        map_vec.sort_by(|(a,a_freq),(b,b_freq)| {
+            if a_freq == b_freq{
+                b.cmp(&a)
+            }else{
+                a_freq.cmp(&b_freq)
+            }
+        });
+        // array formation
+        for item in map_vec.into_iter(){
+            for _ in 0..item.1{
+                array.push(item.0);
+            }
+        }
+        array
+    }   
 }
 
 // notes
+
+// remember cloned is used on the iterator to copy values but clone is used on the value itself
+
+// #[derive(Debug)]
+// struct User{
+//     username: String,
+//     age: i32
+// }
+// pub fn play_ground_three(){
+//     let mut array_vec: Vec<User> = Vec::new();
+//     for index in 0..10{
+//         array_vec.push(
+//             User { username: String::from("rumon"), age: 27 + index }
+//         )
+//     }
+//     let single_user = array_vec.iter_mut().find(|user| user.age == 28).unwrap(); // this has the direct link for an iterable reference to the User
+//     single_user.age = 10;
+//     println!("{:?}", array_vec);
+// }
 
 // Correct, you cannot directly use the index obtained from enumerate() to modify the vector in place. The reason is that the indexing operation array[index] requires a mutable reference to the vector, and when using enumerate(), you only get a mutable reference to each element, not to the vector itself.
 // If you need to modify elements based on their index, you can use iter_mut().enumerate() and then calculate the modified value separately before assigning it to the vector. Here's an example:

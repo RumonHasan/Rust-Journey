@@ -7,13 +7,28 @@ mod rust_leetcode;
 mod concepts;
 use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::delete_earn;
+use crate::concepts::concepts_modules::frequency_sort_two;
+use crate::concepts::concepts_modules::fucking_function;
+use crate::concepts::concepts_modules::get_longest_palindrome;
+use crate::concepts::concepts_modules::house_robber_ii;
+use crate::concepts::concepts_modules::intersect_array;
+use crate::concepts::concepts_modules::intersection;
 use crate::concepts::concepts_modules::is_anagram;
+use crate::concepts::concepts_modules::longest_char_replacement;
 use crate::concepts::concepts_modules::min_steps;
+use crate::concepts::concepts_modules::minimum_recolors;
 use crate::concepts::concepts_modules::number_of_subarrays;
+use crate::concepts::concepts_modules::partition_labels;
+use crate::concepts::concepts_modules::pivot_index;
 use crate::concepts::concepts_modules::play_ground;
 use crate::concepts::concepts_modules::play_ground_two;
+use crate::concepts::concepts_modules::push_dominoes;
 use crate::concepts::concepts_modules::remove_duplicates;
 use crate::concepts::concepts_modules::reverse_vowels;
+use crate::concepts::concepts_modules::shortest_distance_to_char;
+use crate::concepts::concepts_modules::subarray_sum;
+use crate::concepts::concepts_modules::uncommon_from_sentences;
+use crate::concepts::concepts_modules::word_pattern;
 
 // main function is necesary to make the code run
 // cannot assign values ot a different type after once its declared... unless its mutable
@@ -25,9 +40,26 @@ fn main() {
     // delete_earn(vec![2,2,3,3,3,4]);
     // println!("Rank transform");
     // array_rank_transform(vec![37,12,28,9,100,56,80,5,12]);
-    number_of_subarrays(vec![2,2,2,1,2,2,1,2,2,2], 2);
-    min_steps(String::from("leetcode"), String::from("practice"));
-    play_ground_two();
+    // number_of_subarrays(vec![2,2,2,1,2,2,1,2,2,2], 2);
+    // min_steps(String::from("leetcode"), String::from("practice"));
+    // println!("Robber down");
+    // house_robber_ii(vec![1,2,3,1]);
+    // play_ground_two();
+    // minimum_recolors(String::from("WBBWWBBWBW"), 7);
+    // println!("longest_palindrome");
+    // get_longest_palindrome(String::from("babbbad"));
+    // intersection(vec![4,9,5], vec![9,4,9,8,4]);
+    // partition_labels(String::from("ababcbacadefegdehijhklij"));
+    // subarray_sum(vec![1,2,3], 3);
+    // pivot_index(vec![1,7,3,6,5,6]);
+    // longest_char_replacement(String::from("ABBB"), 2);
+    // intersect_array(vec![9,4,5], vec![9,4,9,8,4]);
+    // println!("shortest");
+    // shortest_distance_to_char(String::from("loveleetcode"), 'e');
+    // uncommon_from_sentences(String::from("this apple is sweet"), String::from("this apple is sour"));
+    // push_dominoes(String::from(".L.R...LR..L.."));
+    // word_pattern(String::from("abba"), String::from("dog cat cat dog"));
+    frequency_sort_two(vec![-1,1,-6,4,5,-6,1,4,1]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
