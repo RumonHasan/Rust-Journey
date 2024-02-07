@@ -1,4 +1,5 @@
 pub mod concepts_modules {
+    use std::collections::btree_set::Difference;
     use std::collections::HashMap;
     use std::collections::HashSet;
     use std::vec;
@@ -1279,7 +1280,7 @@ pub mod concepts_modules {
             if curr_item == '.' {
                 char_force -= 1;
             }
-            if curr_item == 'L'{
+            if curr_item == 'L' {
                 char_force = 0;
             }
             if curr_item == 'R' {
@@ -1296,7 +1297,7 @@ pub mod concepts_modules {
             if curr_item == '.' {
                 char_force -= 1;
             }
-            if curr_item == 'R'{
+            if curr_item == 'R' {
                 char_force = 0;
             }
             if curr_item == 'L' {
@@ -1309,26 +1310,25 @@ pub mod concepts_modules {
         // creating a the new dominoes string by comparing the vecs
         let mut result_dominoes: Vec<char> = vec!['.';  common_len];
 
-        for (index, item) in result_dominoes.iter_mut().enumerate(){
+        for (index, item) in result_dominoes.iter_mut().enumerate() {
             let left_val: i32 = left[index];
             let right_val: i32 = right[index];
-            if right_val == 0 && left_val > 0{
+            if right_val == 0 && left_val > 0 {
                 *item = 'L';
-            }else if left_val == 0 && right_val > 0{
+            } else if left_val == 0 && right_val > 0 {
                 *item = 'R';
-            }else if (left_val == 0 && right_val == 0) || (left_val == right_val){
+            } else if (left_val == 0 && right_val == 0) || left_val == right_val {
                 *item = '.';
-            }else if left_val > 0 && right_val > 0{
-                if left_val > right_val{
+            } else if left_val > 0 && right_val > 0 {
+                if left_val > right_val {
                     *item = 'L';
-                }else{
+                } else {
                     *item = 'R';
                 }
             }
-
         }
         let mut str_result: String = String::from("");
-        for curr_char in result_dominoes.iter(){
+        for curr_char in result_dominoes.iter() {
             str_result.push(*curr_char);
         }
 
@@ -1336,73 +1336,173 @@ pub mod concepts_modules {
     }
 
     // checking for word pattern
-    pub fn word_pattern(pattern: String, s: String)->bool{
+    pub fn word_pattern(pattern: String, s: String) -> bool {
         let mut check: bool = true;
         let pattern_new: Vec<char> = pattern.chars().collect();
-        let s_array: Vec<String> = s.split_whitespace().into_iter().map(|val|val.to_string()).collect();
-        if pattern_new.len() != s_array.len(){
+        let s_array: Vec<String> = s
+            .split_whitespace()
+            .into_iter()
+            .map(|val| val.to_string())
+            .collect();
+        if pattern_new.len() != s_array.len() {
             return false;
         }
         let mut map: HashMap<char, String> = HashMap::new();
         // populating map
-        for (index, curr_char) in pattern_new.iter().enumerate(){
+        for (index, curr_char) in pattern_new.iter().enumerate() {
             let local_char = *curr_char;
-            match map.get_mut(&local_char){
-                Some(inner_string)=> {
+            match map.get_mut(&local_char) {
+                Some(inner_string) => {
                     *inner_string = s_array[index].to_string();
-                },
-                None=>{
+                }
+                None => {
                     map.insert(local_char, s_array[index].to_string());
                 }
             }
         }
-        for index in 0..pattern_new.len(){
+        for index in 0..pattern_new.len() {
             let pattern_char: char = pattern_new[index];
             let s_array_word: String = s_array[index].to_string();
-            match map.get(&pattern_char){
-                Some(mapped_word)=>{
-                    if mapped_word.to_string() != s_array_word{
+            match map.get(&pattern_char) {
+                Some(mapped_word) => {
+                    if mapped_word.to_string() != s_array_word {
                         check = false;
                         break;
                     }
-                },
-                None=>{}
+                }
+                None => {}
             }
         }
         check
     }
 
-    pub fn frequency_sort_two(nums: Vec<i32>)->Vec<i32>{
+    // frequency sort
+    pub fn frequency_sort_two(nums: Vec<i32>) -> Vec<i32> {
         let mut map: HashMap<i32, i32> = HashMap::new();
         let mut array: Vec<i32> = Vec::new();
-        for curr_num in nums.iter(){
-            match map.get_mut(&curr_num){
-                Some(occurence)=> {
+        for curr_num in nums.iter() {
+            match map.get_mut(&curr_num) {
+                Some(occurence) => {
                     *occurence += 1;
-                },
-                None=>{
-                    map.insert(*curr_num, 1);s
+                }
+                None => {
+                    map.insert(*curr_num, 1);
                 }
             }
         }
         // sort the map
-        let mut map_vec: Vec<(i32, i32)> = map.into_iter().collect(); 
+        let mut map_vec: Vec<(i32, i32)> = map.into_iter().collect();
         // if the frequency is equal then compare the numbers and rearrange them in decreasing else arrange em by increasing of frequency
-        map_vec.sort_by(|(a,a_freq),(b,b_freq)| {
-            if a_freq == b_freq{
-                b.cmp(&a)
-            }else{
-                a_freq.cmp(&b_freq)
-            }
+        map_vec.sort_by(|(a, a_freq), (b, b_freq)| {
+            if a_freq == b_freq { b.cmp(&a) } else { a_freq.cmp(&b_freq) }
         });
         // array formation
-        for item in map_vec.into_iter(){
-            for _ in 0..item.1{
+        for item in map_vec.into_iter() {
+            for _ in 0..item.1 {
                 array.push(item.0);
             }
         }
         array
-    }   
+    }
+
+    // getting teh subarray ranges
+    pub fn subarray_ranges(nums: Vec<i32>) -> i64 {
+        let mut total: i64 = 0;
+        for (index, item) in nums.iter().enumerate() {
+            let curr_item: i32 = *item;
+            let mut max: i32 = curr_item;
+            let mut min: i32 = curr_item;
+            for sub_index in index + 1..nums.len() {
+                max = max.max(nums[sub_index]);
+                min = min.min(nums[sub_index]);
+                let diff: i64 = (max - min) as i64;
+                total += diff;
+            }
+        }
+        total
+    }
+
+    // min length of counter
+    pub fn min_len(s: String) -> i32 {
+        let s_vec: Vec<char> = s.chars().into_iter().collect();
+        let mut stack: Vec<char> = Vec::new();
+
+        for curr_char in s_vec.iter() {
+            if *curr_char == 'B' || *curr_char == 'D' {
+                let mut check: bool = false;
+                if let Some(last_char) = stack.last() {
+                    if *curr_char == 'B' && *last_char == 'A' {
+                        check = true;
+                    }
+                    if *curr_char == 'D' && *last_char == 'C' {
+                        check = true;
+                    }
+                }
+                if check {
+                    stack.pop();
+                } else {
+                    stack.push(*curr_char);
+                }
+            } else {
+                stack.push(*curr_char);
+            }
+        }
+        stack.len() as i32
+    }
+
+    //[1,1,0,1,1,1]
+    pub fn max_consequtive_ones(nums: Vec<i32>) -> i32 {
+        let mut counter: i32 = 0;
+        let mut end: usize = 0;
+        while end < nums.len() {
+            let curr_num: i32 = nums[end];
+            match curr_num == 1 {
+                true => {
+                    let mut local_counter: i32 = 0;
+                    while end < nums.len() && nums[end] == 1 {
+                        if curr_num == 0 {
+                            break;
+                        }
+                        end += 1;
+                        local_counter += 1;
+                    }
+                    counter = counter.max(local_counter);
+                },
+                false => {  
+                    end += 1;
+                },
+            }
+        }
+        counter
+    }
+
+    // checking for subsequence 
+    pub fn is_subsequence(s: String, t:String)-> bool{
+        if s.is_empty(){
+            return false;
+        }
+        fn make_vec(string:String)-> Vec<char>{
+            string.chars().collect()
+        }
+        // consumed
+        let s_vec:Vec<char> = make_vec(s);
+        let t_vec:Vec<char> = make_vec(t);
+
+        let mut s_index:usize = 0;
+        for t_item in t_vec.iter(){
+            let t_char: char = *t_item;
+            if t_char == s_vec[s_index]{
+                s_index += 1;
+            }
+            if s_index == s_vec.len(){ // if its equal stopping additional add ons for boundary error prevention
+                break;
+            }
+        }
+        if s_index as usize == s_vec.len(){
+            return true;
+        }
+        false
+    }
 }
 
 // notes

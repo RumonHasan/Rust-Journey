@@ -14,7 +14,10 @@ use crate::concepts::concepts_modules::house_robber_ii;
 use crate::concepts::concepts_modules::intersect_array;
 use crate::concepts::concepts_modules::intersection;
 use crate::concepts::concepts_modules::is_anagram;
+use crate::concepts::concepts_modules::is_subsequence;
 use crate::concepts::concepts_modules::longest_char_replacement;
+use crate::concepts::concepts_modules::max_consequtive_ones;
+use crate::concepts::concepts_modules::min_len;
 use crate::concepts::concepts_modules::min_steps;
 use crate::concepts::concepts_modules::minimum_recolors;
 use crate::concepts::concepts_modules::number_of_subarrays;
@@ -26,6 +29,7 @@ use crate::concepts::concepts_modules::push_dominoes;
 use crate::concepts::concepts_modules::remove_duplicates;
 use crate::concepts::concepts_modules::reverse_vowels;
 use crate::concepts::concepts_modules::shortest_distance_to_char;
+use crate::concepts::concepts_modules::subarray_ranges;
 use crate::concepts::concepts_modules::subarray_sum;
 use crate::concepts::concepts_modules::uncommon_from_sentences;
 use crate::concepts::concepts_modules::word_pattern;
@@ -59,7 +63,11 @@ fn main() {
     // uncommon_from_sentences(String::from("this apple is sweet"), String::from("this apple is sour"));
     // push_dominoes(String::from(".L.R...LR..L.."));
     // word_pattern(String::from("abba"), String::from("dog cat cat dog"));
-    frequency_sort_two(vec![-1,1,-6,4,5,-6,1,4,1]);
+    // frequency_sort_two(vec![-1,1,-6,4,5,-6,1,4,1]);
+    // subarray_ranges(vec![4,-2,-3,4,1]);
+    // min_len(String::from("ABFCACDB"));
+    // max_consequtive_ones(vec![1,1,0,1,1,1,0]);
+    is_subsequence(String::from("b"), String::from("abc"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
