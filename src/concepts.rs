@@ -1467,47 +1467,83 @@ pub mod concepts_modules {
                         local_counter += 1;
                     }
                     counter = counter.max(local_counter);
-                },
-                false => {  
+                }
+                false => {
                     end += 1;
-                },
+                }
             }
         }
         counter
     }
 
-    // checking for subsequence 
-    pub fn is_subsequence(s: String, t:String)-> bool{
-        if s.is_empty(){
+    // checking for subsequence
+    pub fn is_subsequence(s: String, t: String) -> bool {
+        if s.is_empty() {
             return false;
         }
-        fn make_vec(string:String)-> Vec<char>{
+        fn make_vec(string: String) -> Vec<char> {
             string.chars().collect()
         }
         // consumed
-        let s_vec:Vec<char> = make_vec(s);
-        let t_vec:Vec<char> = make_vec(t);
+        let s_vec: Vec<char> = make_vec(s);
+        let t_vec: Vec<char> = make_vec(t);
 
-        let mut s_index:usize = 0;
-        for t_item in t_vec.iter(){
+        let mut s_index: usize = 0;
+        for t_item in t_vec.iter() {
             let t_char: char = *t_item;
-            if t_char == s_vec[s_index]{
+            if t_char == s_vec[s_index] {
                 s_index += 1;
             }
-            if s_index == s_vec.len(){ // if its equal stopping additional add ons for boundary error prevention
+            if s_index == s_vec.len() {
+                // if its equal stopping additional add ons for boundary error prevention
                 break;
             }
         }
-        if s_index as usize == s_vec.len(){
+        if (s_index as usize) == s_vec.len() {
             return true;
         }
         false
+    }
+
+    // license key formatting
+    pub fn license_key_formatting(s: String, k: i32) -> String {
+        let mut license_vec: Vec<char> = Vec::new();
+        let s_vec: Vec<char> = s
+            .chars()
+            .filter(|&local_char| local_char != '-')
+            .collect(); // get chars and add only the ones u need
+        let mut local_counter = 0;
+        for curr_char in s_vec.iter().rev() {
+            if local_counter == k {
+                local_counter = 0;
+                license_vec.insert(0, '-');
+            }
+            // keeps on inserting if there is no hash needed
+                license_vec.insert(0, *curr_char);
+            
+            local_counter += 1;
+        }
+        // loop approach
+        let mut license_iter = license_vec.iter_mut();
+        loop {
+            match license_iter.next(){
+                Some(curr_char)=>{
+                    if curr_char.is_alphabetic(){
+                        *curr_char = curr_char.to_ascii_uppercase();
+                    }
+                },
+                None=>{break;}
+            }
+        }
+        let result: String = license_vec.into_iter().collect();
+        result
     }
 }
 
 // notes
 
 // remember cloned is used on the iterator to copy values but clone is used on the value itself
+// map is used to create iterator
 
 // #[derive(Debug)]
 // struct User{

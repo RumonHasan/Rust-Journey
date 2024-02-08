@@ -15,6 +15,7 @@ use crate::concepts::concepts_modules::intersect_array;
 use crate::concepts::concepts_modules::intersection;
 use crate::concepts::concepts_modules::is_anagram;
 use crate::concepts::concepts_modules::is_subsequence;
+use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
 use crate::concepts::concepts_modules::max_consequtive_ones;
 use crate::concepts::concepts_modules::min_len;
@@ -68,6 +69,7 @@ fn main() {
     // min_len(String::from("ABFCACDB"));
     // max_consequtive_ones(vec![1,1,0,1,1,1,0]);
     is_subsequence(String::from("b"), String::from("abc"));
+    license_key_formatting(String::from("5F3Z-2e-9-w"), 3);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
