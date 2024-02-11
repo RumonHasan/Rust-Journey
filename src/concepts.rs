@@ -1519,24 +1519,218 @@ pub mod concepts_modules {
                 license_vec.insert(0, '-');
             }
             // keeps on inserting if there is no hash needed
-                license_vec.insert(0, *curr_char);
-            
+            license_vec.insert(0, *curr_char);
+
             local_counter += 1;
         }
         // loop approach
         let mut license_iter = license_vec.iter_mut();
         loop {
-            match license_iter.next(){
-                Some(curr_char)=>{
-                    if curr_char.is_alphabetic(){
+            match license_iter.next() {
+                Some(curr_char) => {
+                    if curr_char.is_alphabetic() {
                         *curr_char = curr_char.to_ascii_uppercase();
                     }
-                },
-                None=>{break;}
+                }
+                None => {
+                    break;
+                }
             }
         }
         let result: String = license_vec.into_iter().collect();
         result
+    }
+
+    // ransom note problem
+    pub fn can_construct(ransom_note: String, magazine: String) -> bool {
+        // function to generate occurence
+        fn get_occurence(local_string: String) -> HashMap<char, i32> {
+            let mut map: HashMap<char, i32> = HashMap::new();
+            let array: Vec<char> = local_string.chars().collect();
+            let mut array_iter = array.iter();
+            loop {
+                match array_iter.next() {
+                    Some(curr_char) => {
+                        match map.get_mut(curr_char) {
+                            Some(curr_occurence) => {
+                                *curr_occurence += 1;
+                            }
+                            None => {
+                                map.insert(*curr_char, 1);
+                            }
+                        }
+                    }
+                    None => {
+                        break;
+                    }
+                }
+            }
+            map
+        }
+        let ransom_hash: HashMap<char, i32> = get_occurence(ransom_note);
+        let magazine_hash: HashMap<char, i32> = get_occurence(magazine);
+
+        for (key, value) in magazine_hash.iter() {
+            if ransom_hash.contains_key(&key) {
+                if let Some(key_val) = ransom_hash.get(&key) {
+                    if *key_val > *value {
+                        return false;
+                    }
+                }
+            }
+        }
+        for (key, char) in ransom_hash {
+            if !magazine_hash.contains_key(&key) {
+                return false;
+            }
+        }
+        true
+    }
+
+    // finding winners
+    pub fn find_winners(matches: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        let mut result: Vec<Vec<i32>> = Vec::new();
+        let mut map: HashMap<i32, Vec<i32>> = HashMap::new();
+        let mut winner_vec: Vec<i32> = Vec::new();
+        let mut loser_vec: Vec<i32> = Vec::new();
+        // populating map
+        for curr_num in matches.iter() {
+            let num: Vec<i32> = curr_num.to_vec();
+            let (winner, loser) = (num[0], num[1]);
+            if !map.contains_key(&winner) {
+                map.insert(winner, vec![0, 0]);
+            }
+            if !map.contains_key(&loser) {
+                map.insert(loser, vec![0, 0]);
+            }
+        }
+
+        // getting indexes and finding the values
+        for curr_num in matches.into_iter() {
+            let (winner, loser) = (curr_num[0], curr_num[1]);
+            // getting the winners
+            if map.contains_key(&winner) {
+                match map.get_mut(&winner) {
+                    Some(inner_vec) => {
+                        inner_vec[0] = inner_vec[0] + 1;
+                    }
+                    None => {}
+                }
+            }
+            // getting losers
+            if map.contains_key(&loser) {
+                match map.get_mut(&loser) {
+                    Some(inner_vec) => {
+                        inner_vec[1] = inner_vec[1] + 1;
+                    }
+                    None => {}
+                }
+            }
+        }
+        for (key, value) in map {
+            if value[1] == 0 {
+                winner_vec.push(key);
+            }
+            if value[1] == 1 {
+                loser_vec.push(key);
+            }
+        }
+
+        fn sort_stuff(array: &mut Vec<i32>) {
+            array.sort_by(|a, b| a.cmp(&b))
+        }
+        //fetching winner and loser from vec
+
+        sort_stuff(&mut winner_vec);
+        sort_stuff(&mut loser_vec);
+        result.push(winner_vec);
+        result.push(loser_vec);
+        result
+    }
+
+    // counting vowel substrings
+    pub fn count_vowel_substrings(word: String) -> i32 {
+        let mut total: i32 = 0;
+        let mut end: usize = 0;
+        // creates a default vowel map
+        fn get_map() -> HashMap<char, i32> {
+            let mut map: HashMap<char, i32> = HashMap::new();
+            map.insert('a', 0);
+            map.insert('i', 0);
+            map.insert('e', 0);
+            map.insert('o', 0);
+            map.insert('u', 0);
+            map
+        }
+        let word_array: Vec<char> = word.chars().collect();
+
+        while end < word_array.len() {
+            let mut map: HashMap<char, i32> = get_map();
+            let curr_char = word_array[end];
+            let mut sub_counter = 0;
+            if map.contains_key(&curr_char) {
+                for index in end..word_array.len() {
+                    let sub_char: char = word_array[index];
+                    match map.contains_key(&sub_char) {
+                        true =>
+                            match map.get_mut(&sub_char) {
+                                Some(occurence) => {
+                                    *occurence += 1;
+                                }
+                                None => {
+                                    break;
+                                }
+                            }
+                        false => {
+                            break;
+                        }
+                    }
+                    let check: bool = map.values().all(|val| *val > 0); // can be destructured
+                    if check {
+                        sub_counter += 1;
+                    }
+                }
+            }
+            total += sub_counter;
+            end += 1;
+        }
+        total
+    }
+
+    // getting subsequence vals based on the subsequence entered and by cancelling chars
+    pub fn is_find_word_in_sub(array: Vec<String>) -> i32 {
+        let mut min_counter: i32 = std::i32::MAX;
+        let word: String = array[0].clone();
+        let dict: Vec<String> = array[1]
+            .clone()
+            .split(',')
+            .map(|val| val.to_string())
+            .collect();
+
+        fn is_sub(dict_word: String, word: &mut String) -> bool {
+            let dict_chars: Vec<char> = dict_word.chars().collect();
+            let mut index: usize = 0;
+            for curr_char in word.chars(){ 
+                if curr_char == dict_chars[index]{
+                    index += 1;
+                }
+                if index == dict_chars.len(){
+                    break;
+                }
+            }
+            index == dict_chars.len()
+        }
+        for dict_word in dict.iter() {
+            let curr_word: String = dict_word.to_string();
+            let curr_len = curr_word.len();
+            let found_check = is_sub(curr_word, &mut word.to_string());
+            if found_check {
+                let found_len = (word.len() -curr_len) as i32;
+                min_counter = min_counter.min(found_len);
+            }
+        }
+
+        min_counter
     }
 }
 

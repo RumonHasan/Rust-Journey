@@ -6,7 +6,10 @@ use std::usize;
 mod rust_leetcode;
 mod concepts;
 use crate::concepts::concepts_modules::array_rank_transform;
+use crate::concepts::concepts_modules::can_construct;
+use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::delete_earn;
+use crate::concepts::concepts_modules::find_winners;
 use crate::concepts::concepts_modules::frequency_sort_two;
 use crate::concepts::concepts_modules::fucking_function;
 use crate::concepts::concepts_modules::get_longest_palindrome;
@@ -14,6 +17,7 @@ use crate::concepts::concepts_modules::house_robber_ii;
 use crate::concepts::concepts_modules::intersect_array;
 use crate::concepts::concepts_modules::intersection;
 use crate::concepts::concepts_modules::is_anagram;
+use crate::concepts::concepts_modules::is_find_word_in_sub;
 use crate::concepts::concepts_modules::is_subsequence;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
@@ -68,8 +72,12 @@ fn main() {
     // subarray_ranges(vec![4,-2,-3,4,1]);
     // min_len(String::from("ABFCACDB"));
     // max_consequtive_ones(vec![1,1,0,1,1,1,0]);
-    is_subsequence(String::from("b"), String::from("abc"));
-    license_key_formatting(String::from("5F3Z-2e-9-w"), 3);
+    // is_subsequence(String::from("b"), String::from("abc"));
+    // license_key_formatting(String::from("5F3Z-2e-9-w"), 3);
+    // can_construct(String::from("aa"), String::from("aab"));
+    // find_winners(vec![vec![1,3],vec![2,3],vec![3,6],vec![5,6],vec![5,7],vec![4,5],vec![4,8],vec![4,9],vec![10,4],vec![10,9]]);
+    count_vowel_substrings(String::from("cuaieuouac"));
+    is_find_word_in_sub(vec![String::from("worlcd"), String::from("ab,world,word,wld")]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
