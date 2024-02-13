@@ -1702,7 +1702,6 @@ pub mod concepts_modules {
         let mut min_counter: i32 = std::i32::MAX;
         let word: String = array[0].clone();
         let dict: Vec<String> = array[1]
-            .clone()
             .split(',')
             .map(|val| val.to_string())
             .collect();
@@ -1729,8 +1728,45 @@ pub mod concepts_modules {
                 min_counter = min_counter.min(found_len);
             }
         }
-
+        println!("{}", min_counter);
         min_counter
+    }
+
+    // first palindromic substring
+    pub fn first_palindromic_substring(words:Vec<String>)-> String{
+
+        fn second_check(curr_string:Vec<char>)->bool{
+            let rev_string: String = curr_string.iter().rev().map(|val| val.to_string()).collect();
+            let normal_string: String = curr_string.iter().map(|char| char.to_string()).collect();
+             normal_string == rev_string
+        }
+        // regular pal check
+        // fn palindrome_check(curr_string: Vec<char>)-> bool{
+        //     let check = true;
+        //     let half_len: usize = (curr_string.len() / 2 as usize) as usize;
+        //     let mut start: usize = 0;
+        //     let mut end: usize = curr_string.len() - 1 as usize;
+        //     while start <= half_len && end >= half_len{
+        //         if let Some(first) = curr_string.get(start){
+        //             if let Some(last) = curr_string.get(end){
+        //                 if *first != *last{
+        //                     return false;
+        //                 }
+        //             }
+        //         }
+        //         start += 1;
+        //         end -= 1;
+        //     }
+        //     check
+        // }
+        let word_iter = words.iter();
+        for word in word_iter{
+            let curr_string = word.to_string();
+            if second_check(curr_string.chars().collect()){
+                return word.to_string();
+            }
+        }
+        String::from("")
     }
 }
 

@@ -10,6 +10,7 @@ use crate::concepts::concepts_modules::can_construct;
 use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::delete_earn;
 use crate::concepts::concepts_modules::find_winners;
+use crate::concepts::concepts_modules::first_palindromic_substring;
 use crate::concepts::concepts_modules::frequency_sort_two;
 use crate::concepts::concepts_modules::fucking_function;
 use crate::concepts::concepts_modules::get_longest_palindrome;
@@ -76,8 +77,9 @@ fn main() {
     // license_key_formatting(String::from("5F3Z-2e-9-w"), 3);
     // can_construct(String::from("aa"), String::from("aab"));
     // find_winners(vec![vec![1,3],vec![2,3],vec![3,6],vec![5,6],vec![5,7],vec![4,5],vec![4,8],vec![4,9],vec![10,4],vec![10,9]]);
-    count_vowel_substrings(String::from("cuaieuouac"));
+    // count_vowel_substrings(String::from("cuaieuouac"));
     is_find_word_in_sub(vec![String::from("worlcd"), String::from("ab,world,word,wld")]);
+    first_palindromic_substring(vec!["abc".to_string(),"car".to_string(),"ada".to_string(),"racecar".to_string(),"cool".to_string()]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
