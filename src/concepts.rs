@@ -1709,11 +1709,11 @@ pub mod concepts_modules {
         fn is_sub(dict_word: String, word: &mut String) -> bool {
             let dict_chars: Vec<char> = dict_word.chars().collect();
             let mut index: usize = 0;
-            for curr_char in word.chars(){ 
-                if curr_char == dict_chars[index]{
+            for curr_char in word.chars() {
+                if curr_char == dict_chars[index] {
                     index += 1;
                 }
-                if index == dict_chars.len(){
+                if index == dict_chars.len() {
                     break;
                 }
             }
@@ -1724,7 +1724,7 @@ pub mod concepts_modules {
             let curr_len = curr_word.len();
             let found_check = is_sub(curr_word, &mut word.to_string());
             if found_check {
-                let found_len = (word.len() -curr_len) as i32;
+                let found_len = (word.len() - curr_len) as i32;
                 min_counter = min_counter.min(found_len);
             }
         }
@@ -1733,12 +1733,18 @@ pub mod concepts_modules {
     }
 
     // first palindromic substring
-    pub fn first_palindromic_substring(words:Vec<String>)-> String{
-
-        fn second_check(curr_string:Vec<char>)->bool{
-            let rev_string: String = curr_string.iter().rev().map(|val| val.to_string()).collect();
-            let normal_string: String = curr_string.iter().map(|char| char.to_string()).collect();
-             normal_string == rev_string
+    pub fn first_palindromic_substring(words: Vec<String>) -> String {
+        fn second_check(curr_string: Vec<char>) -> bool {
+            let rev_string: String = curr_string
+                .iter()
+                .rev()
+                .map(|val| val.to_string())
+                .collect();
+            let normal_string: String = curr_string
+                .iter()
+                .map(|char| char.to_string())
+                .collect();
+            normal_string == rev_string
         }
         // regular pal check
         // fn palindrome_check(curr_string: Vec<char>)-> bool{
@@ -1760,13 +1766,71 @@ pub mod concepts_modules {
         //     check
         // }
         let word_iter = words.iter();
-        for word in word_iter{
+        for word in word_iter {
             let curr_string = word.to_string();
-            if second_check(curr_string.chars().collect()){
+            if second_check(curr_string.chars().collect()) {
                 return word.to_string();
             }
         }
         String::from("")
+    }
+
+    // longest sub without repeating chars using sliding window logic
+    pub fn longest_sub_without_repeating_chars(s: String) -> i32 {
+        let mut length: i32 = 0;
+        let array: Vec<char> = s.chars().collect();
+        let mut set: HashSet<char> = HashSet::new();
+        let mut map: HashMap<char, i32> = HashMap::new();
+        let mut end: usize = 0;
+        let mut start: usize = 0;
+
+        while end < array.len() {
+            // map to keep track of chars
+            match map.get_mut(&array[end]){
+                Some(occurence)=>{
+                    *occurence += 1;
+                },
+                None =>{
+                    map.insert(array[end], 1);
+                }
+            }
+            set.insert(array[end]);
+            if set.len() == end - start + (1 as usize) {
+                length = length.max(set.len() as i32);
+            }
+            // checking length against empty set in order to define whether the length can be updated or not 
+            while !set.is_empty() && set.len() < end - start + (1 as usize) && start < array.len() {
+                if let Some(occurence) = map.get_mut(&array[start]){
+                    *occurence -= 1;
+                    if *occurence == 0{
+                        set.remove(&array[start]);
+                        map.remove(&array[start]);
+                    }
+                }
+                start += 1;
+            }
+
+            end += 1;
+        }
+        length
+    }
+// minimum size of substring will be equal to the number of unique substring 
+    pub fn count_complete_subarrays(nums:Vec<i32>)->i32{
+        let mut counter: i32 = 0;
+        let set: HashSet<i32> = nums.iter().map(|val| *val).collect();
+        let k: usize = set.len();
+        for index in 0..nums.len(){
+            let mut sub_set:HashSet<i32> = HashSet::new();
+            // checking all the subarrays from the starting points using set since it starts from index
+            for sub_index in index..nums.len(){
+                let curr_num:i32 = nums[sub_index];
+                sub_set.insert(curr_num);
+                if sub_set.len() == k{
+                    counter += 1;
+                }
+            }
+        }
+        counter
     }
 }
 

@@ -7,6 +7,7 @@ mod rust_leetcode;
 mod concepts;
 use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::can_construct;
+use crate::concepts::concepts_modules::count_complete_subarrays;
 use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::delete_earn;
 use crate::concepts::concepts_modules::find_winners;
@@ -22,6 +23,7 @@ use crate::concepts::concepts_modules::is_find_word_in_sub;
 use crate::concepts::concepts_modules::is_subsequence;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
+use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
 use crate::concepts::concepts_modules::max_consequtive_ones;
 use crate::concepts::concepts_modules::min_len;
 use crate::concepts::concepts_modules::min_steps;
@@ -78,8 +80,9 @@ fn main() {
     // can_construct(String::from("aa"), String::from("aab"));
     // find_winners(vec![vec![1,3],vec![2,3],vec![3,6],vec![5,6],vec![5,7],vec![4,5],vec![4,8],vec![4,9],vec![10,4],vec![10,9]]);
     // count_vowel_substrings(String::from("cuaieuouac"));
-    is_find_word_in_sub(vec![String::from("worlcd"), String::from("ab,world,word,wld")]);
-    first_palindromic_substring(vec!["abc".to_string(),"car".to_string(),"ada".to_string(),"racecar".to_string(),"cool".to_string()]);
+    // is_find_word_in_sub(vec![String::from("worlcd"), String::from("ab,world,word,wld")]);
+    // first_palindromic_substring(vec!["abc".to_string(),"car".to_string(),"ada".to_string(),"racecar".to_string(),"cool".to_string()]);
+    count_complete_subarrays(vec![1,3,1,2,2]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
