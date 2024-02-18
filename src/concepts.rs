@@ -1786,11 +1786,11 @@ pub mod concepts_modules {
 
         while end < array.len() {
             // map to keep track of chars
-            match map.get_mut(&array[end]){
-                Some(occurence)=>{
+            match map.get_mut(&array[end]) {
+                Some(occurence) => {
                     *occurence += 1;
-                },
-                None =>{
+                }
+                None => {
                     map.insert(array[end], 1);
                 }
             }
@@ -1798,11 +1798,11 @@ pub mod concepts_modules {
             if set.len() == end - start + (1 as usize) {
                 length = length.max(set.len() as i32);
             }
-            // checking length against empty set in order to define whether the length can be updated or not 
+            // checking length against empty set in order to define whether the length can be updated or not
             while !set.is_empty() && set.len() < end - start + (1 as usize) && start < array.len() {
-                if let Some(occurence) = map.get_mut(&array[start]){
+                if let Some(occurence) = map.get_mut(&array[start]) {
                     *occurence -= 1;
-                    if *occurence == 0{
+                    if *occurence == 0 {
                         set.remove(&array[start]);
                         map.remove(&array[start]);
                     }
@@ -1814,25 +1814,120 @@ pub mod concepts_modules {
         }
         length
     }
-// minimum size of substring will be equal to the number of unique substring 
-    pub fn count_complete_subarrays(nums:Vec<i32>)->i32{
+    // minimum size of substring will be equal to the number of unique substring
+    pub fn count_complete_subarrays(nums: Vec<i32>) -> i32 {
         let mut counter: i32 = 0;
-        let set: HashSet<i32> = nums.iter().map(|val| *val).collect();
+        let set: HashSet<i32> = nums
+            .iter()
+            .map(|val| *val)
+            .collect();
         let k: usize = set.len();
-        for index in 0..nums.len(){
-            let mut sub_set:HashSet<i32> = HashSet::new();
+        for index in 0..nums.len() {
+            let mut sub_set: HashSet<i32> = HashSet::new();
             // checking all the subarrays from the starting points using set since it starts from index
-            for sub_index in index..nums.len(){
-                let curr_num:i32 = nums[sub_index];
+            for sub_index in index..nums.len() {
+                let curr_num: i32 = nums[sub_index];
                 sub_set.insert(curr_num);
-                if sub_set.len() == k{
+                if sub_set.len() == k {
                     counter += 1;
                 }
             }
         }
         counter
     }
+
+    // max area for containing water using two pointer approach to check the both sides
+    pub fn container_water(height: Vec<i32>) -> i32 {
+        let mut max_height: i32 = 0;
+        let mut start: usize = 0;
+        let mut end: usize = height.len() - 1;
+
+        // two pointer approach
+        while start < end {
+            let start_height: i32 = height[start];
+            let end_height: i32 = height[end];
+            let index_gap: i32 = (end - start) as i32;
+            let min_height: i32 = start_height.min(end_height);
+            max_height = max_height.max(min_height * index_gap);
+            if start_height < end_height {
+                start += 1;
+            } else {
+                end -= 1;
+            }
+        }
+        max_height
+    }
+
+    // common sequence of substring
+    pub fn longest_substring(word: String) -> i32 {
+        let mut max_len: i32 = 0;
+        let vowel_array: Vec<char> = vec!['a', 'e', 'i', 'o', 'u'];
+        let mut index: usize = 0;
+        let word_vec: Vec<char> = word.chars().collect();
+        if word_vec.len() < 5 {
+            return max_len;
+        }
+        while index < word_vec.len() {
+            let curr_char = word_vec[index];
+            if curr_char == 'a' {
+                let start_index: usize = index;
+                let mut check_index: usize = 0;
+                let mut len_checker: i32 = 0;
+                let mut check: bool = true;
+                for (v_index, vowel) in vowel_array.iter().enumerate() {
+                    let curr_vowel: char = *vowel;
+                    // failed check
+                    if index < word_vec.len() && curr_vowel != word_vec[index] {
+                        check_index = v_index;
+                        check = false;
+                        break;
+                    }
+                    // checking for vowel first
+                    while index < word_vec.len() && word_vec[index] == curr_vowel {
+                        index += 1;
+                        len_checker += 1;
+                        check_index = v_index;
+                    }
+                }
+                if check && len_checker >= 5 && check_index == 4 {
+                    max_len = max_len.max((index - start_index) as i32);
+                }
+            } else {
+                index += 1;
+            }
+        }
+        max_len
+    }
+
+    // checking unique occurence
+    pub fn unique_occurence(arr: Vec<i32>) -> bool {
+        fn get_occurence(arr: Vec<i32>) -> HashMap<i32, i32> {
+            let mut map: HashMap<i32, i32> = HashMap::new();
+            for curr_num in arr.iter() {
+                match map.get_mut(curr_num) {
+                    Some(occurence) => {
+                        *occurence += 1;
+                    }
+                    None => {
+                        map.insert(*curr_num, 1);
+                    }
+                }
+            }
+            map
+        }
+        let value_map: HashMap<i32, i32> = get_occurence(arr.clone());
+        let occ_map: HashMap<i32, i32> = get_occurence(
+            value_map
+                .values()
+                .to_owned()
+                .map(|val| *val)
+                .collect()
+        );
+        let check = occ_map.values().all(|val| val == &1);
+        check
+    }
 }
+//"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
 // notes
 

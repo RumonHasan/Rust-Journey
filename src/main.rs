@@ -7,6 +7,7 @@ mod rust_leetcode;
 mod concepts;
 use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::can_construct;
+use crate::concepts::concepts_modules::container_water;
 use crate::concepts::concepts_modules::count_complete_subarrays;
 use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::delete_earn;
@@ -24,6 +25,7 @@ use crate::concepts::concepts_modules::is_subsequence;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
 use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
+use crate::concepts::concepts_modules::longest_substring;
 use crate::concepts::concepts_modules::max_consequtive_ones;
 use crate::concepts::concepts_modules::min_len;
 use crate::concepts::concepts_modules::min_steps;
@@ -40,6 +42,7 @@ use crate::concepts::concepts_modules::shortest_distance_to_char;
 use crate::concepts::concepts_modules::subarray_ranges;
 use crate::concepts::concepts_modules::subarray_sum;
 use crate::concepts::concepts_modules::uncommon_from_sentences;
+use crate::concepts::concepts_modules::unique_occurence;
 use crate::concepts::concepts_modules::word_pattern;
 
 // main function is necesary to make the code run
@@ -82,7 +85,10 @@ fn main() {
     // count_vowel_substrings(String::from("cuaieuouac"));
     // is_find_word_in_sub(vec![String::from("worlcd"), String::from("ab,world,word,wld")]);
     // first_palindromic_substring(vec!["abc".to_string(),"car".to_string(),"ada".to_string(),"racecar".to_string(),"cool".to_string()]);
-    count_complete_subarrays(vec![1,3,1,2,2]);
+    // count_complete_subarrays(vec![1,3,1,2,2]);
+    // container_water(vec![1,8,6,2,5,4,8,3,7]);
+    longest_substring(String::from("aaaaaa"));
+    unique_occurence(vec![-3,0,1,-3,1,1,1,-3,10,0]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
