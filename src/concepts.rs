@@ -1926,6 +1926,77 @@ pub mod concepts_modules {
         let check = occ_map.values().all(|val| val == &1);
         check
     }
+
+    // getting the longest pal that can be build from the data
+    pub fn longest_palindrome(s: String) -> i32 {
+        let mut long_palindrome: i32 = 0;
+        let array: Vec<char> = s.chars().collect();
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for curr_char in array.iter() {
+            match map.get_mut(curr_char) {
+                Some(occurence) => {
+                    *occurence += 1;
+                }
+                None => {
+                    map.insert(*curr_char, 1);
+                }
+            }
+        }
+        let mut check: bool = false;
+        for (_, value) in map.iter() {
+            if value % 2 == 1 {
+                long_palindrome += *value - 1;
+                check = true;
+            }
+            if value % 2 == 0 {
+                long_palindrome += *value;
+            }
+        }
+        if check {
+            long_palindrome += 1;
+        }
+        long_palindrome
+    }
+
+    // longest word in dict
+    pub fn longest_word_in_dict(mut words: Vec<String>) -> String {
+        words.sort_by(|a, b| a.len().cmp(&b.len()));
+        let mut collection: Vec<String> = Vec::new();
+        let set: HashSet<String> = words
+            .iter()
+            .map(|word| word.to_string())
+            .collect();
+        let mut lng: usize = 0;
+        for curr_word in words.iter() {
+            let check_word: Vec<char> = curr_word.chars().collect();
+            let mut local_str: String = String::from("");
+            let mut check: bool = true;
+            for curr_char in check_word.iter() {
+                local_str.push(*curr_char);
+                if !set.contains(&local_str) {
+                    check = false;
+                    break;
+                }
+            }
+            if check {
+                if curr_word.len() > lng {
+                    lng = curr_word.len();
+                }
+                collection.push(curr_word.to_string());
+            }
+        }
+        collection.retain(|word| word.len() == lng);
+        collection.sort();
+        // checking if there is a first rreturn or ignore
+        match collection.first() {
+            Some(word)=>{
+                word.to_string()
+            },
+            None =>{
+                String::from("")
+            }
+       }
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 

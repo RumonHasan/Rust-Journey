@@ -24,8 +24,10 @@ use crate::concepts::concepts_modules::is_find_word_in_sub;
 use crate::concepts::concepts_modules::is_subsequence;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
+use crate::concepts::concepts_modules::longest_palindrome;
 use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
 use crate::concepts::concepts_modules::longest_substring;
+use crate::concepts::concepts_modules::longest_word_in_dict;
 use crate::concepts::concepts_modules::max_consequtive_ones;
 use crate::concepts::concepts_modules::min_len;
 use crate::concepts::concepts_modules::min_steps;
@@ -87,8 +89,16 @@ fn main() {
     // first_palindromic_substring(vec!["abc".to_string(),"car".to_string(),"ada".to_string(),"racecar".to_string(),"cool".to_string()]);
     // count_complete_subarrays(vec![1,3,1,2,2]);
     // container_water(vec![1,8,6,2,5,4,8,3,7]);
-    longest_substring(String::from("aaaaaa"));
-    unique_occurence(vec![-3,0,1,-3,1,1,1,-3,10,0]);
+    // longest_substring(String::from("aaaaaa"));
+    // unique_occurence(vec![-3,0,1,-3,1,1,1,-3,10,0]);
+    // longest_palindrome(String::from("abccccdd"));
+    longest_word_in_dict(vec![
+        String::from("w"),
+        String::from("wo"),
+        String::from("wor"),
+        String::from("worl"),
+        String::from("world")
+    ]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
