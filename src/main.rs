@@ -22,6 +22,7 @@ use crate::concepts::concepts_modules::intersection;
 use crate::concepts::concepts_modules::is_anagram;
 use crate::concepts::concepts_modules::is_find_word_in_sub;
 use crate::concepts::concepts_modules::is_subsequence;
+use crate::concepts::concepts_modules::length_of_last_word;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
 use crate::concepts::concepts_modules::longest_palindrome;
@@ -92,13 +93,14 @@ fn main() {
     // longest_substring(String::from("aaaaaa"));
     // unique_occurence(vec![-3,0,1,-3,1,1,1,-3,10,0]);
     // longest_palindrome(String::from("abccccdd"));
-    longest_word_in_dict(vec![
-        String::from("w"),
-        String::from("wo"),
-        String::from("wor"),
-        String::from("worl"),
-        String::from("world")
-    ]);
+    // longest_word_in_dict(vec![
+    //     String::from("w"),
+    //     String::from("wo"),
+    //     String::from("wor"),
+    //     String::from("worl"),
+    //     String::from("world")
+    // ]);
+    length_of_last_word(String::from("   fly me   to   the moon  "));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

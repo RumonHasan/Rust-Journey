@@ -1989,13 +1989,24 @@ pub mod concepts_modules {
         collection.sort();
         // checking if there is a first rreturn or ignore
         match collection.first() {
-            Some(word)=>{
-                word.to_string()
-            },
-            None =>{
-                String::from("")
-            }
-       }
+            Some(word) => { word.to_string() }
+            None => { String::from("") }
+        }
+    }
+
+    // getting length of last word
+    pub fn length_of_last_word(s: String) -> i32 {
+        let s_array: Vec<String> = s
+            .split_whitespace()
+            .map(|slice| slice.to_string())
+            .collect();
+        let mut length_of_last_word: i32 = 0;
+        for curr_word in s_array.iter().rev() {
+            let curr_word_str = curr_word.to_string();
+            length_of_last_word = curr_word_str.len() as i32;
+            break;
+        }
+        length_of_last_word
     }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
