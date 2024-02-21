@@ -2008,6 +2008,26 @@ pub mod concepts_modules {
         }
         length_of_last_word
     }
+
+    // getting the peak index in a mountain array// solution must be on Ologn
+    pub fn peak_index(arr:Vec<i32>) -> i32{
+        let mut peak: i32 = 0;
+        let mut end: usize = 0;
+        while end < arr.len(){
+            let curr_el: i32 = arr[end];
+            if let Some(next_el) = arr.get(end + 1){
+                if *next_el > curr_el{
+                    while end + 1 < arr.len() && *arr.get(end + 1).unwrap() > arr[end]{
+                        end += 1;
+                    }
+                    peak = end as i32;
+                    break;
+                }
+            }
+            end += 1;
+        }
+        peak
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 

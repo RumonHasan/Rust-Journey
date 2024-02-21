@@ -35,6 +35,7 @@ use crate::concepts::concepts_modules::min_steps;
 use crate::concepts::concepts_modules::minimum_recolors;
 use crate::concepts::concepts_modules::number_of_subarrays;
 use crate::concepts::concepts_modules::partition_labels;
+use crate::concepts::concepts_modules::peak_index;
 use crate::concepts::concepts_modules::pivot_index;
 use crate::concepts::concepts_modules::play_ground;
 use crate::concepts::concepts_modules::play_ground_two;
@@ -100,7 +101,8 @@ fn main() {
     //     String::from("worl"),
     //     String::from("world")
     // ]);
-    length_of_last_word(String::from("   fly me   to   the moon  "));
+    // length_of_last_word(String::from("   fly me   to   the moon  "));
+    peak_index(vec![0,10,5,2]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
