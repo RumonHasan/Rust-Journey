@@ -2010,14 +2010,14 @@ pub mod concepts_modules {
     }
 
     // getting the peak index in a mountain array// solution must be on Ologn
-    pub fn peak_index(arr:Vec<i32>) -> i32{
+    pub fn peak_index(arr: Vec<i32>) -> i32 {
         let mut peak: i32 = 0;
         let mut end: usize = 0;
-        while end < arr.len(){
+        while end < arr.len() {
             let curr_el: i32 = arr[end];
-            if let Some(next_el) = arr.get(end + 1){
-                if *next_el > curr_el{
-                    while end + 1 < arr.len() && *arr.get(end + 1).unwrap() > arr[end]{
+            if let Some(next_el) = arr.get(end + 1) {
+                if *next_el > curr_el {
+                    while end + 1 < arr.len() && *arr.get(end + 1).unwrap() > arr[end] {
                         end += 1;
                     }
                     peak = end as i32;
@@ -2027,6 +2027,58 @@ pub mod concepts_modules {
             end += 1;
         }
         peak
+    }
+    // can place flowers
+    pub fn can_place_flowers(flowerbed: Vec<i32>, n: i32) -> bool {
+        let mut check = false;
+        let mut counter: i32 = n;
+        if n == 0 {
+            return true;
+        }
+        let mut bed: Vec<i32> = flowerbed
+            .iter()
+            .map(|val| *val)
+            .collect();
+        if bed.len() == 1 {
+            if bed[0] == 0 {
+                return counter <= 1;
+            }
+            return false;
+        }
+        // main code
+        for index in 0..bed.len() {
+            if index == 0 && bed[index] == 0 {
+                if let Some(next) = bed.get(index + 1) {
+                    if *next == 0 {
+                        bed[index] = 1;
+                        counter -= 1;
+                    }
+                }
+            }
+            if index >= 2 && index == bed.len() - 1 && bed[index] == 0 {
+                if let Some(second_last) = bed.get(index - 1) {
+                    if *second_last == 0 {
+                        bed[index] = 1;
+                        counter -= 1;
+                    }
+                }
+            }
+            if index > 1 && index < bed.len() - 1 && bed[index] == 0 {
+                if let (Some(before), Some(after)) = (bed.get(index - 1), bed.get(index + 1)) {
+                    if *before == 0 && *after == 0 {
+                        bed[index] = 1;
+                        counter -= 1;
+                    }
+                }
+            }
+            if counter == 0 {
+                return true;
+            }
+        }
+        if counter == 0 {
+            check = true;
+        }
+        check
     }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"

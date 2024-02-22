@@ -7,6 +7,7 @@ mod rust_leetcode;
 mod concepts;
 use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::can_construct;
+use crate::concepts::concepts_modules::can_place_flowers;
 use crate::concepts::concepts_modules::container_water;
 use crate::concepts::concepts_modules::count_complete_subarrays;
 use crate::concepts::concepts_modules::count_vowel_substrings;
@@ -102,7 +103,8 @@ fn main() {
     //     String::from("world")
     // ]);
     // length_of_last_word(String::from("   fly me   to   the moon  "));
-    peak_index(vec![0,10,5,2]);
+    // peak_index(vec![0,10,5,2]);
+    can_place_flowers(vec![0,0,1,0,0], 1);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
