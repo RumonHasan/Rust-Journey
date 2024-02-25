@@ -17,6 +17,7 @@ use crate::concepts::concepts_modules::first_palindromic_substring;
 use crate::concepts::concepts_modules::frequency_sort_two;
 use crate::concepts::concepts_modules::fucking_function;
 use crate::concepts::concepts_modules::get_longest_palindrome;
+use crate::concepts::concepts_modules::halves_in_string;
 use crate::concepts::concepts_modules::house_robber_ii;
 use crate::concepts::concepts_modules::intersect_array;
 use crate::concepts::concepts_modules::intersection;
@@ -104,7 +105,8 @@ fn main() {
     // ]);
     // length_of_last_word(String::from("   fly me   to   the moon  "));
     // peak_index(vec![0,10,5,2]);
-    can_place_flowers(vec![0,0,1,0,0], 1);
+    //can_place_flowers(vec![0,0,1,0,0], 1);
+    halves_in_string(String::from("textbook"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

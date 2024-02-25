@@ -2080,6 +2080,26 @@ pub mod concepts_modules {
         }
         check
     }
+
+    // getting halves of length of strings
+    pub fn halves_in_string(s:String)-> bool{
+        let mut s_vec: Vec<char> = s.chars().collect();
+        let mut vowel_array: Vec<char> = vec!['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+        let half_len = s.len() / 2;
+        let mut counter_one = 0;
+        let mut counter_two = 0;
+
+        fn get_vowel_counter(counter: &mut i32, array: &mut [char], vowels: &mut Vec<char>){
+            for curr_char in array.iter(){
+                if vowels.contains(curr_char){
+                    *counter += 1;
+                }
+            }
+        }
+        get_vowel_counter(&mut counter_one, &mut s_vec[0..half_len], &mut vowel_array);
+        get_vowel_counter(&mut counter_two, &mut s_vec[half_len..s.len()], &mut vowel_array);
+        counter_one == counter_two
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
