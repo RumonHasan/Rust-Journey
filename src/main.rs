@@ -45,6 +45,7 @@ use crate::concepts::concepts_modules::push_dominoes;
 use crate::concepts::concepts_modules::remove_duplicates;
 use crate::concepts::concepts_modules::reverse_vowels;
 use crate::concepts::concepts_modules::shortest_distance_to_char;
+use crate::concepts::concepts_modules::single_num_iii;
 use crate::concepts::concepts_modules::subarray_ranges;
 use crate::concepts::concepts_modules::subarray_sum;
 use crate::concepts::concepts_modules::uncommon_from_sentences;
@@ -106,7 +107,8 @@ fn main() {
     // length_of_last_word(String::from("   fly me   to   the moon  "));
     // peak_index(vec![0,10,5,2]);
     //can_place_flowers(vec![0,0,1,0,0], 1);
-    halves_in_string(String::from("textbook"));
+    //halves_in_string(String::from("textbook"));
+    single_num_iii(vec![1,2,1,3,2,5]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

@@ -2100,6 +2100,31 @@ pub mod concepts_modules {
         get_vowel_counter(&mut counter_two, &mut s_vec[half_len..s.len()], &mut vowel_array);
         counter_one == counter_two
     }
+
+
+    // using single number
+    pub fn single_num_iii(nums: Vec<i32>)->Vec<i32>{
+        let mut collection: Vec<i32> = Vec::new();
+        let mut map:HashMap<i32, i32> = HashMap::new();
+        for curr_num in nums.iter(){
+            let curr = *curr_num;
+            match map.get_mut(&curr){
+                Some(occurence) =>{
+                    *occurence += 1;
+                },
+                None=>{
+                    map.insert(curr, 1);
+                }
+            }
+        }
+        for (key, value) in map{
+            if value == 1{
+                collection.push(key);
+            }
+        }
+        collection
+    }
+
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
