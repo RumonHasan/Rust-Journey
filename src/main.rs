@@ -11,6 +11,7 @@ use crate::concepts::concepts_modules::can_place_flowers;
 use crate::concepts::concepts_modules::container_water;
 use crate::concepts::concepts_modules::count_complete_subarrays;
 use crate::concepts::concepts_modules::count_vowel_substrings;
+use crate::concepts::concepts_modules::count_words;
 use crate::concepts::concepts_modules::delete_earn;
 use crate::concepts::concepts_modules::find_winners;
 use crate::concepts::concepts_modules::first_palindromic_substring;
@@ -55,7 +56,6 @@ use crate::concepts::concepts_modules::word_pattern;
 // main function is necesary to make the code run
 // cannot assign values ot a different type after once its declared... unless its mutable
 fn main() {
-
     // play_ground();
     // remove_duplicates(String::from("abbaca"));
     // is_anagram(String::from("anagram"), String::from("nagaram"));
@@ -108,7 +108,17 @@ fn main() {
     // peak_index(vec![0,10,5,2]);
     //can_place_flowers(vec![0,0,1,0,0], 1);
     //halves_in_string(String::from("textbook"));
-    single_num_iii(vec![1,2,1,3,2,5]);
+    // single_num_iii(vec![1,2,1,3,2,5]);
+    count_words(
+        vec![
+            "leetcode".to_string(),
+            "is".to_string(),
+            "amazing".to_string(),
+            "as".to_string(),
+            "is".to_string()
+        ],
+        vec!["amazing".to_string(), "leetcode".to_string(), "is".to_string()]
+    );
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

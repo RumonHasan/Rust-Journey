@@ -2082,16 +2082,16 @@ pub mod concepts_modules {
     }
 
     // getting halves of length of strings
-    pub fn halves_in_string(s:String)-> bool{
+    pub fn halves_in_string(s: String) -> bool {
         let mut s_vec: Vec<char> = s.chars().collect();
         let mut vowel_array: Vec<char> = vec!['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
         let half_len = s.len() / 2;
         let mut counter_one = 0;
         let mut counter_two = 0;
 
-        fn get_vowel_counter(counter: &mut i32, array: &mut [char], vowels: &mut Vec<char>){
-            for curr_char in array.iter(){
-                if vowels.contains(curr_char){
+        fn get_vowel_counter(counter: &mut i32, array: &mut [char], vowels: &mut Vec<char>) {
+            for curr_char in array.iter() {
+                if vowels.contains(curr_char) {
                     *counter += 1;
                 }
             }
@@ -2101,30 +2101,69 @@ pub mod concepts_modules {
         counter_one == counter_two
     }
 
-
     // using single number
-    pub fn single_num_iii(nums: Vec<i32>)->Vec<i32>{
+    pub fn single_num_iii(nums: Vec<i32>) -> Vec<i32> {
         let mut collection: Vec<i32> = Vec::new();
-        let mut map:HashMap<i32, i32> = HashMap::new();
-        for curr_num in nums.iter(){
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        for curr_num in nums.iter() {
             let curr = *curr_num;
-            match map.get_mut(&curr){
-                Some(occurence) =>{
+            match map.get_mut(&curr) {
+                Some(occurence) => {
                     *occurence += 1;
-                },
-                None=>{
+                }
+                None => {
                     map.insert(curr, 1);
                 }
             }
         }
-        for (key, value) in map{
-            if value == 1{
+        for (key, value) in map {
+            if value == 1 {
                 collection.push(key);
             }
         }
         collection
     }
 
+    // word count
+    pub fn count_words(words1: Vec<String>, words2: Vec<String>) -> i32 {
+        let mut counter: i32 = 0;
+        let mut map: HashMap<String, Vec<i32>> = HashMap::new();
+        fn populate_map(
+            map: &mut HashMap<String, Vec<i32>>,
+            type_str: String,
+            words: &Vec<String>
+        ) {
+            for curr_string in words.iter() {
+                let curr = curr_string.to_string();
+              
+                match map.get_mut(&curr) {
+                    Some(occurrence) => {
+                        if type_str == "one".to_string() {
+                            occurrence[0] += 1;
+                        } else if type_str == "two".to_string() {
+                            occurrence[1] += 1;
+                        }
+                    }
+                    None => {
+                        if type_str == "one".to_string(){
+                            map.insert(curr, vec![1, 0]);
+                        }else{
+                            map.insert(curr, vec![0, 1]);
+                        }
+                       
+                    }
+                }
+            }
+        }
+        populate_map(&mut map, "one".to_string(), &words1);
+        populate_map(&mut map, "two".to_string(), &words2);
+        for (_, value) in map{
+            if value[0] == 1 && value[1] == 1{
+                counter += 1;
+            }
+        }
+        counter
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
