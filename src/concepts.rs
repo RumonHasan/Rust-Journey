@@ -2164,6 +2164,27 @@ pub mod concepts_modules {
         }
         counter
     }
+
+    // fn to get rep chars
+    pub fn rep_chars(s:String)->char{
+        let mut res_char: char = 'a'; // filler char
+        let s_vec: Vec<char> = s.chars().into_iter().collect(); 
+        let mut map:HashMap<char, i32> = HashMap::new();
+        for curr_char in s_vec.into_iter(){
+            match map.get_mut(&curr_char){
+                Some(occurence)=>{
+                    *occurence += 1;
+                    if *occurence == 2{
+                        return curr_char;
+                    }
+                },
+                None=>{
+                    map.insert(curr_char, 1);
+                }
+            }
+        }
+        res_char
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
