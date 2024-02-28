@@ -2,6 +2,7 @@ pub mod concepts_modules {
     use std::collections::btree_set::Difference;
     use std::collections::HashMap;
     use std::collections::HashSet;
+    use std::string;
     use std::vec;
 
     pub fn str_str(haystack: String, needle: String) -> i32 {
@@ -2135,7 +2136,7 @@ pub mod concepts_modules {
         ) {
             for curr_string in words.iter() {
                 let curr = curr_string.to_string();
-              
+
                 match map.get_mut(&curr) {
                     Some(occurrence) => {
                         if type_str == "one".to_string() {
@@ -2145,20 +2146,19 @@ pub mod concepts_modules {
                         }
                     }
                     None => {
-                        if type_str == "one".to_string(){
+                        if type_str == "one".to_string() {
                             map.insert(curr, vec![1, 0]);
-                        }else{
+                        } else {
                             map.insert(curr, vec![0, 1]);
                         }
-                       
                     }
                 }
             }
         }
         populate_map(&mut map, "one".to_string(), &words1);
         populate_map(&mut map, "two".to_string(), &words2);
-        for (_, value) in map{
-            if value[0] == 1 && value[1] == 1{
+        for (_, value) in map {
+            if value[0] == 1 && value[1] == 1 {
                 counter += 1;
             }
         }
@@ -2166,25 +2166,100 @@ pub mod concepts_modules {
     }
 
     // fn to get rep chars
-    pub fn rep_chars(s:String)->char{
+    pub fn rep_chars(s: String) -> char {
         let mut res_char: char = 'a'; // filler char
-        let s_vec: Vec<char> = s.chars().into_iter().collect(); 
-        let mut map:HashMap<char, i32> = HashMap::new();
-        for curr_char in s_vec.into_iter(){
-            match map.get_mut(&curr_char){
-                Some(occurence)=>{
+        let s_vec: Vec<char> = s.chars().into_iter().collect();
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for curr_char in s_vec.into_iter() {
+            match map.get_mut(&curr_char) {
+                Some(occurence) => {
                     *occurence += 1;
-                    if *occurence == 2{
+                    if *occurence == 2 {
                         return curr_char;
                     }
-                },
-                None=>{
+                }
+                None => {
                     map.insert(curr_char, 1);
                 }
             }
         }
         res_char
     }
+
+    // finding the most common word after removing banned words
+    pub fn most_common_word(paragraph: String, banned: Vec<String>) -> String {
+
+        // fn initial_attempt(){
+        //     let mut max_occurence: i32 = 1;
+        //     let spaced_out: Vec<String> = paragraph
+        //         .split_whitespace()
+        //         .map(|val| val.to_string().to_ascii_lowercase())
+        //         .collect();
+        //     let mut map: HashMap<String, i32> = HashMap::new();
+        //     let mut new_array: Vec<String> = Vec::new();
+            
+        //     // extracting
+        //     for curr_word in spaced_out.iter(){
+        //         let curr: String = curr_word.to_string();
+        //         let mut local_string: String = String::from("");
+        //         for curr_char in curr.chars(){
+        //             if curr_char.is_alphabetic(){
+        //                 local_string.push(curr_char);
+        //             }
+        //         }
+        //         new_array.push(local_string);
+        //     }
+    
+        //     for curr_word in new_array.iter() {
+        //         if !banned.contains(curr_word) {
+        //             match map.get_mut(curr_word) {
+        //                 Some(occurence) => {
+        //                     *occurence += 1;
+        //                     max_occurence = *occurence;
+        //                 }
+        //                 None => {
+        //                     map.insert(curr_word.to_string(), 1);
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     for (key, value) in map {
+        //         if value == max_occurence {
+        //             return key;
+        //         }
+        //     }
+        // }
+
+     
+        String::from("")
+    }
+
+// max sub array using the simple concept of prefix sum
+    pub fn max_subarray(nums: Vec<i32>)-> i32{
+        let mut max_sum: i32 = std::i32::MIN;
+        let mut dp: Vec<i32> = Vec::new();
+        for _ in 0..nums.len(){
+            dp.push(0);
+        };
+        for (index, curr_num) in nums.iter().enumerate(){
+            let num: i32 = *curr_num;
+            if index == 0{
+                dp[index] = num;
+                max_sum = max_sum.max(dp[index]);
+            }
+            if index > 0{
+                // check for index out of bound
+                if let Some(prev_dp) = dp.get(index - 1){
+                    let local_sum:i32 = *prev_dp + num;
+                    dp[index] = local_sum.max(num);
+                    max_sum = max_sum.max(dp[index]);
+                }
+            }
+
+        }   
+        max_sum
+    }
+    
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 

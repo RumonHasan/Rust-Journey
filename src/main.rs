@@ -33,9 +33,11 @@ use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
 use crate::concepts::concepts_modules::longest_substring;
 use crate::concepts::concepts_modules::longest_word_in_dict;
 use crate::concepts::concepts_modules::max_consequtive_ones;
+use crate::concepts::concepts_modules::max_subarray;
 use crate::concepts::concepts_modules::min_len;
 use crate::concepts::concepts_modules::min_steps;
 use crate::concepts::concepts_modules::minimum_recolors;
+use crate::concepts::concepts_modules::most_common_word;
 use crate::concepts::concepts_modules::number_of_subarrays;
 use crate::concepts::concepts_modules::partition_labels;
 use crate::concepts::concepts_modules::peak_index;
@@ -120,7 +122,9 @@ fn main() {
     //     ],
     //     vec!["amazing".to_string(), "leetcode".to_string(), "is".to_string()]
     // );
-    rep_chars(String::from("abccbaacz"));
+    //rep_chars(String::from("abccbaacz"));
+    //most_common_word(String::from("a, a, a, a, b,b,b,c, c"), vec![String::from("hit")]);
+    max_subarray(vec![-1, -2]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
