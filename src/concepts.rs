@@ -2188,7 +2188,6 @@ pub mod concepts_modules {
 
     // finding the most common word after removing banned words
     pub fn most_common_word(paragraph: String, banned: Vec<String>) -> String {
-
         // fn initial_attempt(){
         //     let mut max_occurence: i32 = 1;
         //     let spaced_out: Vec<String> = paragraph
@@ -2197,7 +2196,7 @@ pub mod concepts_modules {
         //         .collect();
         //     let mut map: HashMap<String, i32> = HashMap::new();
         //     let mut new_array: Vec<String> = Vec::new();
-            
+
         //     // extracting
         //     for curr_word in spaced_out.iter(){
         //         let curr: String = curr_word.to_string();
@@ -2209,7 +2208,7 @@ pub mod concepts_modules {
         //         }
         //         new_array.push(local_string);
         //     }
-    
+
         //     for curr_word in new_array.iter() {
         //         if !banned.contains(curr_word) {
         //             match map.get_mut(curr_word) {
@@ -2230,36 +2229,71 @@ pub mod concepts_modules {
         //     }
         // }
 
-     
         String::from("")
     }
 
-// max sub array using the simple concept of prefix sum
-    pub fn max_subarray(nums: Vec<i32>)-> i32{
+    // max sub array using the simple concept of prefix sum
+    pub fn max_subarray(nums: Vec<i32>) -> i32 {
         let mut max_sum: i32 = std::i32::MIN;
         let mut dp: Vec<i32> = Vec::new();
-        for _ in 0..nums.len(){
+        for _ in 0..nums.len() {
             dp.push(0);
-        };
-        for (index, curr_num) in nums.iter().enumerate(){
+        }
+        for (index, curr_num) in nums.iter().enumerate() {
             let num: i32 = *curr_num;
-            if index == 0{
+            if index == 0 {
                 dp[index] = num;
                 max_sum = max_sum.max(dp[index]);
             }
-            if index > 0{
+            if index > 0 {
                 // check for index out of bound
-                if let Some(prev_dp) = dp.get(index - 1){
-                    let local_sum:i32 = *prev_dp + num;
+                if let Some(prev_dp) = dp.get(index - 1) {
+                    let local_sum: i32 = *prev_dp + num;
                     dp[index] = local_sum.max(num);
                     max_sum = max_sum.max(dp[index]);
                 }
             }
-
-        }   
+        }
         max_sum
     }
-    
+
+    // calculating the max possible sum of the subarray
+    pub fn max_absolute_sum(nums: Vec<i32>) -> i32 {
+        let mut max_possible: i32 = std::i32::MIN;
+        let mut min_possible: i32 = std::i32::MAX;
+        let mut dp: Vec<i32> = Vec::new();
+        let mut dp_two: Vec<i32> = Vec::new();
+        fn populate_vec(dp: &mut Vec<i32>, length: usize) {
+            for _ in 0..length {
+                dp.push(0);
+            }
+        }
+        populate_vec(&mut dp, nums.len());
+        populate_vec(&mut dp_two, nums.len());
+        // check for min sum
+        for (index, item) in nums.iter().enumerate() {
+            let curr_num = *item;
+            if index == 0 {
+                dp[index] = curr_num;
+                dp_two[index] = curr_num;
+                min_possible = min_possible.min(dp[index]);
+                max_possible = max_possible.max(dp_two[index]);
+            }
+            if index > 0 {
+                let sum_dp: i32 = dp[index - 1] + curr_num;
+                let sum_dp_two: i32 = dp_two[index - 1] + curr_num;
+                dp[index] = sum_dp.min(curr_num);
+                dp_two[index] = sum_dp_two.max(curr_num);
+                min_possible = min_possible.min(dp[index]);
+                max_possible = max_possible.max(dp_two[index]);
+            }
+        }
+        if max_possible.abs() > min_possible.abs() {
+            max_possible.abs()
+        } else {
+            min_possible.abs()
+        }
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
