@@ -2294,6 +2294,29 @@ pub mod concepts_modules {
             min_possible.abs()
         }
     }
+
+    // is toeplix matrix for checking top left value of the matrix
+    pub fn is_toeplix_matrix(matrix: Vec<Vec<i32>>) -> bool {
+        let mut check = true;
+        for i in 0..matrix.len() {
+            if i == 0 {
+                continue;
+            }
+            for j in 0..matrix[i].len() {
+                if j == 0 {
+                    continue;
+                }
+                let curr_el = matrix[i][j];
+                if let Some(top_left) = matrix.get(i - 1).and_then(|row| row.get(j - 1)) {
+                    if curr_el != *top_left{
+                        check = false;
+                        break;
+                    }
+                }
+            }
+        }
+        check
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 

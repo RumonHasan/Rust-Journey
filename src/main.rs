@@ -25,6 +25,7 @@ use crate::concepts::concepts_modules::intersection;
 use crate::concepts::concepts_modules::is_anagram;
 use crate::concepts::concepts_modules::is_find_word_in_sub;
 use crate::concepts::concepts_modules::is_subsequence;
+use crate::concepts::concepts_modules::is_toeplix_matrix;
 use crate::concepts::concepts_modules::length_of_last_word;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
@@ -126,7 +127,8 @@ fn main() {
     //rep_chars(String::from("abccbaacz"));
     //most_common_word(String::from("a, a, a, a, b,b,b,c, c"), vec![String::from("hit")]);
     //max_subarray(vec![-1, -2]);
-    max_absolute_sum(vec![1,-3,2,3,-4]);
+   // max_absolute_sum(vec![1,-3,2,3,-4]);
+    is_toeplix_matrix(vec![vec![1,2], vec![2,2]]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
