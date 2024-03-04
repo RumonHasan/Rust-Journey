@@ -57,6 +57,7 @@ use crate::concepts::concepts_modules::subarray_sum;
 use crate::concepts::concepts_modules::uncommon_from_sentences;
 use crate::concepts::concepts_modules::unique_occurence;
 use crate::concepts::concepts_modules::word_pattern;
+use crate::concepts::concepts_modules::word_pattern_check;
 
 // main function is necesary to make the code run
 // cannot assign values ot a different type after once its declared... unless its mutable
@@ -128,7 +129,8 @@ fn main() {
     //most_common_word(String::from("a, a, a, a, b,b,b,c, c"), vec![String::from("hit")]);
     //max_subarray(vec![-1, -2]);
    // max_absolute_sum(vec![1,-3,2,3,-4]);
-    is_toeplix_matrix(vec![vec![1,2], vec![2,2]]);
+    //is_toeplix_matrix(vec![vec![1,2], vec![2,2]]);
+    word_pattern_check(String::from("abba"), String::from("dog dog dog dog"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

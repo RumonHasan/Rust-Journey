@@ -2308,13 +2308,60 @@ pub mod concepts_modules {
                 }
                 let curr_el = matrix[i][j];
                 if let Some(top_left) = matrix.get(i - 1).and_then(|row| row.get(j - 1)) {
-                    if curr_el != *top_left{
+                    if curr_el != *top_left {
                         check = false;
                         break;
                     }
                 }
             }
         }
+        check
+    }
+
+    // getting the word pattern
+    pub fn word_pattern_check(pattern: String, s: String) -> bool {
+        let mut check: bool = true;
+        let s_array: Vec<String> = s
+            .split_whitespace()
+            .map(|val| val.to_string())
+            .collect();
+        let p_array: Vec<char> = pattern.chars().collect();
+        let mut map: HashMap<char, String> = HashMap::new();
+        let mut set: HashSet<String> = HashSet::new();
+
+        if s_array.len() != p_array.len(){ // edge case for different lengths
+            return false;
+        }
+
+        // add pattern
+        for index in 0..s_array.len() {
+            let curr_word = &s_array[index];
+            let curr_pat = p_array[index];
+            if map.contains_key(&curr_pat){
+                continue;
+            }
+            if set.contains(curr_word){
+                continue;
+            }
+            set.insert(curr_word.to_string());
+            map.insert(curr_pat, curr_word.to_string());
+        }
+
+            for (index, word) in s_array.iter().enumerate() {
+                let curr_word = word.to_string();
+                let curr_pat_char = p_array[index];
+                if !map.contains_key(&curr_pat_char){
+                    check = false;
+                    break;
+                }
+                if let Some(map_word) = map.get(&curr_pat_char) {
+                    if curr_word != map_word.to_string() {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+        // checking pattern
         check
     }
 }
