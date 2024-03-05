@@ -2364,6 +2364,50 @@ pub mod concepts_modules {
         // checking pattern
         check
     }
+
+    // max vowels 
+    pub fn max_vowels_in_given_sub(s:String, k:i32)-> i32{
+        let mut max_count:i32 = std::i32::MIN;
+        let mut map:HashMap<char, i32> = HashMap::new();
+        let array: Vec<char> = s.chars().collect();
+        map.insert('a', 0);
+        map.insert('i', 0);
+        map.insert('e', 0);
+        map.insert('o', 0);
+        map.insert('u', 0);
+
+        // initial render
+        for index in 0..k{
+          let curr_char: char = array[index as usize];
+          if map.contains_key(&curr_char){
+            match map.get_mut(&curr_char){
+                Some(occurence)=>{
+                    *occurence += 1;
+                }
+                None => {
+
+                }
+            }
+          }
+        }
+        max_count = map.values().sum();
+        let mut start: usize = 0;
+        for index in k as usize..(array.len() as usize){
+            if map.contains_key(&array[start]){
+                if let Some(occurence) = map.get_mut(&array[start]){
+                    *occurence -= 1;
+                }
+            }
+            if map.contains_key(&array[index as usize]){
+                if let Some(occurence) = map.get_mut(&array[index as usize]){
+                    *occurence += 1;
+                }
+            }
+            max_count = max_count.max(map.values().sum());
+            start += 1;
+        }
+        max_count
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
