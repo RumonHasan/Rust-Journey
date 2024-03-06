@@ -2436,6 +2436,36 @@ pub mod concepts_modules {
         }
         max_counter
     }
+
+    pub fn max_freq(nums: Vec<i32>)->i32{
+        let mut total: i32 = 0;
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        let mut num_iter = nums.iter();
+        let mut max_freq: i32 = 0;
+        loop{
+            match num_iter.next(){
+                Some(num)=>{
+                    match map.get_mut(num){
+                        Some(occurence)=>{
+                            *occurence += 1;
+                            max_freq = max_freq.max(*occurence);
+                        }
+                        None => {
+                            map.insert(*num, 1);
+                            max_freq = max_freq.max(1);
+                        }
+                    }
+                },
+                None => break
+            }
+        }
+        for (_, value) in map{
+            if value == max_freq{
+                total += value;
+            }
+        }
+        total
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
