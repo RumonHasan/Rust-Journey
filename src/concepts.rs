@@ -2466,6 +2466,48 @@ pub mod concepts_modules {
         }
         total
     }
+    // returning the number of subarrays that passes the count threshold
+    pub fn num_of_subarrays_two(arr: Vec<i32>, k: i32, threshold: i32) -> i32 {
+        let mut sub_array_count: i32 = 0;
+        let mut total: i32 = 0;
+        // initial check
+        for i in 0..k{
+            let curr_i = i as usize;
+            let curr_num = arr[curr_i];
+            total += curr_num;
+        }
+        let curr_avg: i32 = total / k;
+        if curr_avg >= threshold{
+            sub_array_count += 1;
+        }
+        let mut start: usize = 0;
+        let mut check_iter = arr.iter().skip(k as usize);
+
+
+        // window iterator // slower approach if iterator through every window
+        let win_iter = arr.windows(k as usize);
+        for curr_win in win_iter{
+            let win_sum: i32 = curr_win.into_iter().sum();
+            if ( win_sum / k) >= threshold{
+                sub_array_count += 1;
+            }
+        }
+        // sliding window approach 
+        loop {
+            match check_iter.next(){
+                Some(curr_val)=>{
+                    total -= arr[start];
+                    total += *curr_val;
+                    if (total / k) >= threshold{
+                        sub_array_count += 1;
+                    };
+                    start += 1;
+                }
+                None => break
+            }
+        }
+        sub_array_count
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 

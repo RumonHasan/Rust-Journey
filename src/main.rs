@@ -42,6 +42,7 @@ use crate::concepts::concepts_modules::min_len;
 use crate::concepts::concepts_modules::min_steps;
 use crate::concepts::concepts_modules::minimum_recolors;
 use crate::concepts::concepts_modules::most_common_word;
+use crate::concepts::concepts_modules::num_of_subarrays_two;
 use crate::concepts::concepts_modules::number_of_subarrays;
 use crate::concepts::concepts_modules::partition_labels;
 use crate::concepts::concepts_modules::peak_index;
@@ -135,6 +136,7 @@ fn main() {
     //word_pattern_check(String::from("abba"), String::from("dog dog dog dog"));
     //max_vowels_in_given_sub(String::from("abciiidef"), 3);
     max_freq(vec![1,2,2,3,1,4]);
+    num_of_subarrays_two(vec![11,13,17,23,29,31,7,5,2,3], 3, 5);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
