@@ -2508,6 +2508,57 @@ pub mod concepts_modules {
         }
         sub_array_count
     }
+
+    pub fn count_good_sub(s:String)-> i32{
+        let mut count = 0;
+        let array: Vec<char> = s.chars().collect();
+        let mut map: HashMap<char, i32> = HashMap::new();
+        let mut start: usize = 0;
+        let s_iter = array.iter().skip(3);
+
+        //edge case
+        if array.len() < 3{
+            return 0;
+        }
+
+        // first three
+        for i in 0..3{
+            let index = i as usize;
+            match map.get_mut(&array[index]){
+                Some(occurence)=>{
+                    *occurence += 1;
+                }
+                None =>{
+                    map.insert(array[index], 1);
+                }
+            }
+        };
+        if map.len() == 3{
+            count += 1;
+        };
+        for item in s_iter{
+            let curr_char = *item;
+            if let Some(first_char) = map.get_mut(&array[start]){
+                *first_char -= 1;
+                if *first_char == 0{
+                    map.remove(&array[start]);
+                }
+            };
+            match map.get_mut(item){
+                Some(occurence)=>{
+                    *occurence += 1;
+                }
+                None =>{
+                    map.insert(curr_char, 1);
+                }
+            }
+            if map.len() == 3{
+                count += 1;
+            }
+            start += 1;
+        }
+        count
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 

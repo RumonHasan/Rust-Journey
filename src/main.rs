@@ -10,6 +10,7 @@ use crate::concepts::concepts_modules::can_construct;
 use crate::concepts::concepts_modules::can_place_flowers;
 use crate::concepts::concepts_modules::container_water;
 use crate::concepts::concepts_modules::count_complete_subarrays;
+use crate::concepts::concepts_modules::count_good_sub;
 use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::count_words;
 use crate::concepts::concepts_modules::delete_earn;
@@ -135,8 +136,9 @@ fn main() {
     //is_toeplix_matrix(vec![vec![1,2], vec![2,2]]);
     //word_pattern_check(String::from("abba"), String::from("dog dog dog dog"));
     //max_vowels_in_given_sub(String::from("abciiidef"), 3);
-    max_freq(vec![1,2,2,3,1,4]);
-    num_of_subarrays_two(vec![11,13,17,23,29,31,7,5,2,3], 3, 5);
+    //max_freq(vec![1,2,2,3,1,4]);
+    //num_of_subarrays_two(vec![11,13,17,23,29,31,7,5,2,3], 3, 5);
+    count_good_sub(String::from("xyzzaz"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
