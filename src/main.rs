@@ -27,6 +27,7 @@ use crate::concepts::concepts_modules::is_anagram;
 use crate::concepts::concepts_modules::is_find_word_in_sub;
 use crate::concepts::concepts_modules::is_subsequence;
 use crate::concepts::concepts_modules::is_toeplix_matrix;
+use crate::concepts::concepts_modules::kth_distinct;
 use crate::concepts::concepts_modules::length_of_last_word;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
@@ -138,7 +139,8 @@ fn main() {
     //max_vowels_in_given_sub(String::from("abciiidef"), 3);
     //max_freq(vec![1,2,2,3,1,4]);
     //num_of_subarrays_two(vec![11,13,17,23,29,31,7,5,2,3], 3, 5);
-    count_good_sub(String::from("xyzzaz"));
+    //count_good_sub(String::from("xyzzaz"));
+    kth_distinct(vec![String::from("d"),String::from("b"),String::from("c"),String::from("b"),String::from("c"),String::from("a")], 2);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

@@ -2,6 +2,7 @@ pub mod concepts_modules {
     use std::collections::btree_set::Difference;
     use std::collections::HashMap;
     use std::collections::HashSet;
+    use std::hash::Hash;
     use std::string;
     use std::vec;
 
@@ -2558,6 +2559,53 @@ pub mod concepts_modules {
             start += 1;
         }
         count
+    }
+
+    // getting kth distinct string
+    pub fn kth_distinct(arr: Vec<String>, k : i32)-> String{
+        let mut map: HashMap<String, i32> = HashMap::new();
+        let mut iter = arr.iter();
+        let mut track_vec: Vec<(String, i32)> = Vec::new();
+        loop {
+            match iter.next(){
+                Some(val)=>{
+                    let str: String = val.to_string();
+                    match map.get_mut(val){
+                        Some(occurence)=>{
+                            *occurence += 1;
+                        }
+                        None=> {
+                            map.insert(str, 1);
+                        }
+                    }
+                }
+                None=> break
+            }
+        }
+        let iter_two = arr.iter();
+        let mut order: i32 = 1;
+        for (_, curr_str) in iter_two.enumerate(){
+            if map.contains_key(curr_str){
+                if let Some(occurence)= map.get(curr_str){
+                    if *occurence == 1{
+                        track_vec.push((curr_str.to_string(), order));
+                        order += 1;
+                    }
+                }
+            }
+        }
+        if track_vec.len() < k as usize{
+            String::from("")
+        }else{
+            let mut result: String = String::from("");
+            for item in track_vec.iter(){
+                if item.1 == k{
+                    result = item.0.to_string();
+                }
+            }
+            result
+        }
+   
     }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
