@@ -2330,7 +2330,8 @@ pub mod concepts_modules {
         let mut map: HashMap<char, String> = HashMap::new();
         let mut set: HashSet<String> = HashSet::new();
 
-        if s_array.len() != p_array.len(){ // edge case for different lengths
+        if s_array.len() != p_array.len() {
+            // edge case for different lengths
             return false;
         }
 
@@ -2338,36 +2339,36 @@ pub mod concepts_modules {
         for index in 0..s_array.len() {
             let curr_word = &s_array[index];
             let curr_pat = p_array[index];
-            if map.contains_key(&curr_pat){
+            if map.contains_key(&curr_pat) {
                 continue;
             }
-            if set.contains(curr_word){
+            if set.contains(curr_word) {
                 continue;
             }
             set.insert(curr_word.to_string());
             map.insert(curr_pat, curr_word.to_string());
         }
 
-            for (index, word) in s_array.iter().enumerate() {
-                let curr_word = word.to_string();
-                let curr_pat_char = p_array[index];
-                if !map.contains_key(&curr_pat_char){
+        for (index, word) in s_array.iter().enumerate() {
+            let curr_word = word.to_string();
+            let curr_pat_char = p_array[index];
+            if !map.contains_key(&curr_pat_char) {
+                check = false;
+                break;
+            }
+            if let Some(map_word) = map.get(&curr_pat_char) {
+                if curr_word != map_word.to_string() {
                     check = false;
                     break;
                 }
-                if let Some(map_word) = map.get(&curr_pat_char) {
-                    if curr_word != map_word.to_string() {
-                        check = false;
-                        break;
-                    }
-                }
             }
+        }
         // checking pattern
         check
     }
 
-    // max vowels 
-    pub fn max_vowels_in_given_sub(s:String, k:i32)-> i32{
+    // max vowels
+    pub fn max_vowels_in_given_sub(s: String, k: i32) -> i32 {
         // fn initial_unoptimized_approach(s:&String)->i32{
         //     let mut map:HashMap<char, i32> = HashMap::new();
         //     let array: Vec<char> = s.to_string().chars().collect();
@@ -2376,7 +2377,7 @@ pub mod concepts_modules {
         //     map.insert('e', 0);
         //     map.insert('o', 0);
         //     map.insert('u', 0);
-    
+
         //     // initial render
         //     for index in 0..k{
         //       let curr_char: char = array[index as usize];
@@ -2411,25 +2412,29 @@ pub mod concepts_modules {
         // initial_unoptimized_approach(&s);
 
         // optimized approach
-        fn is_vowel(char: &char)->bool{
-            let check_char: char  = *char;
-            check_char == 'a' ||  check_char == 'e' ||  check_char == 'i' ||  check_char == 'o'||  check_char == 'u'
+        fn is_vowel(char: &char) -> bool {
+            let check_char: char = *char;
+            check_char == 'a' ||
+                check_char == 'e' ||
+                check_char == 'i' ||
+                check_char == 'o' ||
+                check_char == 'u'
         }
         let mut counter: i32 = 0;
         let chars: Vec<char> = s.chars().collect();
-        for i in 0..k{
+        for i in 0..k {
             let curr_char = chars[i as usize];
-            if is_vowel(&curr_char){
+            if is_vowel(&curr_char) {
                 counter += 1;
             }
         }
         let mut max_counter: i32 = counter;
         let mut start: usize = 0;
-        for i in k as usize..chars.len(){
-            if is_vowel(&chars[start]){
+        for i in k as usize..chars.len() {
+            if is_vowel(&chars[start]) {
                 counter -= 1;
-            };
-            if is_vowel(&chars[i]){
+            }
+            if is_vowel(&chars[i]) {
                 counter += 1;
             }
             max_counter = max_counter.max(counter);
@@ -2438,16 +2443,16 @@ pub mod concepts_modules {
         max_counter
     }
 
-    pub fn max_freq(nums: Vec<i32>)->i32{
+    pub fn max_freq(nums: Vec<i32>) -> i32 {
         let mut total: i32 = 0;
         let mut map: HashMap<i32, i32> = HashMap::new();
         let mut num_iter = nums.iter();
         let mut max_freq: i32 = 0;
-        loop{
-            match num_iter.next(){
-                Some(num)=>{
-                    match map.get_mut(num){
-                        Some(occurence)=>{
+        loop {
+            match num_iter.next() {
+                Some(num) => {
+                    match map.get_mut(num) {
+                        Some(occurence) => {
                             *occurence += 1;
                             max_freq = max_freq.max(*occurence);
                         }
@@ -2456,12 +2461,14 @@ pub mod concepts_modules {
                             max_freq = max_freq.max(1);
                         }
                     }
-                },
-                None => break
+                }
+                None => {
+                    break;
+                }
             }
         }
-        for (_, value) in map{
-            if value == max_freq{
+        for (_, value) in map {
+            if value == max_freq {
                 total += value;
             }
         }
@@ -2472,45 +2479,46 @@ pub mod concepts_modules {
         let mut sub_array_count: i32 = 0;
         let mut total: i32 = 0;
         // initial check
-        for i in 0..k{
+        for i in 0..k {
             let curr_i = i as usize;
             let curr_num = arr[curr_i];
             total += curr_num;
         }
         let curr_avg: i32 = total / k;
-        if curr_avg >= threshold{
+        if curr_avg >= threshold {
             sub_array_count += 1;
         }
         let mut start: usize = 0;
         let mut check_iter = arr.iter().skip(k as usize);
 
-
         // window iterator // slower approach if iterator through every window
         let win_iter = arr.windows(k as usize);
-        for curr_win in win_iter{
+        for curr_win in win_iter {
             let win_sum: i32 = curr_win.into_iter().sum();
-            if ( win_sum / k) >= threshold{
+            if win_sum / k >= threshold {
                 sub_array_count += 1;
             }
         }
-        // sliding window approach 
+        // sliding window approach
         loop {
-            match check_iter.next(){
-                Some(curr_val)=>{
+            match check_iter.next() {
+                Some(curr_val) => {
                     total -= arr[start];
                     total += *curr_val;
-                    if (total / k) >= threshold{
+                    if total / k >= threshold {
                         sub_array_count += 1;
-                    };
+                    }
                     start += 1;
                 }
-                None => break
+                None => {
+                    break;
+                }
             }
         }
         sub_array_count
     }
 
-    pub fn count_good_sub(s:String)-> i32{
+    pub fn count_good_sub(s: String) -> i32 {
         let mut count = 0;
         let array: Vec<char> = s.chars().collect();
         let mut map: HashMap<char, i32> = HashMap::new();
@@ -2518,42 +2526,42 @@ pub mod concepts_modules {
         let s_iter = array.iter().skip(3);
 
         //edge case
-        if array.len() < 3{
+        if array.len() < 3 {
             return 0;
         }
 
         // first three
-        for i in 0..3{
+        for i in 0..3 {
             let index = i as usize;
-            match map.get_mut(&array[index]){
-                Some(occurence)=>{
+            match map.get_mut(&array[index]) {
+                Some(occurence) => {
                     *occurence += 1;
                 }
-                None =>{
+                None => {
                     map.insert(array[index], 1);
                 }
             }
-        };
-        if map.len() == 3{
+        }
+        if map.len() == 3 {
             count += 1;
-        };
-        for item in s_iter{
+        }
+        for item in s_iter {
             let curr_char = *item;
-            if let Some(first_char) = map.get_mut(&array[start]){
+            if let Some(first_char) = map.get_mut(&array[start]) {
                 *first_char -= 1;
-                if *first_char == 0{
+                if *first_char == 0 {
                     map.remove(&array[start]);
                 }
-            };
-            match map.get_mut(item){
-                Some(occurence)=>{
+            }
+            match map.get_mut(item) {
+                Some(occurence) => {
                     *occurence += 1;
                 }
-                None =>{
+                None => {
                     map.insert(curr_char, 1);
                 }
             }
-            if map.len() == 3{
+            if map.len() == 3 {
                 count += 1;
             }
             start += 1;
@@ -2562,50 +2570,80 @@ pub mod concepts_modules {
     }
 
     // getting kth distinct string
-    pub fn kth_distinct(arr: Vec<String>, k : i32)-> String{
+    pub fn kth_distinct(arr: Vec<String>, k: i32) -> String {
         let mut map: HashMap<String, i32> = HashMap::new();
         let mut iter = arr.iter();
         let mut track_vec: Vec<(String, i32)> = Vec::new();
         loop {
-            match iter.next(){
-                Some(val)=>{
+            match iter.next() {
+                Some(val) => {
                     let str: String = val.to_string();
-                    match map.get_mut(val){
-                        Some(occurence)=>{
+                    match map.get_mut(val) {
+                        Some(occurence) => {
                             *occurence += 1;
                         }
-                        None=> {
+                        None => {
                             map.insert(str, 1);
                         }
                     }
                 }
-                None=> break
+                None => {
+                    break;
+                }
             }
         }
         let iter_two = arr.iter();
         let mut order: i32 = 1;
-        for (_, curr_str) in iter_two.enumerate(){
-            if map.contains_key(curr_str){
-                if let Some(occurence)= map.get(curr_str){
-                    if *occurence == 1{
+        for (_, curr_str) in iter_two.enumerate() {
+            if map.contains_key(curr_str) {
+                if let Some(occurence) = map.get(curr_str) {
+                    if *occurence == 1 {
                         track_vec.push((curr_str.to_string(), order));
                         order += 1;
                     }
                 }
             }
         }
-        if track_vec.len() < k as usize{
+        if track_vec.len() < (k as usize) {
             String::from("")
-        }else{
+        } else {
             let mut result: String = String::from("");
-            for item in track_vec.iter(){
-                if item.1 == k{
+            for item in track_vec.iter() {
+                if item.1 == k {
                     result = item.0.to_string();
                 }
             }
             result
         }
-   
+    }
+    // finding relative ranks
+    pub fn find_relative_ranks(score: Vec<i32>) -> Vec<String> {
+        let mut sorted_score: Vec<i32> = score.clone();
+        sorted_score.sort_by(|a, b| b.cmp(&a));
+        let mut collection: Vec<String> = Vec::new();
+        let mut map: HashMap<i32, String> = std::collections::HashMap::new();
+        for (index, item) in sorted_score.iter().enumerate() {
+            if index == 0 {
+                map.insert(*item, String::from("Gold Medal"));
+            }
+            if index == 1 {
+                map.insert(*item, String::from("Silver Medal"));
+            }
+            if index == 2 {
+                map.insert(*item, String::from("Bronze Medal"));
+            }
+            if index > 2 {
+                map.insert(*item, (index + 1).to_string());
+            }
+        }
+        for item in score.iter() {
+            if map.contains_key(item) {
+                if let Some(map_value) = map.get(item) {
+                    collection.push(map_value.to_string());
+                }
+            }
+        }
+        collection
     }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"

@@ -14,6 +14,7 @@ use crate::concepts::concepts_modules::count_good_sub;
 use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::count_words;
 use crate::concepts::concepts_modules::delete_earn;
+use crate::concepts::concepts_modules::find_relative_ranks;
 use crate::concepts::concepts_modules::find_winners;
 use crate::concepts::concepts_modules::first_palindromic_substring;
 use crate::concepts::concepts_modules::frequency_sort_two;
@@ -140,7 +141,8 @@ fn main() {
     //max_freq(vec![1,2,2,3,1,4]);
     //num_of_subarrays_two(vec![11,13,17,23,29,31,7,5,2,3], 3, 5);
     //count_good_sub(String::from("xyzzaz"));
-    kth_distinct(vec![String::from("d"),String::from("b"),String::from("c"),String::from("b"),String::from("c"),String::from("a")], 2);
+    //kth_distinct(vec![String::from("d"),String::from("b"),String::from("c"),String::from("b"),String::from("c"),String::from("a")], 2);
+    find_relative_ranks(vec![10,3,8,9,4]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
