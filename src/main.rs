@@ -42,6 +42,7 @@ use crate::concepts::concepts_modules::max_freq;
 use crate::concepts::concepts_modules::max_subarray;
 use crate::concepts::concepts_modules::max_vowels_in_given_sub;
 use crate::concepts::concepts_modules::min_len;
+use crate::concepts::concepts_modules::min_set_size;
 use crate::concepts::concepts_modules::min_steps;
 use crate::concepts::concepts_modules::minimum_recolors;
 use crate::concepts::concepts_modules::most_common_word;
@@ -142,7 +143,8 @@ fn main() {
     //num_of_subarrays_two(vec![11,13,17,23,29,31,7,5,2,3], 3, 5);
     //count_good_sub(String::from("xyzzaz"));
     //kth_distinct(vec![String::from("d"),String::from("b"),String::from("c"),String::from("b"),String::from("c"),String::from("a")], 2);
-    find_relative_ranks(vec![10,3,8,9,4]);
+    //find_relative_ranks(vec![10,3,8,9,4]);
+    min_set_size(vec![3,3,3,3,5,5,5,2,2,7]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

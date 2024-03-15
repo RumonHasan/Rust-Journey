@@ -1,4 +1,5 @@
 pub mod concepts_modules {
+    use std::cmp;
     use std::collections::btree_set::Difference;
     use std::collections::HashMap;
     use std::collections::HashSet;
@@ -2644,6 +2645,48 @@ pub mod concepts_modules {
             }
         }
         collection
+    }
+
+    // getting the min set size
+    pub fn min_set_size(arr: Vec<i32>) -> i32 {
+        let mut set_size: i32 = 0;
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        let mut arr_iter = arr.iter();
+        let half_len: i32 = (arr.len() / 2) as i32;
+        loop {
+            match arr_iter.next() {
+                Some(curr_value) => {
+                    match map.get_mut(curr_value) {
+                        Some(occurence) => {
+                            *occurence += 1;
+                        }
+                        None => {
+                            map.insert(*curr_value, 1);
+                        }
+                    }
+                }
+                None => {
+                    break;
+                }
+            }
+        }
+        // need to acquire the maximum set occurence
+        let mut check_vec: Vec<(i32, i32)> = Vec::new();
+        let mut total: i32 = 0;
+        for (key, value) in map{
+            check_vec.push((key, value));
+        }
+        check_vec.sort_by(|a, b| b.1.cmp(&a.1));
+        
+        for curr_iterm in check_vec{
+            let curr_size = curr_iterm.1;
+            total += curr_size;
+            set_size+= 1;
+            if total >= half_len{
+                break;
+            }
+        }
+        set_size
     }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
