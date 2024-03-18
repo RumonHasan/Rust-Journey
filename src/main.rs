@@ -14,6 +14,7 @@ use crate::concepts::concepts_modules::count_good_sub;
 use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::count_words;
 use crate::concepts::concepts_modules::delete_earn;
+use crate::concepts::concepts_modules::find_all_anagrams;
 use crate::concepts::concepts_modules::find_relative_ranks;
 use crate::concepts::concepts_modules::find_winners;
 use crate::concepts::concepts_modules::first_palindromic_substring;
@@ -61,6 +62,7 @@ use crate::concepts::concepts_modules::shortest_distance_to_char;
 use crate::concepts::concepts_modules::single_num_iii;
 use crate::concepts::concepts_modules::subarray_ranges;
 use crate::concepts::concepts_modules::subarray_sum;
+use crate::concepts::concepts_modules::top_k_frequent_elements;
 use crate::concepts::concepts_modules::uncommon_from_sentences;
 use crate::concepts::concepts_modules::unique_occurence;
 use crate::concepts::concepts_modules::word_pattern;
@@ -144,7 +146,9 @@ fn main() {
     //count_good_sub(String::from("xyzzaz"));
     //kth_distinct(vec![String::from("d"),String::from("b"),String::from("c"),String::from("b"),String::from("c"),String::from("a")], 2);
     //find_relative_ranks(vec![10,3,8,9,4]);
-    min_set_size(vec![3,3,3,3,5,5,5,2,2,7]);
+    //min_set_size(vec![3,3,3,3,5,5,5,2,2,7]);
+    //top_k_frequent_elements(vec![3, 1,1,1,2,2], 2);
+    find_all_anagrams(String::from("cbaebabacd"), String::from("abc"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

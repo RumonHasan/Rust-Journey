@@ -2688,6 +2688,86 @@ pub mod concepts_modules {
         }
         set_size
     }
+
+    // getting the two most k freq elements
+    pub fn top_k_frequent_elements(nums: Vec<i32>, k: i32)-> Vec<i32>{
+        let mut collection: Vec<i32> = Vec::new();
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        let mut freq_counter: i32 = 0;
+        let num_iter = nums.iter();
+        for curr_num in num_iter{
+            if let Some(occurence) = map.get_mut(&curr_num){
+                *occurence += 1;
+            }else{
+                map.insert(*curr_num, 1);
+            }
+        }
+        let mut oc_vec: Vec<(i32, i32)> = Vec::new();
+        for (key, value) in map{
+            oc_vec.push((key, value));
+        }
+        oc_vec.sort_by(|a, b| b.1.cmp(&a.1));
+        for curr_item in oc_vec.iter(){
+            if freq_counter == k{
+                break;
+            }
+            collection.push(curr_item.0);
+            freq_counter += 1;
+        }
+        collection
+    }
+
+
+    // finding all anagrams in a string
+    pub fn find_all_anagrams(s: String, p: String)-> Vec<i32>{
+        let mut indices: Vec<i32> = Vec::new();
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for curr_char in p.chars(){
+            if let Some(occurence) = map.get_mut(&curr_char){
+                *occurence += 1;
+            }else{
+                map.insert(curr_char, 1);
+            }
+        }
+        let s_vec: Vec<_> = s.chars().collect();
+        let mut s_map: HashMap<char, i32> = HashMap::new();
+        for index in 0..p.len(){
+            if let Some(s_char) = s_vec.get(index){
+                match s_map.get_mut(s_char){
+                    Some(occurence)=>{
+                        *occurence += 1;
+                    }
+                    None=>{
+                        s_map.insert(*s_char, 1);
+                    }
+                }
+            }
+        }
+        if map == s_map{
+            indices.push(0);
+        }
+        // sliding iteration
+        let mut start: usize = 0;
+        for index in p.len()..s.len(){
+            if let Some(start_char) = s_map.get_mut(&s_vec[start]){
+                *start_char -= 1;
+                if *start_char == 0{
+                    s_map.remove(&s_vec[start]);
+                }
+            }
+            start += 1;
+            if let Some(end_char_val) = s_map.get_mut(&s_vec[index]){
+                *end_char_val += 1;
+            }else{
+                s_map.insert(s_vec[index], 1);
+            }
+            if map == s_map{
+                indices.push(start as i32);
+            }
+        }
+        indices
+    }   
+
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
