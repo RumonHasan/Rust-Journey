@@ -67,6 +67,7 @@ use crate::concepts::concepts_modules::uncommon_from_sentences;
 use crate::concepts::concepts_modules::unique_occurence;
 use crate::concepts::concepts_modules::word_pattern;
 use crate::concepts::concepts_modules::word_pattern_check;
+use crate::concepts::concepts_modules::zero_filled_subarrays;
 
 // main function is necesary to make the code run
 // cannot assign values ot a different type after once its declared... unless its mutable
@@ -148,7 +149,8 @@ fn main() {
     //find_relative_ranks(vec![10,3,8,9,4]);
     //min_set_size(vec![3,3,3,3,5,5,5,2,2,7]);
     //top_k_frequent_elements(vec![3, 1,1,1,2,2], 2);
-    find_all_anagrams(String::from("cbaebabacd"), String::from("abc"));
+    //find_all_anagrams(String::from("cbaebabacd"), String::from("abc"));
+   zero_filled_subarrays(vec![0,0,0,2,0,0]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

@@ -2768,6 +2768,40 @@ pub mod concepts_modules {
         indices
     }   
 
+   // number of zero filled subarrays // 46 out of 48 passed... not complete
+   pub fn zero_filled_subarrays(mut nums: Vec<i32>)->i64{
+    let mut counter: i32 = 0;
+    let mut started: usize = 0;
+    let mut end: usize = 0;
+    nums.push(1); // offsetting value in order to match the final count
+    while end < nums.len(){
+      if let Some(curr_num) = nums.get(end){
+        if *curr_num == 0{
+            started = end;
+            while  end < nums.len() && nums[end] == 0{
+                end += 1;
+                // condition for when it hits the end
+                if end == nums.len() - 1{
+                    break;
+                }
+            }
+            let curr_len : usize = end - started;
+            let curr_sub_count: i32 = curr_len as i32 * (curr_len as i32 + 1) / 2;
+            counter += curr_sub_count;
+            started = end;
+        }
+        else {
+            end += 1;
+        }
+      }else{
+        end += 1;
+        started = end;
+      }
+ 
+    }
+    counter as i64
+   }
+
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
