@@ -40,6 +40,7 @@ use crate::concepts::concepts_modules::longest_word_in_dict;
 use crate::concepts::concepts_modules::max_absolute_sum;
 use crate::concepts::concepts_modules::max_consequtive_ones;
 use crate::concepts::concepts_modules::max_freq;
+use crate::concepts::concepts_modules::max_power;
 use crate::concepts::concepts_modules::max_subarray;
 use crate::concepts::concepts_modules::max_vowels_in_given_sub;
 use crate::concepts::concepts_modules::min_len;
@@ -150,7 +151,8 @@ fn main() {
     //min_set_size(vec![3,3,3,3,5,5,5,2,2,7]);
     //top_k_frequent_elements(vec![3, 1,1,1,2,2], 2);
     //find_all_anagrams(String::from("cbaebabacd"), String::from("abc"));
-   zero_filled_subarrays(vec![0,0,0,2,0,0]);
+   //zero_filled_subarrays(vec![0,0,0,2,0,0]);
+   max_power(String::from("abbcccddddeeeeedcba"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

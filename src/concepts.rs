@@ -2802,6 +2802,28 @@ pub mod concepts_modules {
     counter as i64
    }
 
+   // getting the max power
+   pub fn max_power(s:String)-> i32{
+        let mut count: i32 = 0;
+        let mut s_vec: Vec<char> = s.chars().collect();
+        s_vec.push('#'); // just for the last length index
+        let mut started: usize = 0;
+        let mut curr_char: char = s_vec[0];
+        for index in 1..s_vec.len(){
+            if let Some(local_char) = s_vec.get(index){
+                if *local_char != curr_char{
+                    let curr_len = index - started;
+                    count = count.max(curr_len as i32);
+                    curr_char = *local_char;
+                    started = index;
+                }
+            }
+        }
+        count
+   }
+
+   //23456
+
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
