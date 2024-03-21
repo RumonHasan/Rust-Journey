@@ -2824,6 +2824,29 @@ pub mod concepts_modules {
 
    //23456
 
+   // basic problem to get the largest value based on key and value being the same
+   pub fn find_lucky(arr: Vec<i32>)-> i32{
+    let mut lucky_one : i32 = -1;
+    let mut map: HashMap<i32, i32> = HashMap::new();
+    for curr_num in arr.iter(){
+        let num: i32 = *curr_num;
+        match map.get_mut(curr_num){
+            Some(occurence)=>{
+                *occurence += 1;
+            }
+            None =>{
+                map.insert(num, 1);
+            }
+        }
+    }
+    for (key, value) in map{
+        if key == value{
+            lucky_one = lucky_one.max(key);
+        }
+    }
+    lucky_one
+   }
+
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
