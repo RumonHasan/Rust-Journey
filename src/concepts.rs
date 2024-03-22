@@ -2673,16 +2673,16 @@ pub mod concepts_modules {
         // need to acquire the maximum set occurence
         let mut check_vec: Vec<(i32, i32)> = Vec::new();
         let mut total: i32 = 0;
-        for (key, value) in map{
+        for (key, value) in map {
             check_vec.push((key, value));
         }
         check_vec.sort_by(|a, b| b.1.cmp(&a.1));
-        
-        for curr_iterm in check_vec{
+
+        for curr_iterm in check_vec {
             let curr_size = curr_iterm.1;
             total += curr_size;
-            set_size+= 1;
-            if total >= half_len{
+            set_size += 1;
+            if total >= half_len {
                 break;
             }
         }
@@ -2690,25 +2690,25 @@ pub mod concepts_modules {
     }
 
     // getting the two most k freq elements
-    pub fn top_k_frequent_elements(nums: Vec<i32>, k: i32)-> Vec<i32>{
+    pub fn top_k_frequent_elements(nums: Vec<i32>, k: i32) -> Vec<i32> {
         let mut collection: Vec<i32> = Vec::new();
         let mut map: HashMap<i32, i32> = HashMap::new();
         let mut freq_counter: i32 = 0;
         let num_iter = nums.iter();
-        for curr_num in num_iter{
-            if let Some(occurence) = map.get_mut(&curr_num){
+        for curr_num in num_iter {
+            if let Some(occurence) = map.get_mut(&curr_num) {
                 *occurence += 1;
-            }else{
+            } else {
                 map.insert(*curr_num, 1);
             }
         }
         let mut oc_vec: Vec<(i32, i32)> = Vec::new();
-        for (key, value) in map{
+        for (key, value) in map {
             oc_vec.push((key, value));
         }
         oc_vec.sort_by(|a, b| b.1.cmp(&a.1));
-        for curr_item in oc_vec.iter(){
-            if freq_counter == k{
+        for curr_item in oc_vec.iter() {
+            if freq_counter == k {
                 break;
             }
             collection.push(curr_item.0);
@@ -2717,101 +2717,98 @@ pub mod concepts_modules {
         collection
     }
 
-
     // finding all anagrams in a string
-    pub fn find_all_anagrams(s: String, p: String)-> Vec<i32>{
+    pub fn find_all_anagrams(s: String, p: String) -> Vec<i32> {
         let mut indices: Vec<i32> = Vec::new();
         let mut map: HashMap<char, i32> = HashMap::new();
-        for curr_char in p.chars(){
-            if let Some(occurence) = map.get_mut(&curr_char){
+        for curr_char in p.chars() {
+            if let Some(occurence) = map.get_mut(&curr_char) {
                 *occurence += 1;
-            }else{
+            } else {
                 map.insert(curr_char, 1);
             }
         }
         let s_vec: Vec<_> = s.chars().collect();
         let mut s_map: HashMap<char, i32> = HashMap::new();
-        for index in 0..p.len(){
-            if let Some(s_char) = s_vec.get(index){
-                match s_map.get_mut(s_char){
-                    Some(occurence)=>{
+        for index in 0..p.len() {
+            if let Some(s_char) = s_vec.get(index) {
+                match s_map.get_mut(s_char) {
+                    Some(occurence) => {
                         *occurence += 1;
                     }
-                    None=>{
+                    None => {
                         s_map.insert(*s_char, 1);
                     }
                 }
             }
         }
-        if map == s_map{
+        if map == s_map {
             indices.push(0);
         }
         // sliding iteration
         let mut start: usize = 0;
-        for index in p.len()..s.len(){
-            if let Some(start_char) = s_map.get_mut(&s_vec[start]){
+        for index in p.len()..s.len() {
+            if let Some(start_char) = s_map.get_mut(&s_vec[start]) {
                 *start_char -= 1;
-                if *start_char == 0{
+                if *start_char == 0 {
                     s_map.remove(&s_vec[start]);
                 }
             }
             start += 1;
-            if let Some(end_char_val) = s_map.get_mut(&s_vec[index]){
+            if let Some(end_char_val) = s_map.get_mut(&s_vec[index]) {
                 *end_char_val += 1;
-            }else{
+            } else {
                 s_map.insert(s_vec[index], 1);
             }
-            if map == s_map{
+            if map == s_map {
                 indices.push(start as i32);
             }
         }
         indices
-    }   
-
-   // number of zero filled subarrays // 46 out of 48 passed... not complete
-   pub fn zero_filled_subarrays(mut nums: Vec<i32>)->i64{
-    let mut counter: i32 = 0;
-    let mut started: usize = 0;
-    let mut end: usize = 0;
-    nums.push(1); // offsetting value in order to match the final count
-    while end < nums.len(){
-      if let Some(curr_num) = nums.get(end){
-        if *curr_num == 0{
-            started = end;
-            while  end < nums.len() && nums[end] == 0{
-                end += 1;
-                // condition for when it hits the end
-                if end == nums.len() - 1{
-                    break;
-                }
-            }
-            let curr_len : usize = end - started;
-            let curr_sub_count: i32 = curr_len as i32 * (curr_len as i32 + 1) / 2;
-            counter += curr_sub_count;
-            started = end;
-        }
-        else {
-            end += 1;
-        }
-      }else{
-        end += 1;
-        started = end;
-      }
- 
     }
-    counter as i64
-   }
 
-   // getting the max power
-   pub fn max_power(s:String)-> i32{
+    // number of zero filled subarrays // 46 out of 48 passed... not complete
+    pub fn zero_filled_subarrays(mut nums: Vec<i32>) -> i64 {
+        let mut counter: i32 = 0;
+        let mut started: usize = 0;
+        let mut end: usize = 0;
+        nums.push(1); // offsetting value in order to match the final count
+        while end < nums.len() {
+            if let Some(curr_num) = nums.get(end) {
+                if *curr_num == 0 {
+                    started = end;
+                    while end < nums.len() && nums[end] == 0 {
+                        end += 1;
+                        // condition for when it hits the end
+                        if end == nums.len() - 1 {
+                            break;
+                        }
+                    }
+                    let curr_len: usize = end - started;
+                    let curr_sub_count: i32 = ((curr_len as i32) * ((curr_len as i32) + 1)) / 2;
+                    counter += curr_sub_count;
+                    started = end;
+                } else {
+                    end += 1;
+                }
+            } else {
+                end += 1;
+                started = end;
+            }
+        }
+        counter as i64
+    }
+
+    // getting the max power
+    pub fn max_power(s: String) -> i32 {
         let mut count: i32 = 0;
         let mut s_vec: Vec<char> = s.chars().collect();
         s_vec.push('#'); // just for the last length index
         let mut started: usize = 0;
         let mut curr_char: char = s_vec[0];
-        for index in 1..s_vec.len(){
-            if let Some(local_char) = s_vec.get(index){
-                if *local_char != curr_char{
+        for index in 1..s_vec.len() {
+            if let Some(local_char) = s_vec.get(index) {
+                if *local_char != curr_char {
                     let curr_len = index - started;
                     count = count.max(curr_len as i32);
                     curr_char = *local_char;
@@ -2820,33 +2817,54 @@ pub mod concepts_modules {
             }
         }
         count
-   }
+    }
 
-   //23456
+    //23456
 
-   // basic problem to get the largest value based on key and value being the same
-   pub fn find_lucky(arr: Vec<i32>)-> i32{
-    let mut lucky_one : i32 = -1;
-    let mut map: HashMap<i32, i32> = HashMap::new();
-    for curr_num in arr.iter(){
-        let num: i32 = *curr_num;
-        match map.get_mut(curr_num){
-            Some(occurence)=>{
-                *occurence += 1;
-            }
-            None =>{
-                map.insert(num, 1);
+    // basic problem to get the largest value based on key and value being the same
+    pub fn find_lucky(arr: Vec<i32>) -> i32 {
+        let mut lucky_one: i32 = -1;
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        for curr_num in arr.iter() {
+            let num: i32 = *curr_num;
+            match map.get_mut(curr_num) {
+                Some(occurence) => {
+                    *occurence += 1;
+                }
+                None => {
+                    map.insert(num, 1);
+                }
             }
         }
-    }
-    for (key, value) in map{
-        if key == value{
-            lucky_one = lucky_one.max(key);
+        for (key, value) in map {
+            if key == value {
+                lucky_one = lucky_one.max(key);
+            }
         }
+        lucky_one
     }
-    lucky_one
-   }
 
+    // longest consequtive sequence using sets
+    pub fn longest_consequtive_sequence(nums: Vec<i32>) -> i32 {
+        let mut max_len: i32 = 0;
+        let set: HashSet<i32> = nums
+            .iter()
+            .map(|val| *val)
+            .collect();
+        for curr_num in &set {
+            let left: i32 = curr_num - 1;
+            if !set.contains(&left) {
+                let mut right: i32 = *curr_num + 1;
+                let mut local_len: i32 = 0;
+                while set.contains(&right) {
+                    right += 1;
+                    local_len += 1;
+                }
+                max_len = max_len.max(local_len + 1);
+            }
+        }
+        max_len
+    }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
