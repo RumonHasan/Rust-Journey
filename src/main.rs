@@ -56,17 +56,22 @@ use crate::concepts::concepts_modules::peak_index;
 use crate::concepts::concepts_modules::pivot_index;
 use crate::concepts::concepts_modules::play_ground;
 use crate::concepts::concepts_modules::play_ground_two;
+use crate::concepts::concepts_modules::push_dom;
 use crate::concepts::concepts_modules::push_dominoes;
+use crate::concepts::concepts_modules::random_shit;
 use crate::concepts::concepts_modules::remove_duplicates;
 use crate::concepts::concepts_modules::rep_chars;
 use crate::concepts::concepts_modules::reverse_vowels;
 use crate::concepts::concepts_modules::shortest_distance_to_char;
+use crate::concepts::concepts_modules::shortest_to_char_try;
+use crate::concepts::concepts_modules::similar_pairs;
 use crate::concepts::concepts_modules::single_num_iii;
 use crate::concepts::concepts_modules::subarray_ranges;
 use crate::concepts::concepts_modules::subarray_sum;
 use crate::concepts::concepts_modules::top_k_frequent_elements;
 use crate::concepts::concepts_modules::uncommon_from_sentences;
 use crate::concepts::concepts_modules::unique_occurence;
+use crate::concepts::concepts_modules::vowel_strings;
 use crate::concepts::concepts_modules::word_pattern;
 use crate::concepts::concepts_modules::word_pattern_check;
 use crate::concepts::concepts_modules::zero_filled_subarrays;
@@ -74,87 +79,7 @@ use crate::concepts::concepts_modules::zero_filled_subarrays;
 // main function is necesary to make the code run
 // cannot assign values ot a different type after once its declared... unless its mutable
 fn main() {
-    // play_ground();
-    // remove_duplicates(String::from("abbaca"));
-    // is_anagram(String::from("anagram"), String::from("nagaram"));
-    // delete_earn(vec![2,2,3,3,3,4]);
-    // println!("Rank transform");
-    // array_rank_transform(vec![37,12,28,9,100,56,80,5,12]);
-    // number_of_subarrays(vec![2,2,2,1,2,2,1,2,2,2], 2);
-    // min_steps(String::from("leetcode"), String::from("practice"));
-    // println!("Robber down");
-    // house_robber_ii(vec![1,2,3,1]);
-    // play_ground_two();
-    // minimum_recolors(String::from("WBBWWBBWBW"), 7);
-    // println!("longest_palindrome");
-    // get_longest_palindrome(String::from("babbbad"));
-    // intersection(vec![4,9,5], vec![9,4,9,8,4]);
-    // partition_labels(String::from("ababcbacadefegdehijhklij"));
-    // subarray_sum(vec![1,2,3], 3);
-    // pivot_index(vec![1,7,3,6,5,6]);
-    // longest_char_replacement(String::from("ABBB"), 2);
-    // intersect_array(vec![9,4,5], vec![9,4,9,8,4]);
-    // println!("shortest");
-    // shortest_distance_to_char(String::from("loveleetcode"), 'e');
-    // uncommon_from_sentences(String::from("this apple is sweet"), String::from("this apple is sour"));
-    // push_dominoes(String::from(".L.R...LR..L.."));
-    // word_pattern(String::from("abba"), String::from("dog cat cat dog"));
-    // frequency_sort_two(vec![-1,1,-6,4,5,-6,1,4,1]);
-    // subarray_ranges(vec![4,-2,-3,4,1]);
-    // min_len(String::from("ABFCACDB"));
-    // max_consequtive_ones(vec![1,1,0,1,1,1,0]);
-    // is_subsequence(String::from("b"), String::from("abc"));
-    // license_key_formatting(String::from("5F3Z-2e-9-w"), 3);
-    // can_construct(String::from("aa"), String::from("aab"));
-    // find_winners(vec![vec![1,3],vec![2,3],vec![3,6],vec![5,6],vec![5,7],vec![4,5],vec![4,8],vec![4,9],vec![10,4],vec![10,9]]);
-    // count_vowel_substrings(String::from("cuaieuouac"));
-    // is_find_word_in_sub(vec![String::from("worlcd"), String::from("ab,world,word,wld")]);
-    // first_palindromic_substring(vec!["abc".to_string(),"car".to_string(),"ada".to_string(),"racecar".to_string(),"cool".to_string()]);
-    // count_complete_subarrays(vec![1,3,1,2,2]);
-    // container_water(vec![1,8,6,2,5,4,8,3,7]);
-    // longest_substring(String::from("aaaaaa"));
-    // unique_occurence(vec![-3,0,1,-3,1,1,1,-3,10,0]);
-    // longest_palindrome(String::from("abccccdd"));
-    // longest_word_in_dict(vec![
-    //     String::from("w"),
-    //     String::from("wo"),
-    //     String::from("wor"),
-    //     String::from("worl"),
-    //     String::from("world")
-    // ]);
-    // length_of_last_word(String::from("   fly me   to   the moon  "));
-    // peak_index(vec![0,10,5,2]);
-    //can_place_flowers(vec![0,0,1,0,0], 1);
-    //halves_in_string(String::from("textbook"));
-    // single_num_iii(vec![1,2,1,3,2,5]);
-    // count_words(
-    //     vec![
-    //         "leetcode".to_string(),
-    //         "is".to_string(),
-    //         "amazing".to_string(),
-    //         "as".to_string(),
-    //         "is".to_string()
-    //     ],
-    //     vec!["amazing".to_string(), "leetcode".to_string(), "is".to_string()]
-    // );
-    //rep_chars(String::from("abccbaacz"));
-    //most_common_word(String::from("a, a, a, a, b,b,b,c, c"), vec![String::from("hit")]);
-    //max_subarray(vec![-1, -2]);
-   // max_absolute_sum(vec![1,-3,2,3,-4]);
-    //is_toeplix_matrix(vec![vec![1,2], vec![2,2]]);
-    //word_pattern_check(String::from("abba"), String::from("dog dog dog dog"));
-    //max_vowels_in_given_sub(String::from("abciiidef"), 3);
-    //max_freq(vec![1,2,2,3,1,4]);
-    //num_of_subarrays_two(vec![11,13,17,23,29,31,7,5,2,3], 3, 5);
-    //count_good_sub(String::from("xyzzaz"));
-    //kth_distinct(vec![String::from("d"),String::from("b"),String::from("c"),String::from("b"),String::from("c"),String::from("a")], 2);
-    //find_relative_ranks(vec![10,3,8,9,4]);
-    //min_set_size(vec![3,3,3,3,5,5,5,2,2,7]);
-    //top_k_frequent_elements(vec![3, 1,1,1,2,2], 2);
-    //find_all_anagrams(String::from("cbaebabacd"), String::from("abc"));
-   //zero_filled_subarrays(vec![0,0,0,2,0,0]);
-   //max_power(String::from("abbcccddddeeeeedcba"));
-   longest_consequtive_sequence(vec![100,4,200,1,3,2]);
+   shortest_to_char_try(String::from("loveleetcode"), 'e');
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
