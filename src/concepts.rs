@@ -2867,31 +2867,34 @@ pub mod concepts_modules {
     }
 
     // similar pairs with sets
-    pub fn similar_pairs(words: Vec<String>)-> i32{
+    pub fn similar_pairs(words: Vec<String>) -> i32 {
         let mut count: i32 = 0;
         let mut map: HashMap<String, i32> = HashMap::new();
-        for curr_word in words.iter(){
+        for curr_word in words.iter() {
             let mut local_set: HashSet<char> = HashSet::new();
-            for curr_char in curr_word.to_string().chars(){
+            for curr_char in curr_word.to_string().chars() {
                 local_set.insert(curr_char);
             }
             let mut local_array: Vec<char> = Vec::new();
-            for char in local_set{
+            for char in local_set {
                 local_array.push(char);
             }
             local_array.sort_by(|a, b| a.cmp(&b));
-            let new_str: String = local_array.into_iter().map(|char| char).collect();
-            match map.get_mut(&new_str){
-                Some(occurence)=>{
+            let new_str: String = local_array
+                .into_iter()
+                .map(|char| char)
+                .collect();
+            match map.get_mut(&new_str) {
+                Some(occurence) => {
                     *occurence += 1;
                 }
-                None=>{
+                None => {
                     map.insert(new_str, 1);
                 }
             }
-        };      
-        for (_, value) in map{
-            if value > 1{
+        }
+        for (_, value) in map {
+            if value > 1 {
                 let pair_count = (value * (value - 1)) / 2;
                 count += pair_count;
             }
@@ -2899,8 +2902,8 @@ pub mod concepts_modules {
         count
     }
 
-    // push dominoes retry using vector intervals 
-    pub fn push_dom(dominoes: String)->String{
+    // push dominoes retry using vector intervals
+    pub fn push_dom(dominoes: String) -> String {
         let doms: Vec<char> = dominoes.chars().collect();
         let mut dominoes_str: String = String::from("");
         let common_len: usize = dominoes.len();
@@ -2908,48 +2911,47 @@ pub mod concepts_modules {
         let mut left_doms: Vec<i32> = vec![0; common_len];
         let mut dom_force: i32 = 0;
         // populating the left and right doms with the force
-        for (index, curr_piece) in doms.iter().enumerate(){
+        for (index, curr_piece) in doms.iter().enumerate() {
             let piece: char = *curr_piece;
-            if piece == '.'{
+            if piece == '.' {
                 dom_force -= 1;
             }
-            if piece == 'R'{
+            if piece == 'R' {
                 dom_force = common_len as i32;
             }
-            if piece == 'L'{
+            if piece == 'L' {
                 dom_force = 0;
             }
             right_doms[index] = dom_force.max(0);
         }
-        // populating the left side 
+        // populating the left side
         dom_force = 0;
-        for (index, curr_piece) in doms.iter().enumerate().rev(){
+        for (index, curr_piece) in doms.iter().enumerate().rev() {
             let piece: char = *curr_piece;
-            if piece == '.'{
+            if piece == '.' {
                 dom_force -= 1;
             }
-            if piece == 'L'{
+            if piece == 'L' {
                 dom_force = common_len as i32;
             }
-            if piece == 'R'{
+            if piece == 'R' {
                 dom_force = 0;
             }
             left_doms[index] = dom_force.max(0);
         }
         // compare and populate the new dom array
-        for common_index in 0..doms.len(){
+        for common_index in 0..doms.len() {
             let right_doms_val: i32 = right_doms[common_index];
             let left_doms_val: i32 = left_doms[common_index];
-            if (right_doms_val == 0 && left_doms_val == 0) || (right_doms_val == left_doms_val){
+            if (right_doms_val == 0 && left_doms_val == 0) || right_doms_val == left_doms_val {
                 dominoes_str.push('.');
             }
-            if right_doms_val > left_doms_val{
+            if right_doms_val > left_doms_val {
                 dominoes_str.push('R');
             }
-            if left_doms_val > right_doms_val{
+            if left_doms_val > right_doms_val {
                 dominoes_str.push('L');
             }
-
         }
         dominoes_str
     }
@@ -2958,12 +2960,12 @@ pub mod concepts_modules {
     pub fn vowel_strings(words: Vec<String>, left: i32, right: i32) -> i32 {
         let mut counter: i32 = 0;
         let vowels: Vec<char> = vec!['a', 'i', 'e', 'o', 'u'];
-        for i in left..(right + 1){
+        for i in left..right + 1 {
             let index: usize = i as usize;
             let curr_word: Vec<char> = words[index].to_string().chars().collect();
-            if let Some(first) = curr_word.first(){
-                if let Some(last) = curr_word.last(){
-                    if vowels.contains(first) && vowels.contains(last){
+            if let Some(first) = curr_word.first() {
+                if let Some(last) = curr_word.last() {
+                    if vowels.contains(first) && vowels.contains(last) {
                         counter += 1;
                     }
                 }
@@ -2972,28 +2974,23 @@ pub mod concepts_modules {
         counter
     }
 
+    pub fn random_shit() {
+        let mut vector_something: Vec<i32> = Vec::new();
 
-    pub fn random_shit(){
-        let mut vector_something: Vec<i32> =  Vec::new();
-       
-
-        fn something(vector: &mut Vec<i32>){
-            for index in 0..100{
+        fn something(vector: &mut Vec<i32>) {
+            for index in 0..100 {
                 vector.push(index);
             }
-    
         }
         something(&mut vector_something);
         let mut array: Vec<i32> = Vec::new();
 
-       for (index, curr_item) in vector_something.into_iter().enumerate(){
-        array.push(curr_item);
-       }
+        for (index, curr_item) in vector_something.into_iter().enumerate() {
+            array.push(curr_item);
+        }
 
-       println!("{:?}", array);
-     
+        println!("{:?}", array);
     }
-
 
     // finding the shortest distance to char
     pub fn shortest_to_char_try(s: String, c: char) -> Vec<i32> {
@@ -3004,32 +3001,64 @@ pub mod concepts_modules {
         let s_vec: Vec<char> = s.chars().collect();
         let s_iter = s_vec.iter();
         // right
-        for (index,curr_char) in s_iter.enumerate(){
-            if *curr_char == c{
+        for (index, curr_char) in s_iter.enumerate() {
+            if *curr_char == c {
                 char_force = s.len() as i32;
             }
-            if *curr_char != c{
+            if *curr_char != c {
                 char_force -= 1;
             }
             right[index] = char_force.max(0);
         }
         // left
-        for (index , curr_char) in s_vec.iter().enumerate().rev(){
-            if *curr_char == c{
+        for (index, curr_char) in s_vec.iter().enumerate().rev() {
+            if *curr_char == c {
                 char_force = s.len() as i32;
             }
-            if *curr_char != c{
+            if *curr_char != c {
                 char_force -= 1;
             }
             left[index] = char_force.max(0);
         }
-        for i in 0..final_array.len(){
+        for i in 0..final_array.len() {
             let right_val = right[i];
             let left_val = left[i];
-            let min_val: i32 = (s.len() as i32 - right_val).min(s.len() as i32 - left_val);
-            final_array[i] = min_val
+            let min_val: i32 = ((s.len() as i32) - right_val).min((s.len() as i32) - left_val);
+            final_array[i] = min_val;
         }
         final_array
+    }
+
+    // top k most frequent words
+    pub fn top_k_frequent(mut words: Vec<String>, k: i32) -> Vec<String> {
+        words.sort_by(|a, b| a.cmp(&b)); // initial sort to get the first lexicological arrangment
+        let mut map: HashMap<String, i32> = HashMap::new();
+        for word in words.iter() {
+            match map.get_mut(word) {
+                Some(occurence) => {
+                    *occurence += 1;
+                }
+                None => {
+                    map.insert(word.to_string(), 1);
+                }
+            }
+        }
+        let mut map_tuple: Vec<(String, i32)> = map
+            .into_iter()
+            .map(|val| (val.0.to_string(), val.1))
+            .collect();
+        // here while sorting keep it mind the frequency of the words
+        map_tuple.sort_by(|a, b| if a.1 != b.1 { b.1.cmp(&a.1) } else { a.0.cmp(&b.0) });
+        let mut counter: i32 = k;
+        let mut collection: Vec<String> = Vec::new();
+        for curr_iterm in map_tuple.iter() {
+            collection.push(curr_iterm.0.to_string());
+            counter -= 1;
+            if counter == 0 {
+                break;
+            }
+        }
+        collection
     }
 }
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"

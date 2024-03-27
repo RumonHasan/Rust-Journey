@@ -68,6 +68,7 @@ use crate::concepts::concepts_modules::similar_pairs;
 use crate::concepts::concepts_modules::single_num_iii;
 use crate::concepts::concepts_modules::subarray_ranges;
 use crate::concepts::concepts_modules::subarray_sum;
+use crate::concepts::concepts_modules::top_k_frequent;
 use crate::concepts::concepts_modules::top_k_frequent_elements;
 use crate::concepts::concepts_modules::uncommon_from_sentences;
 use crate::concepts::concepts_modules::unique_occurence;
@@ -79,7 +80,8 @@ use crate::concepts::concepts_modules::zero_filled_subarrays;
 // main function is necesary to make the code run
 // cannot assign values ot a different type after once its declared... unless its mutable
 fn main() {
-   shortest_to_char_try(String::from("loveleetcode"), 'e');
+   //shortest_to_char_try(String::from("loveleetcode"), 'e');
+   top_k_frequent(vec!["i".to_string(),"love".to_string(),"leetcode".to_string(),"i".to_string(),"love".to_string(),"coding".to_string()], 2);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
