@@ -62,6 +62,7 @@ use crate::concepts::concepts_modules::random_shit;
 use crate::concepts::concepts_modules::remove_duplicates;
 use crate::concepts::concepts_modules::rep_chars;
 use crate::concepts::concepts_modules::reverse_vowels;
+use crate::concepts::concepts_modules::reverse_words;
 use crate::concepts::concepts_modules::shortest_distance_to_char;
 use crate::concepts::concepts_modules::shortest_to_char_try;
 use crate::concepts::concepts_modules::similar_pairs;
@@ -81,7 +82,9 @@ use crate::concepts::concepts_modules::zero_filled_subarrays;
 // cannot assign values ot a different type after once its declared... unless its mutable
 fn main() {
    //shortest_to_char_try(String::from("loveleetcode"), 'e');
-   top_k_frequent(vec!["i".to_string(),"love".to_string(),"leetcode".to_string(),"i".to_string(),"love".to_string(),"coding".to_string()], 2);
+   //top_k_frequent(vec!["i".to_string(),"love".to_string(),"leetcode".to_string(),"i".to_string(),"love".to_string(),"coding".to_string()], 2);
+   //repeated_substring(String::from("abcabcabcabc"));
+   reverse_words(String::from("Let's take LeetCode contest"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

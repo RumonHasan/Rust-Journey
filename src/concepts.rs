@@ -3060,7 +3060,35 @@ pub mod concepts_modules {
         }
         collection
     }
+
+    // reverse string in a set
+    pub fn reverse_words(s: String) -> String {
+        let s_vec: Vec<String> = s.split_whitespace().map(|val| val.to_string()).collect();
+        let mut rev_vec: Vec<String> = Vec::new();
+        let mut result: String = String::from("");
+        for curr_word in s_vec.iter(){
+            let mut word: Vec<char> = curr_word.to_string().chars().collect();
+            for index in 0..word.len() / 2{
+                let word_len = word.len();
+                word.swap(index, word_len - index - 1);// swap function to reverse the letter 
+            }
+            let word_string: String = word.iter().map(|val| val).collect();
+            rev_vec.push(word_string);
+        }
+
+        for (index,word) in rev_vec.iter().enumerate(){
+            result.push_str(word);
+            if index != rev_vec.len() - 1{
+                result.push(' ');
+            }
+        }
+        result
+    }
+
 }
+// pattern check
+// abcabcabc => 9/2 = 4
+
 //"aeiaaioaaaaeiiiiouuuooaauuaeiu"
 
 // notes
