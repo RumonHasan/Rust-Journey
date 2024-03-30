@@ -3106,6 +3106,26 @@ pub mod concepts_modules {
         counter
     }
 
+    // length of LIS
+    pub fn longest_increasing_subsequence(nums: Vec<i32>)->i32{
+        let mut max_len: i32 = 0;
+        let mut dp: Vec<i32> = vec![1; nums.len()];
+        for index in 0..nums.len(){
+            let base_el: i32 = nums[index];
+            for sub_index in 0..index{
+                let check_el: i32 = nums[sub_index];
+                if base_el > check_el{
+                    // updates from the previous dp vals in order to increase the subsequence
+                    dp[index] = (dp[sub_index] + 1).max(dp[index]);
+                }
+            }   
+        }
+        if let Some(max_val) = dp.into_iter().max(){
+            max_len = max_val;
+        }
+        max_len
+    }
+
 }
 // pattern check
 // abcabcabc => 9/2 = 4

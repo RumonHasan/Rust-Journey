@@ -34,6 +34,7 @@ use crate::concepts::concepts_modules::length_of_last_word;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
 use crate::concepts::concepts_modules::longest_consequtive_sequence;
+use crate::concepts::concepts_modules::longest_increasing_subsequence;
 use crate::concepts::concepts_modules::longest_palindrome;
 use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
 use crate::concepts::concepts_modules::longest_substring;
@@ -86,7 +87,8 @@ fn main() {
    //top_k_frequent(vec!["i".to_string(),"love".to_string(),"leetcode".to_string(),"i".to_string(),"love".to_string(),"coding".to_string()], 2);
    //repeated_substring(String::from("abcabcabcabc"));
    //reverse_words(String::from("Let's take LeetCode contest"));
-   partition_string_two(String::from("ssssss"));
+   //partition_string_two(String::from("ssssss"));
+   longest_increasing_subsequence(vec![10,9,2,5,3,7,101,18]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
