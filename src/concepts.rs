@@ -3085,6 +3085,27 @@ pub mod concepts_modules {
         result
     }
 
+    // partition string checking for unique chars everytime 
+    pub fn partition_string_two(s:String)-> i32{
+        let mut counter: i32 = 0;
+        let mut s_vec: Vec<char> = s.chars().collect();
+        s_vec.push('#');
+        let mut set: HashSet<char> = HashSet::new();
+
+        for (index, curr_char) in s_vec.iter().enumerate(){
+            if set.contains(curr_char){
+                counter += 1;
+                set = HashSet::new();
+            }
+    
+            set.insert(*curr_char);
+            if !set.is_empty() && index == s_vec.len() - 1{
+                counter += 1;
+            }
+        }
+        counter
+    }
+
 }
 // pattern check
 // abcabcabc => 9/2 = 4

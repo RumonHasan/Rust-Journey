@@ -52,6 +52,7 @@ use crate::concepts::concepts_modules::most_common_word;
 use crate::concepts::concepts_modules::num_of_subarrays_two;
 use crate::concepts::concepts_modules::number_of_subarrays;
 use crate::concepts::concepts_modules::partition_labels;
+use crate::concepts::concepts_modules::partition_string_two;
 use crate::concepts::concepts_modules::peak_index;
 use crate::concepts::concepts_modules::pivot_index;
 use crate::concepts::concepts_modules::play_ground;
@@ -84,7 +85,8 @@ fn main() {
    //shortest_to_char_try(String::from("loveleetcode"), 'e');
    //top_k_frequent(vec!["i".to_string(),"love".to_string(),"leetcode".to_string(),"i".to_string(),"love".to_string(),"coding".to_string()], 2);
    //repeated_substring(String::from("abcabcabcabc"));
-   reverse_words(String::from("Let's take LeetCode contest"));
+   //reverse_words(String::from("Let's take LeetCode contest"));
+   partition_string_two(String::from("ssssss"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
