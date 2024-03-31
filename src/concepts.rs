@@ -3126,6 +3126,23 @@ pub mod concepts_modules {
         max_len
     }
 
+
+    // kth largest in a sorted order
+    pub fn find_kth_largest(mut nums: Vec<i32>, k: i32) -> i32 {
+        let mut el: i32 = 0;
+        nums.sort();
+        let rev_vec: Vec<i32> = nums.iter().rev().map(|val| *val).collect();
+        let mut counter: i32 = 0;
+        for curr_num in rev_vec.iter(){
+            counter += 1;
+            if counter == k{
+                el = *curr_num;
+                break;
+            }
+        }
+        el
+    }
+
 }
 // pattern check
 // abcabcabc => 9/2 = 4

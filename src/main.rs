@@ -15,6 +15,7 @@ use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::count_words;
 use crate::concepts::concepts_modules::delete_earn;
 use crate::concepts::concepts_modules::find_all_anagrams;
+use crate::concepts::concepts_modules::find_kth_largest;
 use crate::concepts::concepts_modules::find_relative_ranks;
 use crate::concepts::concepts_modules::find_winners;
 use crate::concepts::concepts_modules::first_palindromic_substring;
@@ -88,7 +89,8 @@ fn main() {
    //repeated_substring(String::from("abcabcabcabc"));
    //reverse_words(String::from("Let's take LeetCode contest"));
    //partition_string_two(String::from("ssssss"));
-   longest_increasing_subsequence(vec![10,9,2,5,3,7,101,18]);
+   //longest_increasing_subsequence(vec![10,9,2,5,3,7,101,18]);
+   find_kth_largest(vec![3,2,3,1,2,4,5,5,6], 4);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
