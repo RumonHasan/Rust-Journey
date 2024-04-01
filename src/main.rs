@@ -31,6 +31,7 @@ use crate::concepts::concepts_modules::is_find_word_in_sub;
 use crate::concepts::concepts_modules::is_subsequence;
 use crate::concepts::concepts_modules::is_toeplix_matrix;
 use crate::concepts::concepts_modules::kth_distinct;
+use crate::concepts::concepts_modules::largest_good_integer;
 use crate::concepts::concepts_modules::length_of_last_word;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
@@ -90,7 +91,8 @@ fn main() {
    //reverse_words(String::from("Let's take LeetCode contest"));
    //partition_string_two(String::from("ssssss"));
    //longest_increasing_subsequence(vec![10,9,2,5,3,7,101,18]);
-   find_kth_largest(vec![3,2,3,1,2,4,5,5,6], 4);
+   //find_kth_largest(vec![3,2,3,1,2,4,5,5,6], 4);
+   largest_good_integer(String::from("42352338"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

@@ -3143,6 +3143,47 @@ pub mod concepts_modules {
         el
     }
 
+    // largest good integer
+    pub fn largest_good_integer(num: String) -> String {
+        let num_vec: Vec<char> = num.chars().collect();
+        let mut curr_num_check: i32 = -1;
+        let mut collection: Vec<i32> = Vec::new();
+        let mut end: usize = 1;
+        let mut counter: i32 = 1;
+        let mut start: char = num_vec[0];
+        while end < num_vec.len(){
+            let curr_char = num_vec[end];
+            if curr_char == start{
+                counter += 1;
+            }
+            if curr_char != start{
+                start = curr_char;
+                counter = 1;
+            }
+            if counter == 3{
+                 if let Some(digit) = curr_char.to_digit(10){
+                    collection.push(digit as i32);
+                 } 
+            }
+            end+= 1;
+        }
+        for curr_num in collection.iter(){
+            if *curr_num > curr_num_check{
+                curr_num_check = *curr_num;
+            }
+        }
+        let mut result: String = String::from("");
+        if curr_num_check == -1{
+            return result;
+        }
+    let char_digit = std::char::from_digit(curr_num_check as u32, 10).unwrap_or('?');
+      
+        for _ in 0..3{
+            result.push(char_digit);
+        }
+        result
+    }
+
 }
 // pattern check
 // abcabcabc => 9/2 = 4
