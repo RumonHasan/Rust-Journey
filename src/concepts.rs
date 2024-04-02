@@ -3184,6 +3184,39 @@ pub mod concepts_modules {
         result
     }
 
+
+    // has all codes
+    pub fn has_all_codes(s: String, k: i32)-> bool{
+        let s_vec: Vec<char> = s.chars().collect();
+        let mut map: HashMap<String, i32> = HashMap::new();
+        let mut binary_str: String = String::from("");
+        // edge case
+        if s.len() < k as usize{
+            return false;
+        }
+        for index in 0..k{
+            let curr_char = s_vec[index as usize];
+            binary_str.push(curr_char);
+        };
+        map.insert(binary_str.clone(), 1);
+        // sliding window
+        for index in k as usize..s_vec.len(){
+            binary_str.drain(..1);
+            binary_str.push(s_vec[index]);
+            match map.get_mut(&binary_str){
+                Some(occurence)=>{
+                    *occurence += 1;
+                }
+                None=>{
+                    map.insert(binary_str.clone(), 1);
+                }
+            }
+        }
+        let map_size: i32 = map.len() as i32;
+        let need_size : i32 = (2u32.pow(k as u32)) as i32;
+        need_size == map_size
+    }
+
 }
 // pattern check
 // abcabcabc => 9/2 = 4

@@ -23,6 +23,7 @@ use crate::concepts::concepts_modules::frequency_sort_two;
 use crate::concepts::concepts_modules::fucking_function;
 use crate::concepts::concepts_modules::get_longest_palindrome;
 use crate::concepts::concepts_modules::halves_in_string;
+use crate::concepts::concepts_modules::has_all_codes;
 use crate::concepts::concepts_modules::house_robber_ii;
 use crate::concepts::concepts_modules::intersect_array;
 use crate::concepts::concepts_modules::intersection;
@@ -92,7 +93,8 @@ fn main() {
    //partition_string_two(String::from("ssssss"));
    //longest_increasing_subsequence(vec![10,9,2,5,3,7,101,18]);
    //find_kth_largest(vec![3,2,3,1,2,4,5,5,6], 4);
-   largest_good_integer(String::from("42352338"));
+   //largest_good_integer(String::from("42352338"));
+   has_all_codes(String::from("00110110"), 2);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
