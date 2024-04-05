@@ -4,6 +4,7 @@ pub mod concepts_modules {
     use std::collections::HashMap;
     use std::collections::HashSet;
     use std::hash::Hash;
+    use std::iter::Map;
     use std::string;
     use std::vec;
 
@@ -3063,43 +3064,49 @@ pub mod concepts_modules {
 
     // reverse string in a set
     pub fn reverse_words(s: String) -> String {
-        let s_vec: Vec<String> = s.split_whitespace().map(|val| val.to_string()).collect();
+        let s_vec: Vec<String> = s
+            .split_whitespace()
+            .map(|val| val.to_string())
+            .collect();
         let mut rev_vec: Vec<String> = Vec::new();
         let mut result: String = String::from("");
-        for curr_word in s_vec.iter(){
+        for curr_word in s_vec.iter() {
             let mut word: Vec<char> = curr_word.to_string().chars().collect();
-            for index in 0..word.len() / 2{
+            for index in 0..word.len() / 2 {
                 let word_len = word.len();
-                word.swap(index, word_len - index - 1);// swap function to reverse the letter 
+                word.swap(index, word_len - index - 1); // swap function to reverse the letter
             }
-            let word_string: String = word.iter().map(|val| val).collect();
+            let word_string: String = word
+                .iter()
+                .map(|val| val)
+                .collect();
             rev_vec.push(word_string);
         }
 
-        for (index,word) in rev_vec.iter().enumerate(){
+        for (index, word) in rev_vec.iter().enumerate() {
             result.push_str(word);
-            if index != rev_vec.len() - 1{
+            if index != rev_vec.len() - 1 {
                 result.push(' ');
             }
         }
         result
     }
 
-    // partition string checking for unique chars everytime 
-    pub fn partition_string_two(s:String)-> i32{
+    // partition string checking for unique chars everytime
+    pub fn partition_string_two(s: String) -> i32 {
         let mut counter: i32 = 0;
         let mut s_vec: Vec<char> = s.chars().collect();
         s_vec.push('#');
         let mut set: HashSet<char> = HashSet::new();
 
-        for (index, curr_char) in s_vec.iter().enumerate(){
-            if set.contains(curr_char){
+        for (index, curr_char) in s_vec.iter().enumerate() {
+            if set.contains(curr_char) {
                 counter += 1;
                 set = HashSet::new();
             }
-    
+
             set.insert(*curr_char);
-            if !set.is_empty() && index == s_vec.len() - 1{
+            if !set.is_empty() && index == s_vec.len() - 1 {
                 counter += 1;
             }
         }
@@ -3107,35 +3114,38 @@ pub mod concepts_modules {
     }
 
     // length of LIS
-    pub fn longest_increasing_subsequence(nums: Vec<i32>)->i32{
+    pub fn longest_increasing_subsequence(nums: Vec<i32>) -> i32 {
         let mut max_len: i32 = 0;
         let mut dp: Vec<i32> = vec![1; nums.len()];
-        for index in 0..nums.len(){
+        for index in 0..nums.len() {
             let base_el: i32 = nums[index];
-            for sub_index in 0..index{
+            for sub_index in 0..index {
                 let check_el: i32 = nums[sub_index];
-                if base_el > check_el{
+                if base_el > check_el {
                     // updates from the previous dp vals in order to increase the subsequence
                     dp[index] = (dp[sub_index] + 1).max(dp[index]);
                 }
-            }   
+            }
         }
-        if let Some(max_val) = dp.into_iter().max(){
+        if let Some(max_val) = dp.into_iter().max() {
             max_len = max_val;
         }
         max_len
     }
 
-
     // kth largest in a sorted order
     pub fn find_kth_largest(mut nums: Vec<i32>, k: i32) -> i32 {
         let mut el: i32 = 0;
         nums.sort();
-        let rev_vec: Vec<i32> = nums.iter().rev().map(|val| *val).collect();
+        let rev_vec: Vec<i32> = nums
+            .iter()
+            .rev()
+            .map(|val| *val)
+            .collect();
         let mut counter: i32 = 0;
-        for curr_num in rev_vec.iter(){
+        for curr_num in rev_vec.iter() {
             counter += 1;
-            if counter == k{
+            if counter == k {
                 el = *curr_num;
                 break;
             }
@@ -3151,72 +3161,112 @@ pub mod concepts_modules {
         let mut end: usize = 1;
         let mut counter: i32 = 1;
         let mut start: char = num_vec[0];
-        while end < num_vec.len(){
+        while end < num_vec.len() {
             let curr_char = num_vec[end];
-            if curr_char == start{
+            if curr_char == start {
                 counter += 1;
             }
-            if curr_char != start{
+            if curr_char != start {
                 start = curr_char;
                 counter = 1;
             }
-            if counter == 3{
-                 if let Some(digit) = curr_char.to_digit(10){
+            if counter == 3 {
+                if let Some(digit) = curr_char.to_digit(10) {
                     collection.push(digit as i32);
-                 } 
+                }
             }
-            end+= 1;
+            end += 1;
         }
-        for curr_num in collection.iter(){
-            if *curr_num > curr_num_check{
+        for curr_num in collection.iter() {
+            if *curr_num > curr_num_check {
                 curr_num_check = *curr_num;
             }
         }
         let mut result: String = String::from("");
-        if curr_num_check == -1{
+        if curr_num_check == -1 {
             return result;
         }
-    let char_digit = std::char::from_digit(curr_num_check as u32, 10).unwrap_or('?');
-      
-        for _ in 0..3{
+        let char_digit = std::char::from_digit(curr_num_check as u32, 10).unwrap_or('?');
+
+        for _ in 0..3 {
             result.push(char_digit);
         }
         result
     }
 
-
     // has all codes
-    pub fn has_all_codes(s: String, k: i32)-> bool{
+    pub fn has_all_codes(s: String, k: i32) -> bool {
         let s_vec: Vec<char> = s.chars().collect();
         let mut map: HashMap<String, i32> = HashMap::new();
         let mut binary_str: String = String::from("");
         // edge case
-        if s.len() < k as usize{
+        if s.len() < (k as usize) {
             return false;
         }
-        for index in 0..k{
+        for index in 0..k {
             let curr_char = s_vec[index as usize];
             binary_str.push(curr_char);
-        };
+        }
         map.insert(binary_str.clone(), 1);
         // sliding window
-        for index in k as usize..s_vec.len(){
+        for index in k as usize..s_vec.len() {
             binary_str.drain(..1);
             binary_str.push(s_vec[index]);
-            match map.get_mut(&binary_str){
-                Some(occurence)=>{
+            match map.get_mut(&binary_str) {
+                Some(occurence) => {
                     *occurence += 1;
                 }
-                None=>{
+                None => {
                     map.insert(binary_str.clone(), 1);
                 }
             }
         }
         let map_size: i32 = map.len() as i32;
-        let need_size : i32 = (2u32.pow(k as u32)) as i32;
+        let need_size: i32 = (2u32).pow(k as u32) as i32;
         need_size == map_size
     }
 
+    // checking maximum number of unique palindromic subseqeunce of length 3
+    pub fn count_palindromic_subsequence(s: String) -> i32 {
+        let s_vec: Vec<char> = s.chars().collect();
+        let mut map: HashMap<char, i32> = HashMap::new();
+        let mut set: HashSet<String> = HashSet::new();
+        let mut left_set: HashSet<char> = HashSet::new();
+        for letter in s_vec.iter(){
+            match map.get_mut(letter){
+                Some(occurence)=>{
+                    *occurence += 1;
+                }
+                None=> {
+                    map.insert(*letter, 1);
+                }
+            }
+        }
+        // main iteration for checking
+        let characters: [char; 26] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        for curr_char in s_vec.iter(){
+            if map.contains_key(curr_char){ // reducing right key if its available
+                if let Some(occurence) = map.get_mut(curr_char){
+                    *occurence -= 1;
+                    if *occurence == 0{
+                        map.remove(curr_char);
+                    }
+                }
+            }
+            for index in 0..26{
+                let curr_letter: char = characters[index as usize];
+                if left_set.contains(&curr_letter) && map.contains_key(&curr_letter){
+                    let mut res: String = String::from("");
+                    res.push(curr_letter);
+                    res.push(*curr_char);
+                    res.push(curr_letter);
+                    set.insert(res.to_string());
+                }
+            }
+            left_set.insert(*curr_char);
+        }
+        set.len() as i32
+    }
 }
 // pattern check
 // abcabcabc => 9/2 = 4

@@ -11,6 +11,7 @@ use crate::concepts::concepts_modules::can_place_flowers;
 use crate::concepts::concepts_modules::container_water;
 use crate::concepts::concepts_modules::count_complete_subarrays;
 use crate::concepts::concepts_modules::count_good_sub;
+use crate::concepts::concepts_modules::count_palindromic_subsequence;
 use crate::concepts::concepts_modules::count_vowel_substrings;
 use crate::concepts::concepts_modules::count_words;
 use crate::concepts::concepts_modules::delete_earn;
@@ -94,7 +95,8 @@ fn main() {
    //longest_increasing_subsequence(vec![10,9,2,5,3,7,101,18]);
    //find_kth_largest(vec![3,2,3,1,2,4,5,5,6], 4);
    //largest_good_integer(String::from("42352338"));
-   has_all_codes(String::from("00110110"), 2);
+  // has_all_codes(String::from("00110110"), 2);
+   count_palindromic_subsequence(String::from("aabca"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
