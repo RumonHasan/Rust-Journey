@@ -3232,30 +3232,59 @@ pub mod concepts_modules {
         let mut map: HashMap<char, i32> = HashMap::new();
         let mut set: HashSet<String> = HashSet::new();
         let mut left_set: HashSet<char> = HashSet::new();
-        for letter in s_vec.iter(){
-            match map.get_mut(letter){
-                Some(occurence)=>{
+        for letter in s_vec.iter() {
+            match map.get_mut(letter) {
+                Some(occurence) => {
                     *occurence += 1;
                 }
-                None=> {
+                None => {
                     map.insert(*letter, 1);
                 }
             }
         }
         // main iteration for checking
-        let characters: [char; 26] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-        for curr_char in s_vec.iter(){
-            if map.contains_key(curr_char){ // reducing right key if its available
-                if let Some(occurence) = map.get_mut(curr_char){
+        let characters: [char; 26] = [
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f',
+            'g',
+            'h',
+            'i',
+            'j',
+            'k',
+            'l',
+            'm',
+            'n',
+            'o',
+            'p',
+            'q',
+            'r',
+            's',
+            't',
+            'u',
+            'v',
+            'w',
+            'x',
+            'y',
+            'z',
+        ];
+        for curr_char in s_vec.iter() {
+            if map.contains_key(curr_char) {
+                // reducing right key if its available
+                if let Some(occurence) = map.get_mut(curr_char) {
                     *occurence -= 1;
-                    if *occurence == 0{
+                    if *occurence == 0 {
                         map.remove(curr_char);
                     }
                 }
             }
-            for index in 0..26{
+            // for an O(n) the iteration of all the 26 letters is necessary in order to check for possible unique substrings and are stored in sets in order to check the final size of the palindromic substring.
+            for index in 0..26 {
                 let curr_letter: char = characters[index as usize];
-                if left_set.contains(&curr_letter) && map.contains_key(&curr_letter){
+                if left_set.contains(&curr_letter) && map.contains_key(&curr_letter) {
                     let mut res: String = String::from("");
                     res.push(curr_letter);
                     res.push(*curr_char);
@@ -3267,7 +3296,125 @@ pub mod concepts_modules {
         }
         set.len() as i32
     }
+
+    // strictly largest max ascending sum
+    pub fn max_ascending_sum(mut nums: Vec<i32>) -> i32 {
+        let mut max_size: i32 = 0;
+        nums.push(0);
+        let mut local_total = nums[0];
+
+        for index in 1..nums.len() {
+            let curr_num = nums[index];
+            // strictly ascending
+            if curr_num > nums[index - 1] {
+                local_total += curr_num;
+            }
+            if curr_num <= nums[index - 1] {
+                max_size = max_size.max(local_total);
+                local_total = curr_num;
+            }
+        }
+        max_size
+    }
+
+    // solve for every string in the list of arrays
+    pub fn count_characters(words: Vec<String>, chars: String) -> i32 {
+        let mut total: i32 = 0;
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for curr_char in chars.chars() {
+            match map.get_mut(&curr_char) {
+                Some(ocurrence) => {
+                    *ocurrence += 1;
+                }
+                None => {
+                    map.insert(curr_char, 1);
+                }
+            }
+        }
+        for curr_word in words.iter() {
+            let word = curr_word.to_string();
+            let mut copy_map: HashMap<char, i32> = map.clone();
+            let mut check: bool = true;
+            for curr_letter in word.chars() {
+                if !copy_map.contains_key(&curr_letter) {
+                    check = false;
+                    break;
+                }
+                if copy_map.contains_key(&curr_letter) {
+                    if let Some(occurence) = copy_map.get_mut(&curr_letter) {
+                        *occurence -= 1;
+                        if *occurence == 0 {
+                            copy_map.remove(&curr_letter);
+                        }
+                    }
+                }
+            }
+            if check {
+                total += word.len() as i32;
+            }
+        }
+        total
+    }
+
+    // min deletions
+    pub fn min_deletions(s: String) -> i32 {
+        let mut min_counter: i32 = 0;
+        let s_chars: Vec<char> = s.chars().collect();
+        let mut map: HashMap<char, i32> = HashMap::new();
+        for curr_char in s_chars.iter() {
+            match map.get_mut(curr_char) {
+                Some(occurence) => {
+                    *occurence += 1;
+                }
+                None => {
+                    map.insert(*curr_char, 1);
+                }
+            }
+        }
+        let mut map_freq: Vec<i32> = map
+            .values()
+            .map(|val| *val)
+            .collect();
+        map_freq.sort_by(|a, b| b.cmp(a));
+        // checking against has
+        let mut oc_map: HashMap<i32, i32> = HashMap::new();
+        for num in map_freq.iter() {
+            match oc_map.get_mut(&num) {
+                Some(occurence) => {
+                    *occurence += 1;
+                }
+                None => {
+                    oc_map.insert(*num, 1);
+                }
+            }
+        }
+        // main algorithm to check
+        for index in 0..map_freq.len() {
+            while *oc_map.get(&map_freq[index]).unwrap_or(&0) > 1 {
+                if let Some(main_oc) = oc_map.get_mut(&map_freq[index]) {
+                    *main_oc -= 1;
+                }
+                map_freq[index] -= 1;
+                min_counter += 1;
+                if map_freq[index] > 0 {
+                    if let Some(check_oc) = oc_map.get_mut(&map_freq[index]) {
+                        *check_oc += 1;
+                    } else {
+                        oc_map.insert(map_freq[index], 1);
+                    }
+                }
+            }
+        }
+        min_counter
+    }
 }
+
+// [5,5,4,3]
+/* 
+    [3,2,2,1]
+    [3,1,2, 1] => {1} 1
+    [3,1,2, 1] 
+*/
 // pattern check
 // abcabcabc => 9/2 = 4
 

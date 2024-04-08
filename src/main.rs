@@ -9,6 +9,7 @@ use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::can_construct;
 use crate::concepts::concepts_modules::can_place_flowers;
 use crate::concepts::concepts_modules::container_water;
+use crate::concepts::concepts_modules::count_characters;
 use crate::concepts::concepts_modules::count_complete_subarrays;
 use crate::concepts::concepts_modules::count_good_sub;
 use crate::concepts::concepts_modules::count_palindromic_subsequence;
@@ -44,11 +45,13 @@ use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
 use crate::concepts::concepts_modules::longest_substring;
 use crate::concepts::concepts_modules::longest_word_in_dict;
 use crate::concepts::concepts_modules::max_absolute_sum;
+use crate::concepts::concepts_modules::max_ascending_sum;
 use crate::concepts::concepts_modules::max_consequtive_ones;
 use crate::concepts::concepts_modules::max_freq;
 use crate::concepts::concepts_modules::max_power;
 use crate::concepts::concepts_modules::max_subarray;
 use crate::concepts::concepts_modules::max_vowels_in_given_sub;
+use crate::concepts::concepts_modules::min_deletions;
 use crate::concepts::concepts_modules::min_len;
 use crate::concepts::concepts_modules::min_set_size;
 use crate::concepts::concepts_modules::min_steps;
@@ -96,7 +99,10 @@ fn main() {
    //find_kth_largest(vec![3,2,3,1,2,4,5,5,6], 4);
    //largest_good_integer(String::from("42352338"));
   // has_all_codes(String::from("00110110"), 2);
-   count_palindromic_subsequence(String::from("aabca"));
+   //count_palindromic_subsequence(String::from("aabca"));
+   //max_ascending_sum(vec![10,20,30,5,10,50]);
+   //count_characters(vec!["cat".to_string(),"bt".to_string(),"hat".to_string(),"tree".to_string()], String::from("atach"));
+   min_deletions(String::from("bbcebab"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
