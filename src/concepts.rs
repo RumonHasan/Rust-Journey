@@ -3437,8 +3437,8 @@ pub mod concepts_modules {
         }
 
         // intuitive approach 
-        let mut zero_count: i32 = 0;
-        let mut total_count: i32 = 0;
+        let mut zero_count: i64 = 0;
+        let mut total_count: i64 = 0;
         for curr_num in nums.iter(){
             let num: i32 = *curr_num;   
             if num == 0{
@@ -3451,6 +3451,51 @@ pub mod concepts_modules {
         }
         total_count as i64
 
+    }
+
+
+    // problem to calculate the number of car fleet
+    pub fn car_fleet(target: i32, position: Vec<i32>, speed: Vec<i32>) -> i32 {
+        let mut stack_fleet: Vec<(i32 , i32)> = Vec::new();
+        // making a sorted position and speed tuple vec
+        let mut fleet: Vec<(i32, i32)> = Vec::new();
+        for index in 0..position.len(){
+            let pos: i32 = position[index];
+            let speed: i32 = speed[index];
+            fleet.push((pos, speed));
+        }
+        fleet.sort_by(|a, b| a.0.cmp(&b.0));
+        if fleet.len() == 1{
+            return 1
+        }
+        println!("{:?}- main fleet", fleet);
+        // reverse iteration in order to populate stack
+        let mut curr_time: f32 = 0.0;
+        let mut next_time: f32 = 0.0;
+        for (index, curr_vector) in fleet.iter().enumerate().rev(){
+            if index == fleet.len() - 1{
+                next_time = (target as f32 - curr_vector.0 as f32) / curr_vector.1 as f32;
+                stack_fleet.push(*curr_vector); // last one will always be the lead car that all needs to follow
+            }
+            if index == fleet.len()- 2{
+                stack_fleet.push(*curr_vector); // first push incase there is no intersection then add to stack for next comparison
+                curr_time = (target as f32 - curr_vector.0 as f32) / curr_vector.1 as f32;
+                if curr_time <= next_time{
+                    stack_fleet.pop();
+                }
+            }
+            if index < fleet.len() - 2{
+                let latest_stack_fleet = stack_fleet[stack_fleet.len() - 1];
+                // next should be updated as per last value in stack
+                next_time = (target as f32 - latest_stack_fleet.0 as f32) / latest_stack_fleet.1 as f32;
+                stack_fleet.push(*curr_vector);
+                curr_time = (target as f32 - curr_vector.0 as f32) / curr_vector.1 as f32;
+                if curr_time <= next_time{
+                    stack_fleet.pop();
+                }
+            }
+        }
+        stack_fleet.len() as i32
     }
 
 }

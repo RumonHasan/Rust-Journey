@@ -8,6 +8,7 @@ mod concepts;
 use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::can_construct;
 use crate::concepts::concepts_modules::can_place_flowers;
+use crate::concepts::concepts_modules::car_fleet;
 use crate::concepts::concepts_modules::container_water;
 use crate::concepts::concepts_modules::count_characters;
 use crate::concepts::concepts_modules::count_complete_subarrays;
@@ -104,7 +105,8 @@ fn main() {
    //max_ascending_sum(vec![10,20,30,5,10,50]);
    //count_characters(vec!["cat".to_string(),"bt".to_string(),"hat".to_string(),"tree".to_string()], String::from("atach"));
    //min_deletions(String::from("bbcebab"));
-   zero_filled(vec![0,0,0,2,0,0]);
+   //zero_filled(vec![0,0,0,2,0,0]);
+   car_fleet(10, vec![0,4,2], vec![2,1,3]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
