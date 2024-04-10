@@ -85,6 +85,7 @@ use crate::concepts::concepts_modules::unique_occurence;
 use crate::concepts::concepts_modules::vowel_strings;
 use crate::concepts::concepts_modules::word_pattern;
 use crate::concepts::concepts_modules::word_pattern_check;
+use crate::concepts::concepts_modules::zero_filled;
 use crate::concepts::concepts_modules::zero_filled_subarrays;
 
 // main function is necesary to make the code run
@@ -102,7 +103,8 @@ fn main() {
    //count_palindromic_subsequence(String::from("aabca"));
    //max_ascending_sum(vec![10,20,30,5,10,50]);
    //count_characters(vec!["cat".to_string(),"bt".to_string(),"hat".to_string(),"tree".to_string()], String::from("atach"));
-   min_deletions(String::from("bbcebab"));
+   //min_deletions(String::from("bbcebab"));
+   zero_filled(vec![0,0,0,2,0,0]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

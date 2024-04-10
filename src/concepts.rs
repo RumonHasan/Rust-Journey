@@ -3356,7 +3356,7 @@ pub mod concepts_modules {
         total
     }
 
-    // min deletions
+    // min deletions -> optimization needed
     pub fn min_deletions(s: String) -> i32 {
         let mut min_counter: i32 = 0;
         let s_chars: Vec<char> = s.chars().collect();
@@ -3407,7 +3407,55 @@ pub mod concepts_modules {
         }
         min_counter
     }
+
+
+    // number of zero filled subarrays
+    pub fn zero_filled(mut nums: Vec<i32>)-> i64{
+        // note: becareful of integer over flow during calculations
+        // substring calc from a mutable reference
+        fn formulaic_approach (mut nums: &mut Vec<i32>)->i64{
+            let mut count: i64 = 0;
+            fn calc_substring( zero_count: &mut i64)->i64{
+                let mut sub_count:i64 = 0;
+                sub_count += ((*zero_count * (*zero_count + 1)) / 2) as i64;
+                sub_count
+            }
+            // one pass iteration
+            let mut zero_count: i64 = 0;
+            for index in 0..nums.len(){
+                let curr_num = nums[index];
+                if curr_num == 0{
+                    zero_count += 1;
+                }else if curr_num != 0{ 
+                    // basic substring formula to calculate the number of subs
+                    count += calc_substring(&mut zero_count);
+                    zero_count = 0;
+                }
+            }
+            count += calc_substring(&mut zero_count);
+            count
+        }
+
+        // intuitive approach 
+        let mut zero_count: i32 = 0;
+        let mut total_count: i32 = 0;
+        for curr_num in nums.iter(){
+            let num: i32 = *curr_num;   
+            if num == 0{
+                zero_count+= 1;
+                total_count += zero_count;
+            }
+            if num != 0{
+                zero_count = 0;
+            }
+        }
+        total_count as i64
+
+    }
+
 }
+
+// n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
 
 // [5,5,4,3]
 /* 
@@ -3441,6 +3489,7 @@ pub mod concepts_modules {
 //     single_user.age = 10;
 //     println!("{:?}", array_vec);
 // }
+
 
 // Correct, you cannot directly use the index obtained from enumerate() to modify the vector in place. The reason is that the indexing operation array[index] requires a mutable reference to the vector, and when using enumerate(), you only get a mutable reference to each element, not to the vector itself.
 // If you need to modify elements based on their index, you can use iter_mut().enumerate() and then calculate the modified value separately before assigning it to the vector. Here's an example:
