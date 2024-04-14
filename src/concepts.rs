@@ -3408,25 +3408,24 @@ pub mod concepts_modules {
         min_counter
     }
 
-
     // number of zero filled subarrays
-    pub fn zero_filled(mut nums: Vec<i32>)-> i64{
+    pub fn zero_filled(mut nums: Vec<i32>) -> i64 {
         // note: becareful of integer over flow during calculations
         // substring calc from a mutable reference
-        fn formulaic_approach (mut nums: &mut Vec<i32>)->i64{
+        fn formulaic_approach(mut nums: &mut Vec<i32>) -> i64 {
             let mut count: i64 = 0;
-            fn calc_substring( zero_count: &mut i64)->i64{
-                let mut sub_count:i64 = 0;
+            fn calc_substring(zero_count: &mut i64) -> i64 {
+                let mut sub_count: i64 = 0;
                 sub_count += ((*zero_count * (*zero_count + 1)) / 2) as i64;
                 sub_count
             }
             // one pass iteration
             let mut zero_count: i64 = 0;
-            for index in 0..nums.len(){
+            for index in 0..nums.len() {
                 let curr_num = nums[index];
-                if curr_num == 0{
+                if curr_num == 0 {
                     zero_count += 1;
-                }else if curr_num != 0{ 
+                } else if curr_num != 0 {
                     // basic substring formula to calculate the number of subs
                     count += calc_substring(&mut zero_count);
                     zero_count = 0;
@@ -3436,61 +3435,61 @@ pub mod concepts_modules {
             count
         }
 
-        // intuitive approach 
+        // intuitive approach
         let mut zero_count: i64 = 0;
         let mut total_count: i64 = 0;
-        for curr_num in nums.iter(){
-            let num: i32 = *curr_num;   
-            if num == 0{
-                zero_count+= 1;
+        for curr_num in nums.iter() {
+            let num: i32 = *curr_num;
+            if num == 0 {
+                zero_count += 1;
                 total_count += zero_count;
             }
-            if num != 0{
+            if num != 0 {
                 zero_count = 0;
             }
         }
         total_count as i64
-
     }
-
 
     // problem to calculate the number of car fleet
     pub fn car_fleet(target: i32, position: Vec<i32>, speed: Vec<i32>) -> i32 {
-        let mut stack_fleet: Vec<(i32 , i32)> = Vec::new();
+        let mut stack_fleet: Vec<(i32, i32)> = Vec::new();
         // making a sorted position and speed tuple vec
         let mut fleet: Vec<(i32, i32)> = Vec::new();
-        for index in 0..position.len(){
+        for index in 0..position.len() {
             let pos: i32 = position[index];
             let speed: i32 = speed[index];
             fleet.push((pos, speed));
         }
         fleet.sort_by(|a, b| a.0.cmp(&b.0));
-        if fleet.len() == 1{
-            return 1
+        if fleet.len() == 1 {
+            return 1;
         }
         println!("{:?}- main fleet", fleet);
         // reverse iteration in order to populate stack
         let mut curr_time: f32 = 0.0;
         let mut next_time: f32 = 0.0;
-        for (index, curr_vector) in fleet.iter().enumerate().rev(){
-            if index == fleet.len() - 1{
-                next_time = (target as f32 - curr_vector.0 as f32) / curr_vector.1 as f32;
+        for (index, curr_vector) in fleet.iter().enumerate().rev() {
+            if index == fleet.len() - 1 {
+                next_time = ((target as f32) - (curr_vector.0 as f32)) / (curr_vector.1 as f32);
                 stack_fleet.push(*curr_vector); // last one will always be the lead car that all needs to follow
             }
-            if index == fleet.len()- 2{
+            if index == fleet.len() - 2 {
                 stack_fleet.push(*curr_vector); // first push incase there is no intersection then add to stack for next comparison
-                curr_time = (target as f32 - curr_vector.0 as f32) / curr_vector.1 as f32;
-                if curr_time <= next_time{
+                curr_time = ((target as f32) - (curr_vector.0 as f32)) / (curr_vector.1 as f32);
+                if curr_time <= next_time {
                     stack_fleet.pop();
                 }
             }
-            if index < fleet.len() - 2{
+            if index < fleet.len() - 2 {
                 let latest_stack_fleet = stack_fleet[stack_fleet.len() - 1];
                 // next should be updated as per last value in stack
-                next_time = (target as f32 - latest_stack_fleet.0 as f32) / latest_stack_fleet.1 as f32;
+                next_time =
+                    ((target as f32) - (latest_stack_fleet.0 as f32)) /
+                    (latest_stack_fleet.1 as f32);
                 stack_fleet.push(*curr_vector);
-                curr_time = (target as f32 - curr_vector.0 as f32) / curr_vector.1 as f32;
-                if curr_time <= next_time{
+                curr_time = ((target as f32) - (curr_vector.0 as f32)) / (curr_vector.1 as f32);
+                if curr_time <= next_time {
                     stack_fleet.pop();
                 }
             }
@@ -3498,15 +3497,105 @@ pub mod concepts_modules {
         stack_fleet.len() as i32
     }
 
+    // counting the car collisions
+    pub fn count_car_collisions(directions: String) -> i32 {
+        let mut counter: i32 = 0;
+        let dir_vec: Vec<char> = directions.chars().collect();
+        let mut extra: i32 = 0;
+        let mut prev: char = dir_vec[0];
+        for index in 1..dir_vec.len() {
+            let curr: char = dir_vec[index];
+            if prev == 'R' && curr == 'L' {
+                // double collision then turn to S
+                counter += 2;
+                counter += extra;
+                extra = 0; // turns stationery no collision
+                prev = 'S';
+            } else if
+                // stationary single collision
+                (curr == 'L' && prev == 'S') ||
+                (curr == 'S' && prev == 'R')
+            {
+                counter += 1 + extra;
+                prev = 'S';
+                extra = 0;
+            } else if curr == 'R' && prev == 'R' {
+                extra += 1; // collision force gathers till it hits something
+                prev = curr;
+            } else {
+                prev = curr;
+            }
+        }
+        counter
+    }
+
+    // boats to save people
+    pub fn num_rescue_boats(people: Vec<i32>, limit: i32) -> i32 {
+        let mut boat_counter: i32 = 0;
+        let mut sorted_people: Vec<i32> = people.clone();
+        sorted_people.sort_by(|a, b| a.cmp(&b));
+
+        let mut start: usize = 0;
+        let mut end: usize = sorted_people.len() - 1;
+
+        while start < end {
+            let start_people: i32 = sorted_people[start];
+            let end_people: i32 = sorted_people[end];
+            let curr_capacity: i32 = start_people + end_people;
+
+            if curr_capacity > limit{
+                boat_counter += 1;
+                end -= 1;
+            }else if curr_capacity <= limit{
+                boat_counter += 1;
+                end -= 1;
+                start += 1;
+            }
+        }
+
+        boat_counter
+    }
 }
 
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
 
 // [5,5,4,3]
 /* 
+3 5 3 4 start
+
+3 3 4 5  9
+
+
+
+3 3 4
+
+3 3
+
+
+
+
+
+
+
+
     [3,2,2,1]
     [3,1,2, 1] => {1} 1
     [3,1,2, 1] 
+
+    1,2,2,3 - limit - 3
+    1 2 2 - c = 1
+
+    1 2 2 2
+
+
+     1 1 3 3 = 3
+
+
+
+    1 1 = c = 1
+
+
+
 */
 // pattern check
 // abcabcabc => 9/2 = 4
@@ -3534,7 +3623,6 @@ pub mod concepts_modules {
 //     single_user.age = 10;
 //     println!("{:?}", array_vec);
 // }
-
 
 // Correct, you cannot directly use the index obtained from enumerate() to modify the vector in place. The reason is that the indexing operation array[index] requires a mutable reference to the vector, and when using enumerate(), you only get a mutable reference to each element, not to the vector itself.
 // If you need to modify elements based on their index, you can use iter_mut().enumerate() and then calculate the modified value separately before assigning it to the vector. Here's an example:

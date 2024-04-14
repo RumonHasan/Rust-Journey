@@ -10,6 +10,7 @@ use crate::concepts::concepts_modules::can_construct;
 use crate::concepts::concepts_modules::can_place_flowers;
 use crate::concepts::concepts_modules::car_fleet;
 use crate::concepts::concepts_modules::container_water;
+use crate::concepts::concepts_modules::count_car_collisions;
 use crate::concepts::concepts_modules::count_characters;
 use crate::concepts::concepts_modules::count_complete_subarrays;
 use crate::concepts::concepts_modules::count_good_sub;
@@ -59,6 +60,7 @@ use crate::concepts::concepts_modules::min_steps;
 use crate::concepts::concepts_modules::minimum_recolors;
 use crate::concepts::concepts_modules::most_common_word;
 use crate::concepts::concepts_modules::num_of_subarrays_two;
+use crate::concepts::concepts_modules::num_rescue_boats;
 use crate::concepts::concepts_modules::number_of_subarrays;
 use crate::concepts::concepts_modules::partition_labels;
 use crate::concepts::concepts_modules::partition_string_two;
@@ -106,7 +108,9 @@ fn main() {
    //count_characters(vec!["cat".to_string(),"bt".to_string(),"hat".to_string(),"tree".to_string()], String::from("atach"));
    //min_deletions(String::from("bbcebab"));
    //zero_filled(vec![0,0,0,2,0,0]);
-   car_fleet(10, vec![0,4,2], vec![2,1,3]);
+   //car_fleet(10, vec![0,4,2], vec![2,1,3]);
+   //count_car_collisions(String::from("LLRLRLLSLRLLSLSSSS"));
+   num_rescue_boats(vec![5,1,4,2], 6);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
