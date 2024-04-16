@@ -3555,6 +3555,36 @@ pub mod concepts_modules {
 
         boat_counter
     }
+
+    // longest continuous sub that ordered alphabetically
+    pub fn longest_continuous_alphbetic_sum(s: String)-> i32{
+        let mut len: i32 = 1;
+        let s_vec: Vec<char> = s.chars().collect();
+        let mut prev_char_byte: u8 = s_vec[0] as u8;
+        let mut local_counter: i32 = 1;
+
+        for i in 1..s_vec.len(){
+            let curr_char: char = s_vec[i];
+            let curr_char_byte: u8 = curr_char as u8;
+
+            if (curr_char_byte - 1) == prev_char_byte{
+                local_counter += 1;
+                prev_char_byte = curr_char_byte;
+            }else{
+                len = len.max(local_counter);
+                local_counter = 1;
+                prev_char_byte = curr_char_byte;
+            }
+            // edge case
+            if i == s_vec.len() - 1{
+                len = len.max(local_counter);
+            }
+        }
+
+        len
+    }
+
+    
 }
 
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6

@@ -41,6 +41,7 @@ use crate::concepts::concepts_modules::length_of_last_word;
 use crate::concepts::concepts_modules::license_key_formatting;
 use crate::concepts::concepts_modules::longest_char_replacement;
 use crate::concepts::concepts_modules::longest_consequtive_sequence;
+use crate::concepts::concepts_modules::longest_continuous_alphbetic_sum;
 use crate::concepts::concepts_modules::longest_increasing_subsequence;
 use crate::concepts::concepts_modules::longest_palindrome;
 use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
@@ -110,7 +111,8 @@ fn main() {
    //zero_filled(vec![0,0,0,2,0,0]);
    //car_fleet(10, vec![0,4,2], vec![2,1,3]);
    //count_car_collisions(String::from("LLRLRLLSLRLLSLSSSS"));
-   num_rescue_boats(vec![5,1,4,2], 6);
+   //num_rescue_boats(vec![5,1,4,2], 6);
+   longest_continuous_alphbetic_sum(String::from("abcacaba"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
