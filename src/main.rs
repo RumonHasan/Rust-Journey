@@ -43,6 +43,7 @@ use crate::concepts::concepts_modules::longest_char_replacement;
 use crate::concepts::concepts_modules::longest_consequtive_sequence;
 use crate::concepts::concepts_modules::longest_continuous_alphbetic_sum;
 use crate::concepts::concepts_modules::longest_increasing_subsequence;
+use crate::concepts::concepts_modules::longest_ones;
 use crate::concepts::concepts_modules::longest_palindrome;
 use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
 use crate::concepts::concepts_modules::longest_substring;
@@ -53,6 +54,7 @@ use crate::concepts::concepts_modules::max_consequtive_ones;
 use crate::concepts::concepts_modules::max_freq;
 use crate::concepts::concepts_modules::max_power;
 use crate::concepts::concepts_modules::max_subarray;
+use crate::concepts::concepts_modules::max_vowels;
 use crate::concepts::concepts_modules::max_vowels_in_given_sub;
 use crate::concepts::concepts_modules::min_deletions;
 use crate::concepts::concepts_modules::min_len;
@@ -112,7 +114,9 @@ fn main() {
    //car_fleet(10, vec![0,4,2], vec![2,1,3]);
    //count_car_collisions(String::from("LLRLRLLSLRLLSLSSSS"));
    //num_rescue_boats(vec![5,1,4,2], 6);
-   longest_continuous_alphbetic_sum(String::from("abcacaba"));
+   //longest_continuous_alphbetic_sum(String::from("abcacaba"));
+   //max_vowels(String::from("abciiidef"), 3);
+   longest_ones(vec![0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], 3);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

@@ -3584,8 +3584,70 @@ pub mod concepts_modules {
         len
     }
 
-    
+    // max number of vowel letters in a substring 
+    pub fn max_vowels(s: String, k: i32)-> i32{
+        let mut max_len: i32 = 0;
+        let vec: Vec<char> = s.chars().collect();
+        let mut v_set: HashSet<char> = HashSet::new();
+        v_set.insert('a');
+        v_set.insert('i');
+        v_set.insert('e');
+        v_set.insert('o');
+        v_set.insert('u');
+
+        let mut flex_vec: Vec<char> = Vec::new();
+        let mut v_counter: i32 = 0;
+        for i in 0..k as usize{
+            flex_vec.push(vec[i]);
+            if v_set.contains(&vec[i]){
+                v_counter += 1;
+            }
+        }
+        max_len = max_len.max(v_counter);
+        for i in k as usize..vec.len(){
+            let curr_char: char = vec[i];
+            if let Some(first) = flex_vec.first(){
+                if v_set.contains(first){
+                    v_counter -= 1;
+                }
+            }
+            flex_vec.remove(0);
+            flex_vec.push(curr_char);
+            if v_set.contains(&curr_char){
+                v_counter += 1;
+            }
+            max_len = max_len.max(v_counter);
+        }       
+        max_len
+    }
+
+    // getting the longest ones
+    pub fn longest_ones(nums: Vec<i32>, k: i32) -> i32 {
+        let mut count: i32 = 0;
+        let mut start: usize = 0;
+        let mut end: usize = 0;
+        let mut zero_counter: i32 = 0;
+
+        while end < nums.len(){
+            let curr_num: i32 = nums[end];
+            if curr_num == 0 {
+                zero_counter += 1;
+            }
+            while zero_counter > k{
+                if nums[start] == 0{
+                    zero_counter -= 1;
+                }
+                start += 1;
+            }
+            count = count.max((end as i32 - start as i32) + 1);
+            end += 1;
+        }
+        count      
+    }
 }
+
+    
+
 
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
 
