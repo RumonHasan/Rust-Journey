@@ -3644,6 +3644,22 @@ pub mod concepts_modules {
         }
         count      
     }
+    // removing stars from the strings
+    pub fn remove_stars(s: String) -> String {
+        let s_vec: Vec<char> = s.chars().collect();
+        let s_iter = s_vec.iter();
+        let mut stack: Vec<char> = Vec::new();
+        for curr_char in s_iter{
+            let local_char: char = *curr_char;
+            if local_char == '*'{
+                stack.pop();
+            }else{
+                stack.push(local_char);
+            }
+        }
+        let res: String = stack.into_iter().map(|a| a.to_string()).collect();
+        res
+    }
 }
 
     

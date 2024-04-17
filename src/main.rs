@@ -75,6 +75,7 @@ use crate::concepts::concepts_modules::push_dom;
 use crate::concepts::concepts_modules::push_dominoes;
 use crate::concepts::concepts_modules::random_shit;
 use crate::concepts::concepts_modules::remove_duplicates;
+use crate::concepts::concepts_modules::remove_stars;
 use crate::concepts::concepts_modules::rep_chars;
 use crate::concepts::concepts_modules::reverse_vowels;
 use crate::concepts::concepts_modules::reverse_words;
@@ -117,6 +118,7 @@ fn main() {
    //longest_continuous_alphbetic_sum(String::from("abcacaba"));
    //max_vowels(String::from("abciiidef"), 3);
    longest_ones(vec![0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], 3);
+   //remove_stars(String::from("leet**cod*e"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
