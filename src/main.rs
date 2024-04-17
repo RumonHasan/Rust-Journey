@@ -9,6 +9,7 @@ use crate::concepts::concepts_modules::array_rank_transform;
 use crate::concepts::concepts_modules::can_construct;
 use crate::concepts::concepts_modules::can_place_flowers;
 use crate::concepts::concepts_modules::car_fleet;
+use crate::concepts::concepts_modules::check_distance;
 use crate::concepts::concepts_modules::container_water;
 use crate::concepts::concepts_modules::count_car_collisions;
 use crate::concepts::concepts_modules::count_characters;
@@ -117,8 +118,9 @@ fn main() {
    //num_rescue_boats(vec![5,1,4,2], 6);
    //longest_continuous_alphbetic_sum(String::from("abcacaba"));
    //max_vowels(String::from("abciiidef"), 3);
-   longest_ones(vec![0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], 3);
+//    longest_ones(vec![0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], 3);
    //remove_stars(String::from("leet**cod*e"));
+   check_distance(String::from("abaccb"), vec![1,3,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

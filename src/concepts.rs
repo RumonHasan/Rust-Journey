@@ -3660,6 +3660,44 @@ pub mod concepts_modules {
         let res: String = stack.into_iter().map(|a| a.to_string()).collect();
         res
     }
+
+    // check distances 
+    pub fn check_distance(s: String, distance: Vec<i32>) -> bool{
+        let mut check:bool = true;
+        let s_vec: Vec<char> = s.chars().collect();
+        let alphabets: Vec<char> = ('a'..='z').collect();
+        let mut alpha_vec: Vec<(char, i32)> = Vec::new();
+        for i in 0..alphabets.len(){
+            alpha_vec.push((alphabets[i], distance[i]));
+        }
+        let mut map: HashMap<char, (i32, i32)> = HashMap::new();
+
+        for (index, curr_char) in s_vec.iter().enumerate(){
+            if map.contains_key(curr_char){
+                if let Some(tuple) = map.get_mut(curr_char){
+                    tuple.1 = index as i32
+                }
+            }else{
+                map.insert(*curr_char, (index as i32, 0));
+            }
+        }
+        // positioning
+        for curr_alpha in alpha_vec.iter(){
+            let curr_char : char = curr_alpha.0;
+            let curr_char_val: i32 = curr_alpha.1;
+            if map.contains_key(&curr_char){
+                if let Some(tup_val) = map.get(&curr_char){
+                    let diff: i32 = tup_val.1 - tup_val.0 - 1;
+                    if diff != curr_char_val{
+                        check = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        check
+    }
 }
 
     
