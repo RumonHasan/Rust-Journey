@@ -3543,10 +3543,10 @@ pub mod concepts_modules {
             let end_people: i32 = sorted_people[end];
             let curr_capacity: i32 = start_people + end_people;
 
-            if curr_capacity > limit{
+            if curr_capacity > limit {
                 boat_counter += 1;
                 end -= 1;
-            }else if curr_capacity <= limit{
+            } else if curr_capacity <= limit {
                 boat_counter += 1;
                 end -= 1;
                 start += 1;
@@ -3557,26 +3557,26 @@ pub mod concepts_modules {
     }
 
     // longest continuous sub that ordered alphabetically
-    pub fn longest_continuous_alphbetic_sum(s: String)-> i32{
+    pub fn longest_continuous_alphbetic_sum(s: String) -> i32 {
         let mut len: i32 = 1;
         let s_vec: Vec<char> = s.chars().collect();
         let mut prev_char_byte: u8 = s_vec[0] as u8;
         let mut local_counter: i32 = 1;
 
-        for i in 1..s_vec.len(){
+        for i in 1..s_vec.len() {
             let curr_char: char = s_vec[i];
             let curr_char_byte: u8 = curr_char as u8;
 
-            if (curr_char_byte - 1) == prev_char_byte{
+            if curr_char_byte - 1 == prev_char_byte {
                 local_counter += 1;
                 prev_char_byte = curr_char_byte;
-            }else{
+            } else {
                 len = len.max(local_counter);
                 local_counter = 1;
                 prev_char_byte = curr_char_byte;
             }
             // edge case
-            if i == s_vec.len() - 1{
+            if i == s_vec.len() - 1 {
                 len = len.max(local_counter);
             }
         }
@@ -3584,8 +3584,8 @@ pub mod concepts_modules {
         len
     }
 
-    // max number of vowel letters in a substring 
-    pub fn max_vowels(s: String, k: i32)-> i32{
+    // max number of vowel letters in a substring
+    pub fn max_vowels(s: String, k: i32) -> i32 {
         let mut max_len: i32 = 0;
         let vec: Vec<char> = s.chars().collect();
         let mut v_set: HashSet<char> = HashSet::new();
@@ -3597,27 +3597,27 @@ pub mod concepts_modules {
 
         let mut flex_vec: Vec<char> = Vec::new();
         let mut v_counter: i32 = 0;
-        for i in 0..k as usize{
+        for i in 0..k as usize {
             flex_vec.push(vec[i]);
-            if v_set.contains(&vec[i]){
+            if v_set.contains(&vec[i]) {
                 v_counter += 1;
             }
         }
         max_len = max_len.max(v_counter);
-        for i in k as usize..vec.len(){
+        for i in k as usize..vec.len() {
             let curr_char: char = vec[i];
-            if let Some(first) = flex_vec.first(){
-                if v_set.contains(first){
+            if let Some(first) = flex_vec.first() {
+                if v_set.contains(first) {
                     v_counter -= 1;
                 }
             }
             flex_vec.remove(0);
             flex_vec.push(curr_char);
-            if v_set.contains(&curr_char){
+            if v_set.contains(&curr_char) {
                 v_counter += 1;
             }
             max_len = max_len.max(v_counter);
-        }       
+        }
         max_len
     }
 
@@ -3628,67 +3628,70 @@ pub mod concepts_modules {
         let mut end: usize = 0;
         let mut zero_counter: i32 = 0;
 
-        while end < nums.len(){
+        while end < nums.len() {
             let curr_num: i32 = nums[end];
             if curr_num == 0 {
                 zero_counter += 1;
             }
-            while zero_counter > k{
-                if nums[start] == 0{
+            while zero_counter > k {
+                if nums[start] == 0 {
                     zero_counter -= 1;
                 }
                 start += 1;
             }
-            count = count.max((end as i32 - start as i32) + 1);
+            count = count.max((end as i32) - (start as i32) + 1);
             end += 1;
         }
-        count      
+        count
     }
     // removing stars from the strings
     pub fn remove_stars(s: String) -> String {
         let s_vec: Vec<char> = s.chars().collect();
         let s_iter = s_vec.iter();
         let mut stack: Vec<char> = Vec::new();
-        for curr_char in s_iter{
+        for curr_char in s_iter {
             let local_char: char = *curr_char;
-            if local_char == '*'{
+            if local_char == '*' {
                 stack.pop();
-            }else{
+            } else {
                 stack.push(local_char);
             }
         }
-        let res: String = stack.into_iter().map(|a| a.to_string()).collect();
+        let res: String = stack
+            .into_iter()
+            .map(|a| a.to_string())
+            .collect();
         res
     }
 
-    // check distances 
-    pub fn check_distance(s: String, distance: Vec<i32>) -> bool{
-        let mut check:bool = true;
+    // check distances
+    pub fn check_distance(s: String, distance: Vec<i32>) -> bool {
+        let mut check: bool = true;
         let s_vec: Vec<char> = s.chars().collect();
         let alphabets: Vec<char> = ('a'..='z').collect();
         let mut alpha_vec: Vec<(char, i32)> = Vec::new();
-        for i in 0..alphabets.len(){
+        for i in 0..alphabets.len() {
             alpha_vec.push((alphabets[i], distance[i]));
         }
         let mut map: HashMap<char, (i32, i32)> = HashMap::new();
 
-        for (index, curr_char) in s_vec.iter().enumerate(){
-            if map.contains_key(curr_char){
-                if let Some(tuple) = map.get_mut(curr_char){
-                    tuple.1 = index as i32
+        for (index, curr_char) in s_vec.iter().enumerate() {
+            if map.contains_key(curr_char) {
+                if let Some(tuple) = map.get_mut(curr_char) {
+                    tuple.1 = index as i32;
                 }
-            }else{
+            } else {
                 map.insert(*curr_char, (index as i32, 0));
             }
         }
         // positioning
-        for curr_alpha in alpha_vec.iter(){
-            let curr_char : char = curr_alpha.0;
+        for curr_alpha in alpha_vec.iter() {
+            let curr_char: char = curr_alpha.0;
             let curr_char_val: i32 = curr_alpha.1;
-            if map.contains_key(&curr_char){
-                if let Some(tup_val) = map.get(&curr_char){
+            if map.contains_key(&curr_char) {
+                if let Some(tup_val) = map.get(&curr_char) {
                     let diff: i32 = tup_val.1 - tup_val.0 - 1;
-                    if diff != curr_char_val{
+                    if diff != curr_char_val {
                         check = false;
                         break;
                     }
@@ -3698,10 +3701,47 @@ pub mod concepts_modules {
 
         check
     }
+
+    pub fn merge_alternately(word1: String, word2: String) -> String {
+        let mut i: usize = 0;
+        let mut j: usize = 0;
+        let word_vec: Vec<char> = word1.chars().collect();
+        let word_vec2: Vec<char> = word2.chars().collect();
+        let mut res: String = String::from("");
+
+        let mut long_len: usize = word1.len();
+        if word2.len() > word1.len() {
+            long_len = word2.len();
+        }
+        let mut check: bool = false;
+        let mut check_two: bool = false;
+
+        for _ in 0..long_len {
+            let one_char: char = word_vec[i];
+            let two_char: char = word_vec2[j];
+            if !check {
+                res.push(one_char);
+            }
+            if !check_two{
+                res.push(two_char);
+            }
+
+            if i == word_vec.len() - 1{
+                check = true;
+            }
+            if !check{
+                i += 1;
+            }
+            if j == word_vec2.len() - 1{
+                check_two = true;
+            }
+            if !check_two {
+                j += 1
+            }
+        }
+        res
+    }
 }
-
-    
-
 
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
 

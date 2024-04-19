@@ -2,125 +2,17 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::usize;
 
+use crate::concepts::concepts_modules::merge_alternately;
+
 // using the files
 mod rust_leetcode;
 mod concepts;
-use crate::concepts::concepts_modules::array_rank_transform;
-use crate::concepts::concepts_modules::can_construct;
-use crate::concepts::concepts_modules::can_place_flowers;
-use crate::concepts::concepts_modules::car_fleet;
-use crate::concepts::concepts_modules::check_distance;
-use crate::concepts::concepts_modules::container_water;
-use crate::concepts::concepts_modules::count_car_collisions;
-use crate::concepts::concepts_modules::count_characters;
-use crate::concepts::concepts_modules::count_complete_subarrays;
-use crate::concepts::concepts_modules::count_good_sub;
-use crate::concepts::concepts_modules::count_palindromic_subsequence;
-use crate::concepts::concepts_modules::count_vowel_substrings;
-use crate::concepts::concepts_modules::count_words;
-use crate::concepts::concepts_modules::delete_earn;
-use crate::concepts::concepts_modules::find_all_anagrams;
-use crate::concepts::concepts_modules::find_kth_largest;
-use crate::concepts::concepts_modules::find_relative_ranks;
-use crate::concepts::concepts_modules::find_winners;
-use crate::concepts::concepts_modules::first_palindromic_substring;
-use crate::concepts::concepts_modules::frequency_sort_two;
-use crate::concepts::concepts_modules::fucking_function;
-use crate::concepts::concepts_modules::get_longest_palindrome;
-use crate::concepts::concepts_modules::halves_in_string;
-use crate::concepts::concepts_modules::has_all_codes;
-use crate::concepts::concepts_modules::house_robber_ii;
-use crate::concepts::concepts_modules::intersect_array;
-use crate::concepts::concepts_modules::intersection;
-use crate::concepts::concepts_modules::is_anagram;
-use crate::concepts::concepts_modules::is_find_word_in_sub;
-use crate::concepts::concepts_modules::is_subsequence;
-use crate::concepts::concepts_modules::is_toeplix_matrix;
-use crate::concepts::concepts_modules::kth_distinct;
-use crate::concepts::concepts_modules::largest_good_integer;
-use crate::concepts::concepts_modules::length_of_last_word;
-use crate::concepts::concepts_modules::license_key_formatting;
-use crate::concepts::concepts_modules::longest_char_replacement;
-use crate::concepts::concepts_modules::longest_consequtive_sequence;
-use crate::concepts::concepts_modules::longest_continuous_alphbetic_sum;
-use crate::concepts::concepts_modules::longest_increasing_subsequence;
-use crate::concepts::concepts_modules::longest_ones;
-use crate::concepts::concepts_modules::longest_palindrome;
-use crate::concepts::concepts_modules::longest_sub_without_repeating_chars;
-use crate::concepts::concepts_modules::longest_substring;
-use crate::concepts::concepts_modules::longest_word_in_dict;
-use crate::concepts::concepts_modules::max_absolute_sum;
-use crate::concepts::concepts_modules::max_ascending_sum;
-use crate::concepts::concepts_modules::max_consequtive_ones;
-use crate::concepts::concepts_modules::max_freq;
-use crate::concepts::concepts_modules::max_power;
-use crate::concepts::concepts_modules::max_subarray;
-use crate::concepts::concepts_modules::max_vowels;
-use crate::concepts::concepts_modules::max_vowels_in_given_sub;
-use crate::concepts::concepts_modules::min_deletions;
-use crate::concepts::concepts_modules::min_len;
-use crate::concepts::concepts_modules::min_set_size;
-use crate::concepts::concepts_modules::min_steps;
-use crate::concepts::concepts_modules::minimum_recolors;
-use crate::concepts::concepts_modules::most_common_word;
-use crate::concepts::concepts_modules::num_of_subarrays_two;
-use crate::concepts::concepts_modules::num_rescue_boats;
-use crate::concepts::concepts_modules::number_of_subarrays;
-use crate::concepts::concepts_modules::partition_labels;
-use crate::concepts::concepts_modules::partition_string_two;
-use crate::concepts::concepts_modules::peak_index;
-use crate::concepts::concepts_modules::pivot_index;
-use crate::concepts::concepts_modules::play_ground;
-use crate::concepts::concepts_modules::play_ground_two;
-use crate::concepts::concepts_modules::push_dom;
-use crate::concepts::concepts_modules::push_dominoes;
-use crate::concepts::concepts_modules::random_shit;
-use crate::concepts::concepts_modules::remove_duplicates;
-use crate::concepts::concepts_modules::remove_stars;
-use crate::concepts::concepts_modules::rep_chars;
-use crate::concepts::concepts_modules::reverse_vowels;
-use crate::concepts::concepts_modules::reverse_words;
-use crate::concepts::concepts_modules::shortest_distance_to_char;
-use crate::concepts::concepts_modules::shortest_to_char_try;
-use crate::concepts::concepts_modules::similar_pairs;
-use crate::concepts::concepts_modules::single_num_iii;
-use crate::concepts::concepts_modules::subarray_ranges;
-use crate::concepts::concepts_modules::subarray_sum;
-use crate::concepts::concepts_modules::top_k_frequent;
-use crate::concepts::concepts_modules::top_k_frequent_elements;
-use crate::concepts::concepts_modules::uncommon_from_sentences;
-use crate::concepts::concepts_modules::unique_occurence;
-use crate::concepts::concepts_modules::vowel_strings;
-use crate::concepts::concepts_modules::word_pattern;
-use crate::concepts::concepts_modules::word_pattern_check;
-use crate::concepts::concepts_modules::zero_filled;
-use crate::concepts::concepts_modules::zero_filled_subarrays;
 
 // main function is necesary to make the code run
 // cannot assign values ot a different type after once its declared... unless its mutable
 fn main() {
-   //shortest_to_char_try(String::from("loveleetcode"), 'e');
-   //top_k_frequent(vec!["i".to_string(),"love".to_string(),"leetcode".to_string(),"i".to_string(),"love".to_string(),"coding".to_string()], 2);
-   //repeated_substring(String::from("abcabcabcabc"));
-   //reverse_words(String::from("Let's take LeetCode contest"));
-   //partition_string_two(String::from("ssssss"));
-   //longest_increasing_subsequence(vec![10,9,2,5,3,7,101,18]);
-   //find_kth_largest(vec![3,2,3,1,2,4,5,5,6], 4);
-   //largest_good_integer(String::from("42352338"));
-  // has_all_codes(String::from("00110110"), 2);
-   //count_palindromic_subsequence(String::from("aabca"));
-   //max_ascending_sum(vec![10,20,30,5,10,50]);
-   //count_characters(vec!["cat".to_string(),"bt".to_string(),"hat".to_string(),"tree".to_string()], String::from("atach"));
-   //min_deletions(String::from("bbcebab"));
-   //zero_filled(vec![0,0,0,2,0,0]);
-   //car_fleet(10, vec![0,4,2], vec![2,1,3]);
-   //count_car_collisions(String::from("LLRLRLLSLRLLSLSSSS"));
-   //num_rescue_boats(vec![5,1,4,2], 6);
-   //longest_continuous_alphbetic_sum(String::from("abcacaba"));
-   //max_vowels(String::from("abciiidef"), 3);
-//    longest_ones(vec![0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], 3);
-   //remove_stars(String::from("leet**cod*e"));
-   check_distance(String::from("abaccb"), vec![1,3,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+
+    merge_alternately(String::from("ab"), String::from("pqrs"));
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
@@ -132,7 +24,7 @@ fn main() {
     println!("x is: {}", x);
     x = 5;
     println!("x new value: {}", x);
-    reverse_vowels(String::from("leetcode"));
+    //reverse_vowels(String::from("leetcode"));
     // here the value is redeclared that is okay even if they are immutable
     // let x = 4;
     // let x = x + 1;
