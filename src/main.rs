@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::usize;
 
-use crate::concepts::concepts_modules::merge_alternately;
+use crate::concepts::concepts_modules::rearrange_nums;
 
 // using the files
 mod rust_leetcode;
@@ -12,7 +12,8 @@ mod concepts;
 // cannot assign values ot a different type after once its declared... unless its mutable
 fn main() {
 
-    merge_alternately(String::from("ab"), String::from("pqrs"));
+    //merge_alternately(String::from("ab"), String::from("pqrs"));
+    rearrange_nums(vec![1,2,5,9]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

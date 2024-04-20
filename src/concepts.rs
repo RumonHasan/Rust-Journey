@@ -3722,24 +3722,74 @@ pub mod concepts_modules {
             if !check {
                 res.push(one_char);
             }
-            if !check_two{
+            if !check_two {
                 res.push(two_char);
             }
 
-            if i == word_vec.len() - 1{
+            if i == word_vec.len() - 1 {
                 check = true;
             }
-            if !check{
+            if !check {
                 i += 1;
             }
-            if j == word_vec2.len() - 1{
+            if j == word_vec2.len() - 1 {
                 check_two = true;
             }
             if !check_two {
-                j += 1
+                j += 1;
             }
         }
         res
+    }
+
+    // rearrange nums
+    pub fn rearrange_nums(nums: Vec<i32>) -> Vec<i32> { // without swapping
+        let mut sorted_nums: Vec<i32> = nums.clone();
+        sorted_nums.sort_by(|a, b| a.cmp(&b));
+        let mut arr_vec: Vec<i32> = Vec::new();
+        let half_len: usize = sorted_nums.len() / 2;
+        let mut f_h: Vec<i32> = Vec::new();
+        let mut s_h: Vec<i32> = Vec::new();
+        for i in 0..half_len + 1 {
+            f_h.push(sorted_nums[i]);
+        }
+        for i in half_len + 1..sorted_nums.len() {
+            s_h.push(sorted_nums[i]);
+        }
+        let mut f_index: usize = 0;
+        let mut s_index: usize = 0;
+        let mut check: bool = false;
+        let mut check_two: bool = false;
+
+        let mut long_len: usize = f_h.len();
+        if long_len < s_h.len() {
+            long_len = s_h.len();
+        }
+
+        for _ in 0..long_len {
+            if !check {
+                arr_vec.push(f_h[f_index]);
+            }
+            if !check_two {
+                arr_vec.push(s_h[s_index]);
+            }
+            if s_index == s_h.len() - 1 {
+                check_two = true;
+            }
+            if f_index == f_h.len() - 1 {
+                check = true;
+            }
+
+            if !check {
+                f_index += 1;
+            }
+
+            if !check_two {
+                s_index += 1;
+            }
+        }
+
+        arr_vec
     }
 }
 
