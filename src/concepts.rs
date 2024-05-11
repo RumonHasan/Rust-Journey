@@ -4,6 +4,8 @@ pub mod concepts_modules {
     use std::collections::HashMap;
     use std::collections::HashSet;
     use std::hash::Hash;
+    use std::i32::MAX;
+    use std::i32::MIN;
     use std::iter::Map;
     use std::string;
     use std::vec;
@@ -3743,7 +3745,8 @@ pub mod concepts_modules {
     }
 
     // rearrange nums
-    pub fn rearrange_nums(nums: Vec<i32>) -> Vec<i32> { // without swapping
+    pub fn rearrange_nums(nums: Vec<i32>) -> Vec<i32> {
+        // without swapping
         let mut sorted_nums: Vec<i32> = nums.clone();
         sorted_nums.sort_by(|a, b| a.cmp(&b));
         let mut arr_vec: Vec<i32> = Vec::new();
@@ -3790,6 +3793,41 @@ pub mod concepts_modules {
         }
 
         arr_vec
+    }
+
+    // finding the longest harmonious sequence
+    pub fn find_lhs(nums: Vec<i32>) -> i32 {
+        let mut longest_len: i32 = 0;
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        let mut set: HashSet<i32> = HashSet::new();
+        for item in nums.iter() {
+            set.insert(*item);
+        }
+        for i in 0..nums.len() {
+            match map.get_mut(&nums[i]) {
+                Some(occurence) => {
+                    *occurence += 1;
+                }
+                None => {
+                    map.insert(nums[i], 1);
+                }
+            }
+        }
+        let mut set_vec: Vec<i32> = set
+            .into_iter()
+            .map(|val| val)
+            .collect();
+        set_vec.sort_by(|a, b| b.cmp(&a));
+        let mut end: usize = 1;
+        while end < set_vec.len() {
+            if set_vec[end - 1] - set_vec[end] == 1 {
+                longest_len = longest_len.max(
+                    map.get(&set_vec[end]).unwrap() + map.get(&set_vec[end - 1]).unwrap()
+                );
+            }
+            end += 1;
+        }
+        longest_len
     }
 }
 

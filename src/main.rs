@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::usize;
 
+use crate::concepts::concepts_modules::find_lhs;
 use crate::concepts::concepts_modules::rearrange_nums;
 
 // using the files
@@ -14,6 +15,7 @@ fn main() {
 
     //merge_alternately(String::from("ab"), String::from("pqrs"));
     rearrange_nums(vec![1,2,5,9]);
+    find_lhs(vec![1,3,2,2,5,2,3,7]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
