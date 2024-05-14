@@ -3829,6 +3829,71 @@ pub mod concepts_modules {
         }
         longest_len
     }
+
+    // getting the long pressed name
+    pub fn is_long_pressed_name(name: String, typed: String) -> bool {
+        let mut type_pointer: usize = 1;
+        let mut name_pointer: usize = 1;
+        let n_vec: Vec<char> = name.chars().collect();
+        let t_vec: Vec<char> = typed.chars().collect();
+        if n_vec.is_empty(){
+            return false;
+        }
+        if n_vec.len() > t_vec.len(){
+            return false;
+        }
+
+        while type_pointer < t_vec.len() {
+            let t_char: char = t_vec[type_pointer];
+
+            if name_pointer < n_vec.len() && type_pointer < t_vec.len(){
+                let n_char: char = n_vec[name_pointer];
+                let n_prev: char = if name_pointer > 0 { n_vec[name_pointer - 1] } else { '\0' };
+                if n_char == t_char{
+                    name_pointer += 1;
+                    type_pointer += 1;
+                }else if t_char == n_prev{
+                    type_pointer += 1;
+                }else {
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
+        name.len() == name_pointer
+    }
+
+    // replace words
+    pub fn replace_words(dictionary: Vec<String>, sentence: String) -> String {
+        let s_vec: Vec<&str> = sentence.split_whitespace().collect();
+        let mut result_vec: Vec<String> = Vec::new();
+        for word in s_vec.iter(){
+            result_vec.push(word.to_string());
+        }
+        for (index,word) in s_vec.iter().enumerate(){
+            let curr_word = word.to_string();
+            let mut d_match: String = String::from("");
+            for d_word in dictionary.iter(){
+                let d = d_word.to_string();
+                if curr_word.starts_with(&d){
+                    if d_match.is_empty(){
+                        d_match = d.to_string();
+                    }else{
+                        if d_match.len() > d.to_string().len(){
+                            d_match = d.to_string();
+                        }
+                    }
+                }
+            }
+            if  let Some(res_word) = result_vec.get_mut(index){
+                if !d_match.is_empty() {
+                    *res_word = d_match;
+                }
+            }
+        }
+        result_vec.join("")
+    }
 }
 
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
