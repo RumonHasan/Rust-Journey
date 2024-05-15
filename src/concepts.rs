@@ -3894,6 +3894,38 @@ pub mod concepts_modules {
         }
         result_vec.join("")
     }
+
+    // sliding window binary sum
+    pub fn num_subarrays_with_sum(mut nums: Vec<i32>, mut goal: i32) -> i32 {
+        let mut counter: i32 = 0;
+        fn get_sub_ocurence (nums: &mut Vec<i32>, goal: &mut i32)-> i32{
+            let mut counter: i32 = 0;
+            let mut start: usize = 0;
+            let mut total: i32 = 0;
+            let mut end: usize = 0;
+            while end < nums.len() {
+                total += nums[end];
+                while total > *goal {
+                    if start < nums.len() {
+                        total -= nums[start];
+                        start += 1;
+                    } else {
+                        break;
+                    }
+                }
+                if start <= end {
+                    counter += (end - start + 1) as i32;
+                }
+                end += 1;
+            }
+            return counter
+        }
+        let total_sub: i32 = get_sub_ocurence(&mut nums, &mut goal);
+        goal -= 1;
+        let second_sub: i32 = get_sub_ocurence(&mut nums, &mut goal);
+        counter = total_sub - second_sub;
+        counter
+    }
 }
 
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
