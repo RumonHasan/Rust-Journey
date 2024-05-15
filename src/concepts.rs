@@ -3836,28 +3836,28 @@ pub mod concepts_modules {
         let mut name_pointer: usize = 1;
         let n_vec: Vec<char> = name.chars().collect();
         let t_vec: Vec<char> = typed.chars().collect();
-        if n_vec.is_empty(){
+        if n_vec.is_empty() {
             return false;
         }
-        if n_vec.len() > t_vec.len(){
+        if n_vec.len() > t_vec.len() {
             return false;
         }
 
         while type_pointer < t_vec.len() {
             let t_char: char = t_vec[type_pointer];
 
-            if name_pointer < n_vec.len() && type_pointer < t_vec.len(){
+            if name_pointer < n_vec.len() && type_pointer < t_vec.len() {
                 let n_char: char = n_vec[name_pointer];
                 let n_prev: char = if name_pointer > 0 { n_vec[name_pointer - 1] } else { '\0' };
-                if n_char == t_char{
+                if n_char == t_char {
                     name_pointer += 1;
                     type_pointer += 1;
-                }else if t_char == n_prev{
+                } else if t_char == n_prev {
                     type_pointer += 1;
-                }else {
+                } else {
                     return false;
                 }
-            }else{
+            } else {
                 return true;
             }
         }
@@ -3868,25 +3868,25 @@ pub mod concepts_modules {
     pub fn replace_words(dictionary: Vec<String>, sentence: String) -> String {
         let s_vec: Vec<&str> = sentence.split_whitespace().collect();
         let mut result_vec: Vec<String> = Vec::new();
-        for word in s_vec.iter(){
+        for word in s_vec.iter() {
             result_vec.push(word.to_string());
         }
-        for (index,word) in s_vec.iter().enumerate(){
+        for (index, word) in s_vec.iter().enumerate() {
             let curr_word = word.to_string();
             let mut d_match: String = String::from("");
-            for d_word in dictionary.iter(){
+            for d_word in dictionary.iter() {
                 let d = d_word.to_string();
-                if curr_word.starts_with(&d){
-                    if d_match.is_empty(){
+                if curr_word.starts_with(&d) {
+                    if d_match.is_empty() {
                         d_match = d.to_string();
-                    }else{
-                        if d_match.len() > d.to_string().len(){
+                    } else {
+                        if d_match.len() > d.to_string().len() {
                             d_match = d.to_string();
                         }
                     }
                 }
             }
-            if  let Some(res_word) = result_vec.get_mut(index){
+            if let Some(res_word) = result_vec.get_mut(index) {
                 if !d_match.is_empty() {
                     *res_word = d_match;
                 }
@@ -3898,7 +3898,7 @@ pub mod concepts_modules {
     // sliding window binary sum
     pub fn num_subarrays_with_sum(mut nums: Vec<i32>, mut goal: i32) -> i32 {
         let mut counter: i32 = 0;
-        fn get_sub_ocurence (nums: &mut Vec<i32>, goal: &mut i32)-> i32{
+        fn get_sub_ocurence(nums: &mut Vec<i32>, goal: &mut i32) -> i32 {
             let mut counter: i32 = 0;
             let mut start: usize = 0;
             let mut total: i32 = 0;
@@ -3918,7 +3918,7 @@ pub mod concepts_modules {
                 }
                 end += 1;
             }
-            return counter
+            return counter;
         }
         let total_sub: i32 = get_sub_ocurence(&mut nums, &mut goal);
         goal -= 1;
@@ -3926,8 +3926,65 @@ pub mod concepts_modules {
         counter = total_sub - second_sub;
         counter
     }
-}
 
+    // getting the longest substring with k repeating characters using hashmap and sliding window
+    pub fn longest_substring_with_k(s: String, k: i32) -> i32 {
+        let mut max_len: usize = 0;
+        let s_vec: Vec<char> = s.chars().collect();
+        let set: HashSet<char> = s_vec.iter().map(|val| *val).collect();
+        let unique_size: usize = set.len();
+        let mut unique_index: usize = 1;
+
+        while unique_index <= unique_size{
+            let mut map: HashMap<char, i32> = HashMap::new();
+            let mut atleast_k: i32 = 0;
+            let mut u_count: i32 = 0;
+            let mut start: usize = 0;
+
+            for (index, curr_char) in s_vec.iter().enumerate(){
+                if let Some(occurence) = map.get_mut(curr_char){
+                    *occurence += 1;
+                }else{
+                    map.insert(*curr_char, 1);
+                }
+                // populating unique and atleast k
+                if let Some(k_check) = map.get(curr_char){
+                    if *k_check == k{
+                        atleast_k += 1;
+                    }
+                }
+                if let Some(occ) = map.get(curr_char){
+                    if *occ == 1{
+                        u_count += 1;
+                    }
+                }
+                // if it exceeds unique count
+                while u_count > unique_index as i32{
+                    if let Some(atk) = map.get(&s_vec[start]){
+                        if *atk == k{
+                            atleast_k -= 1;
+                        }
+                    }
+                    if let Some(oc) = map.get_mut(&s_vec[start]){
+                        *oc -= 1;
+                        if *oc == 0{
+                            u_count -= 1;
+                        }
+                    }
+                    start += 1;
+                }
+                if u_count as usize == unique_index && atleast_k as usize == unique_index{
+                    max_len = max_len.max(index - start + 1);
+                }
+
+            }
+
+            unique_index += 1;
+        }
+        max_len as i32
+    }
+}
+// aebaaabbc
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
 
 // [5,5,4,3]
