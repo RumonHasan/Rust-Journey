@@ -3983,6 +3983,45 @@ pub mod concepts_modules {
         }
         max_len as i32
     }
+
+
+    // longest turbulent
+    pub fn turbulent(arr: Vec<i32>)-> i32{
+        let mut maxlen: i32 = 0;
+        let mut end: usize = 1;
+        let mut start: usize = 0;
+        let mut currsign: char = '.';
+        if arr.len() == 1{
+            return 1
+        }
+        while end < arr.len(){
+            let currel: i32 = arr[end];
+            let currprev: i32 = arr[end - 1];
+
+            if currprev > currel && currsign != '>'{
+                maxlen = maxlen.max((end - start + 1) as i32);
+                end += 1;
+                currsign = '>';
+            }else if currprev < currel && currsign != '<'{
+                maxlen = maxlen.max((end - start + 1) as i32);
+                end += 1;
+                currsign = '<';
+            }else{
+                if currel == currprev{
+                    maxlen = maxlen.max((end - start) as i32);
+                    start = end;
+                    end = end + 1;
+                    currsign = '.';
+                }
+                if currsign == '>' || currsign == '<'{
+                    start = end - 1;
+                    end += 1;
+                }
+            }
+            
+        }
+        return maxlen
+    }
 }
 // aebaaabbc
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
