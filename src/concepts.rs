@@ -3931,52 +3931,54 @@ pub mod concepts_modules {
     pub fn longest_substring_with_k(s: String, k: i32) -> i32 {
         let mut max_len: usize = 0;
         let s_vec: Vec<char> = s.chars().collect();
-        let set: HashSet<char> = s_vec.iter().map(|val| *val).collect();
+        let set: HashSet<char> = s_vec
+            .iter()
+            .map(|val| *val)
+            .collect();
         let unique_size: usize = set.len();
         let mut unique_index: usize = 1;
 
-        while unique_index <= unique_size{
+        while unique_index <= unique_size {
             let mut map: HashMap<char, i32> = HashMap::new();
             let mut atleast_k: i32 = 0;
             let mut u_count: i32 = 0;
             let mut start: usize = 0;
 
-            for (index, curr_char) in s_vec.iter().enumerate(){
-                if let Some(occurence) = map.get_mut(curr_char){
+            for (index, curr_char) in s_vec.iter().enumerate() {
+                if let Some(occurence) = map.get_mut(curr_char) {
                     *occurence += 1;
-                }else{
+                } else {
                     map.insert(*curr_char, 1);
                 }
                 // populating unique and atleast k
-                if let Some(k_check) = map.get(curr_char){
-                    if *k_check == k{
+                if let Some(k_check) = map.get(curr_char) {
+                    if *k_check == k {
                         atleast_k += 1;
                     }
                 }
-                if let Some(occ) = map.get(curr_char){
-                    if *occ == 1{
+                if let Some(occ) = map.get(curr_char) {
+                    if *occ == 1 {
                         u_count += 1;
                     }
                 }
                 // if it exceeds unique count
-                while u_count > unique_index as i32{
-                    if let Some(atk) = map.get(&s_vec[start]){
-                        if *atk == k{
+                while u_count > (unique_index as i32) {
+                    if let Some(atk) = map.get(&s_vec[start]) {
+                        if *atk == k {
                             atleast_k -= 1;
                         }
                     }
-                    if let Some(oc) = map.get_mut(&s_vec[start]){
+                    if let Some(oc) = map.get_mut(&s_vec[start]) {
                         *oc -= 1;
-                        if *oc == 0{
+                        if *oc == 0 {
                             u_count -= 1;
                         }
                     }
                     start += 1;
                 }
-                if u_count as usize == unique_index && atleast_k as usize == unique_index{
+                if (u_count as usize) == unique_index && (atleast_k as usize) == unique_index {
                     max_len = max_len.max(index - start + 1);
                 }
-
             }
 
             unique_index += 1;
@@ -3984,43 +3986,79 @@ pub mod concepts_modules {
         max_len as i32
     }
 
-
     // longest turbulent
-    pub fn turbulent(arr: Vec<i32>)-> i32{
+    pub fn turbulent(arr: Vec<i32>) -> i32 {
         let mut maxlen: i32 = 0;
         let mut end: usize = 1;
         let mut start: usize = 0;
         let mut currsign: char = '.';
-        if arr.len() == 1{
-            return 1
+        if arr.len() == 1 {
+            return 1;
         }
-        while end < arr.len(){
+        while end < arr.len() {
             let currel: i32 = arr[end];
             let currprev: i32 = arr[end - 1];
 
-            if currprev > currel && currsign != '>'{
+            if currprev > currel && currsign != '>' {
                 maxlen = maxlen.max((end - start + 1) as i32);
                 end += 1;
                 currsign = '>';
-            }else if currprev < currel && currsign != '<'{
+            } else if currprev < currel && currsign != '<' {
                 maxlen = maxlen.max((end - start + 1) as i32);
                 end += 1;
                 currsign = '<';
-            }else{
-                if currel == currprev{
+            } else {
+                if currel == currprev {
                     maxlen = maxlen.max((end - start) as i32);
                     start = end;
                     end = end + 1;
                     currsign = '.';
                 }
-                if currsign == '>' || currsign == '<'{
+                if currsign == '>' || currsign == '<' {
                     start = end - 1;
                     end += 1;
                 }
             }
-            
         }
-        return maxlen
+        return maxlen;
+    }
+
+    // asteroid collision problem
+    pub fn asteroid_collision(asteroids: Vec<i32>) -> Vec<i32> {
+        let mut stack: Vec<i32> = Vec::new();
+        for asteroid in asteroids.iter() {
+            if stack.is_empty() {
+                stack.push(*asteroid);
+            } else {
+                let last_roid: i32 = *stack.last().unwrap();
+                // collision occurs
+                if last_roid > 0 && *asteroid < 0 {
+                    let mut collision_check: bool = false;
+                    while !stack.is_empty() && stack[stack.len() - 1] > 0 && *asteroid < 0 {
+                        if stack[stack.len() - 1].abs() < asteroid.abs() {
+                            stack.pop();
+                        } else if stack[stack.len() - 1].abs() > asteroid.abs() {
+                            collision_check = true;
+                            break;
+                        } else if stack[stack.len() - 1].abs() == asteroid.abs() {
+                          stack.pop();
+                          collision_check = true;
+                          break;
+                        } else {
+                            collision_check = true;
+                            break;
+                        }
+                    }
+                    if !collision_check {
+                        stack.push(*asteroid);
+                    }
+                } else {
+                    stack.push(*asteroid);
+                }
+            }
+        }
+        println!("{:?}", stack);
+        stack
     }
 }
 // aebaaabbc
