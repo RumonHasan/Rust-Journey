@@ -3,6 +3,7 @@ use std::collections::HashSet;
 use std::usize;
 
 use crate::concepts::concepts_modules::asteroid_collision;
+use crate::concepts::concepts_modules::find_least_num_of_unique_ints;
 use crate::concepts::concepts_modules::find_lhs;
 use crate::concepts::concepts_modules::is_long_pressed_name;
 use crate::concepts::concepts_modules::longest_substring_with_k;
@@ -25,7 +26,8 @@ fn main() {
     //replace_words(vec!["cat".to_string(),"bat".to_string(),"rat".to_string()], String::from("the cattle was rattled by the battery"));
     //num_subarrays_with_sum(vec![1,0,1,0,1], 2);
     //longest_substring_with_k(String::from("ababbc"), 2);
-    asteroid_collision(vec![10, -10]);
+    //asteroid_collision(vec![10, -10]);
+    find_least_num_of_unique_ints(vec![4,3,1,1,3,3,2], 3);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

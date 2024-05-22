@@ -3,6 +3,7 @@ pub mod concepts_modules {
     use std::collections::btree_set::Difference;
     use std::collections::HashMap;
     use std::collections::HashSet;
+    use std::f32::INFINITY;
     use std::hash::Hash;
     use std::i32::MAX;
     use std::i32::MIN;
@@ -4059,6 +4060,42 @@ pub mod concepts_modules {
         }
         println!("{:?}", stack);
         stack
+    }
+
+
+    // removing least number of unique integers
+    pub fn find_least_num_of_unique_ints(arr: Vec<i32>, mut k: i32) -> i32 {
+        let mut min_count: i32 = 0;
+        let mut map: HashMap<i32, i32> = HashMap::new();
+        for num in arr.iter(){
+           *map.entry(*num).or_insert(0) += 1;
+        }
+        let mut sorted_freq: Vec<(i32, i32)> = map.iter().map(|val| (*val.0, *val.1)).collect();
+        sorted_freq.sort_by(|a , b| a.1.cmp(&b.1));
+        // removing k elements then counting distinct
+        let mut cut_off: usize = 0;
+        let mut old_limit: i32 = k;
+        for (index, item) in sorted_freq.iter_mut().enumerate(){
+            k -= item.1;
+            item.1 -= old_limit - k;
+            old_limit = k;
+            if k <= 0{
+                cut_off = index;
+                break;
+            }
+        }
+        // if there is a negative value then change cut off val
+        if k < 0{
+            min_count = sorted_freq[cut_off..sorted_freq.len()].len() as i32;
+        }else {
+            sorted_freq.iter().for_each(|val| {
+                if val.1 > 0{
+                    min_count += 1;
+                }
+            });
+        }
+        min_count
+
     }
 }
 // aebaaabbc
