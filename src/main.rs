@@ -2,11 +2,14 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::usize;
 
+use concepts::concepts_modules::occurrences_of_element;
+
 use crate::concepts::concepts_modules::asteroid_collision;
 use crate::concepts::concepts_modules::find_least_num_of_unique_ints;
 use crate::concepts::concepts_modules::find_lhs;
 use crate::concepts::concepts_modules::is_long_pressed_name;
 use crate::concepts::concepts_modules::longest_substring_with_k;
+use crate::concepts::concepts_modules::max_subarray_sum_circular;
 use crate::concepts::concepts_modules::num_subarrays_with_sum;
 use crate::concepts::concepts_modules::rearrange_nums;
 use crate::concepts::concepts_modules::replace_words;
@@ -27,7 +30,9 @@ fn main() {
     //num_subarrays_with_sum(vec![1,0,1,0,1], 2);
     //longest_substring_with_k(String::from("ababbc"), 2);
     //asteroid_collision(vec![10, -10]);
-    find_least_num_of_unique_ints(vec![4,3,1,1,3,3,2], 3);
+    //find_least_num_of_unique_ints(vec![-3,-2,-3], 3);
+    //max_subarray_sum_circular(vec![-3,-2,-3]);
+    occurrences_of_element(vec![1,3,2,2,3,3,1,3,1], vec![5,6,1,5,6,4,1,5], 3);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

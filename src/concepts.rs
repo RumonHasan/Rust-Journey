@@ -4097,10 +4097,62 @@ pub mod concepts_modules {
         min_count
 
     }
+    // getting the maximum sub circular subarray sum
+    pub fn max_subarray_sum_circular(nums: Vec<i32>) -> i32 {
+        let mut total: i32 = nums.iter().fold(0, |avv, val| avv + val);
+        // global linear max
+        let mut global_max: i32 = *nums.first().unwrap();
+        let mut curr_max: i32 = global_max;
+        // global linear min
+        let mut global_min: i32 = *nums.first().unwrap();
+        let mut curr_min: i32 = global_min;
+
+        for index in 1..nums.len(){
+            let curr_num: i32 = nums[index];
+            // for global max
+            curr_max = (curr_max + curr_num).max(curr_num);
+            if curr_max > global_max{
+                global_max = curr_max;
+            }
+            // getting global mins
+            curr_min = (curr_num + curr_min).min(curr_num);
+            if global_min > curr_min{
+                global_min = curr_min;
+            }
+        }
+        total = if total - global_min > global_max && total != global_min { total - global_min } else{global_max};
+        total
+    }
+
+    // finding occurences of element
+    pub fn occurrences_of_element(nums: Vec<i32>, queries: Vec<i32>, x: i32) -> Vec<i32> {
+        let mut ans_queries: Vec<i32> = vec![-1; queries.len()];
+        let mut freq_vec: Vec<i32> = Vec::new();
+
+        for (index, item) in nums.iter().enumerate(){
+            if *item == x {
+                freq_vec.push(index as i32);
+            }
+        }
+        for index in 0..ans_queries.len(){
+            let query: i32 = queries[index];
+            if query as usize <= freq_vec.len(){
+                ans_queries[index] = freq_vec[(query - 1) as usize];
+            }
+        }
+        ans_queries
+    }
 }
+//[5,6,1,5,6,4,1,5]
+/*
+5, -3, 5
+
+
+
+*/
+
 // aebaaabbc
 // n * (n + 1) / 2 => 3 * 4 => 12 / 2 = 6
-
 // [5,5,4,3]
 /* 
 3 5 3 4 start
