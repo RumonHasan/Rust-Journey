@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::usize;
 
+use concepts::concepts_modules::find_the_prefix_common_array;
 use concepts::concepts_modules::occurrences_of_element;
 
 use crate::concepts::concepts_modules::asteroid_collision;
@@ -32,7 +33,9 @@ fn main() {
     //asteroid_collision(vec![10, -10]);
     //find_least_num_of_unique_ints(vec![-3,-2,-3], 3);
     //max_subarray_sum_circular(vec![-3,-2,-3]);
-    occurrences_of_element(vec![1,3,2,2,3,3,1,3,1], vec![5,6,1,5,6,4,1,5], 3);
+    // occurrences_of_element(vec![1,3,2,2,3,3,1,3,1], vec![5,6,1,5,6,4,1,5], 3);
+    // check_str_twot();
+    find_the_prefix_common_array(vec![1,2, 3], vec![3,2, 1]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]
