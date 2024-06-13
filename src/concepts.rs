@@ -4042,9 +4042,9 @@ pub mod concepts_modules {
                             collision_check = true;
                             break;
                         } else if stack[stack.len() - 1].abs() == asteroid.abs() {
-                          stack.pop();
-                          collision_check = true;
-                          break;
+                            stack.pop();
+                            collision_check = true;
+                            break;
                         } else {
                             collision_check = true;
                             break;
@@ -4062,40 +4062,41 @@ pub mod concepts_modules {
         stack
     }
 
-
     // removing least number of unique integers
     pub fn find_least_num_of_unique_ints(arr: Vec<i32>, mut k: i32) -> i32 {
         let mut min_count: i32 = 0;
         let mut map: HashMap<i32, i32> = HashMap::new();
-        for num in arr.iter(){
-           *map.entry(*num).or_insert(0) += 1;
+        for num in arr.iter() {
+            *map.entry(*num).or_insert(0) += 1;
         }
-        let mut sorted_freq: Vec<(i32, i32)> = map.iter().map(|val| (*val.0, *val.1)).collect();
-        sorted_freq.sort_by(|a , b| a.1.cmp(&b.1));
+        let mut sorted_freq: Vec<(i32, i32)> = map
+            .iter()
+            .map(|val| (*val.0, *val.1))
+            .collect();
+        sorted_freq.sort_by(|a, b| a.1.cmp(&b.1));
         // removing k elements then counting distinct
         let mut cut_off: usize = 0;
         let mut old_limit: i32 = k;
-        for (index, item) in sorted_freq.iter_mut().enumerate(){
+        for (index, item) in sorted_freq.iter_mut().enumerate() {
             k -= item.1;
             item.1 -= old_limit - k;
             old_limit = k;
-            if k <= 0{
+            if k <= 0 {
                 cut_off = index;
                 break;
             }
         }
         // if there is a negative value then change cut off val
-        if k < 0{
+        if k < 0 {
             min_count = sorted_freq[cut_off..sorted_freq.len()].len() as i32;
-        }else {
+        } else {
             sorted_freq.iter().for_each(|val| {
-                if val.1 > 0{
+                if val.1 > 0 {
                     min_count += 1;
                 }
             });
         }
         min_count
-
     }
     // getting the maximum sub circular subarray sum
     pub fn max_subarray_sum_circular(nums: Vec<i32>) -> i32 {
@@ -4107,20 +4108,24 @@ pub mod concepts_modules {
         let mut global_min: i32 = *nums.first().unwrap();
         let mut curr_min: i32 = global_min;
 
-        for index in 1..nums.len(){
+        for index in 1..nums.len() {
             let curr_num: i32 = nums[index];
             // for global max
             curr_max = (curr_max + curr_num).max(curr_num);
-            if curr_max > global_max{
+            if curr_max > global_max {
                 global_max = curr_max;
             }
             // getting global mins
             curr_min = (curr_num + curr_min).min(curr_num);
-            if global_min > curr_min{
+            if global_min > curr_min {
                 global_min = curr_min;
             }
         }
-        total = if total - global_min > global_max && total != global_min { total - global_min } else{global_max};
+        total = if total - global_min > global_max && total != global_min {
+            total - global_min
+        } else {
+            global_max
+        };
         total
     }
 
@@ -4129,14 +4134,14 @@ pub mod concepts_modules {
         let mut ans_queries: Vec<i32> = vec![-1; queries.len()];
         let mut freq_vec: Vec<i32> = Vec::new();
 
-        for (index, item) in nums.iter().enumerate(){
+        for (index, item) in nums.iter().enumerate() {
             if *item == x {
                 freq_vec.push(index as i32);
             }
         }
-        for index in 0..ans_queries.len(){
+        for index in 0..ans_queries.len() {
             let query: i32 = queries[index];
-            if query as usize <= freq_vec.len(){
+            if (query as usize) <= freq_vec.len() {
                 ans_queries[index] = freq_vec[(query - 1) as usize];
             }
         }
@@ -4149,29 +4154,29 @@ pub mod concepts_modules {
         let mut stack: Vec<i32> = vec![0; a.len()];
         let mut i: usize = 0;
         let mut counter: i32 = 0;
-        fn get_oc(local_map: &mut HashMap<i32, i32>, value: &i32){
-            match local_map.get_mut(value){
-                Some(occurence)=>{
+        fn get_oc(local_map: &mut HashMap<i32, i32>, value: &i32) {
+            match local_map.get_mut(value) {
+                Some(occurence) => {
                     *occurence += 1;
                 }
-                None=>{
+                None => {
                     local_map.insert(*value, 1);
                 }
             }
-        }   
-        for index in 0..a.len(){
+        }
+        for index in 0..a.len() {
             let a_el: i32 = a[index];
             let b_el: i32 = b[index];
             get_oc(&mut map, &a_el);
             get_oc(&mut map, &b_el);
-            if a_el != b_el{
-                if *map.get(&a_el).unwrap() > 1{
+            if a_el != b_el {
+                if *map.get(&a_el).unwrap() > 1 {
                     counter += 1;
                 }
-                if *map.get(&b_el).unwrap() > 1{
+                if *map.get(&b_el).unwrap() > 1 {
                     counter += 1;
                 }
-            }else{
+            } else {
                 counter += 1;
             }
             stack[i] = counter;
@@ -4179,6 +4184,71 @@ pub mod concepts_modules {
             i += 1;
         }
         stack
+    }
+
+    // to reorg string
+    pub fn reorg_string(s: String) -> String {
+        let mut map: HashMap<char, i32> = HashMap::new();
+        let mut dp: Vec<char> = vec!['a'; s.len()];
+        // logic
+        for s_char in s.chars() {
+            match map.get_mut(&s_char) {
+                Some(occurence) => {
+                    *occurence += 1;
+                }
+                None => {
+                    map.insert(s_char, 1);
+                }
+            }
+        }
+        // get max char occurence
+        let mut max_char: char = 'x';
+        let mut max_freq_char: i32 = 0;
+        for (key, value) in map.iter() {
+            if *value > max_freq_char {
+                max_freq_char = *value;
+                max_char = *key;
+            }
+        }
+        // place max char
+        let mut dp_index: usize = 0;
+        let mut char_c: i32 = 0;
+        while dp_index < dp.len() {
+            dp[dp_index] = max_char;
+            char_c += 1;
+            if let Some(oc) = map.get_mut(&max_char) {
+                *oc -= 1;
+            }
+            dp_index += 2;
+            if char_c == max_freq_char {
+                break;
+            }
+        }
+        // if the map is 0 then continue or else return max as it did not place the most frequent char
+        let max_val: i32 = *map.get(&max_char).unwrap();
+        if max_val == 0 {
+            map.remove(&max_char);
+        } else {
+            return String::from("");
+        }
+        // placing the remaining chars
+        for (key, _) in map.clone() {
+            while let Some(val) = map.get(&key) {
+                if *val > 0 {
+                    if dp_index >= dp.len() {
+                        dp_index = 1;
+                    }
+                    dp[dp_index] = key;
+                    map.entry(key).and_modify(|v| *v -= 1); // for subtracting within the same object
+                    dp_index += 2;
+                } else {
+                    map.remove(&key);
+                    break;
+                }
+            }
+        }
+        let result: String = dp.iter().collect();
+        result
     }
 }
 //[5,6,1,5,6,4,1,5]
