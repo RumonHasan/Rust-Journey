@@ -1,4 +1,5 @@
 pub mod concepts_modules {
+    use core::num;
     use std::cmp;
     use std::collections::btree_set::Difference;
     use std::collections::HashMap;
@@ -4239,6 +4240,7 @@ pub mod concepts_modules {
                         dp_index = 1;
                     }
                     dp[dp_index] = key;
+                    // map syntax for adding and modifying in place without additional borrowing
                     map.entry(key).and_modify(|v| *v -= 1); // for subtracting within the same object
                     dp_index += 2;
                 } else {
@@ -4249,6 +4251,57 @@ pub mod concepts_modules {
         }
         let result: String = dp.iter().collect();
         result
+    }
+
+
+    // next great element I finding the next greater el in nums2 using nums1 as reference.. using map
+    pub fn next_greater_element(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
+
+        // n * m solution using map
+        fn o_n_m_solution(nums1: Vec<i32>, nums2: Vec<i32>)-> Vec<i32>{
+            let mut ans: Vec<i32> = vec![-1; nums1.len()];
+            let mut map: HashMap<i32, usize> = HashMap::new();
+            for (index, num) in nums1.iter().enumerate(){
+                map.insert(*num, index);
+            }
+            for (index, num) in nums2.iter().enumerate(){
+                if map.contains_key(&num){
+                    let mut curr_num: i32 = *num;
+                    for sub_index in (index + 1)..nums2.len(){
+                        let sub_num: i32 = nums2[sub_index];
+                        if sub_num > curr_num{
+                            curr_num = sub_num;
+                            ans[*map.get(&num).unwrap()] = curr_num;
+                            break;
+                        }
+              
+                    }
+                }
+                
+            }
+            ans
+        }
+
+        // monotonic decreasing stack
+        let mut stack: Vec<i32> = Vec::new();
+        let mut ans: Vec<i32> = vec![-1; nums1.len()];
+        let mut map: HashMap<i32, usize> = HashMap::new();
+        for (i,item) in nums1.iter().enumerate(){
+            map.insert(*item, i);
+        }
+        for item in nums2.iter(){
+            let curr_num: i32 = *item;
+            while !stack.is_empty() && stack[stack.len() - 1] < curr_num{
+                if let Some(popped_val) = stack.pop(){
+                    if map.contains_key(&popped_val){
+                        ans[*map.get(&popped_val).unwrap()] = curr_num; 
+                    }
+                }
+            }
+            stack.push(curr_num);
+        }
+        ans
+
     }
 }
 //[5,6,1,5,6,4,1,5]
