@@ -4303,6 +4303,54 @@ pub mod concepts_modules {
         ans
 
     }
+
+    // finding a pattern and replacing the words accordingly
+    pub fn find_and_replace_pattern(words: Vec<String>, pattern: String) -> Vec<String> {
+        let mut ans: Vec<String> = Vec::new();
+        // function to check pattern of the word against the pattern
+        fn pattern_check(word: &String, pattern: &String)-> bool{  
+            if word.len() != pattern.len(){
+                return false;
+            }
+            // set check
+            let set_word: HashSet<char> = word.chars().collect();
+            let set_p: HashSet<char> = pattern.chars().collect();
+            if set_word.len() != set_p.len(){
+                return false;
+            }
+
+            let mut word_map: HashMap<char,char> = HashMap::new();
+            let word_char: Vec<char> = word.chars().collect();
+            let p_char: Vec<char> = pattern.chars().collect();
+
+            println!("{:?}-{:?}", word_char, p_char);
+            // abc abb
+            for (index , word_letter) in word_char.iter().enumerate(){
+                let w_char: char = *word_letter;
+                let p_char: char = p_char[index];
+                println!("{}-{}", w_char, p_char);
+                if word_map.contains_key(&p_char){
+                    if *word_map.get(&p_char).unwrap() != w_char{
+                        return false;
+                    }
+                 }else{
+                    word_map.insert(p_char, w_char);
+                 }
+            }
+            println!("{:?}-map", word_map);
+
+            true
+        }
+
+        for word in words.iter(){
+            let curr_word: String = word.to_string();
+            if pattern_check(&curr_word, &pattern){
+                ans.push(curr_word);
+            }
+        }
+        println!("{:?}", ans);
+        ans
+    }
 }
 //[5,6,1,5,6,4,1,5]
 /*
