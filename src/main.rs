@@ -4,6 +4,7 @@ use std::usize;
 
 use concepts::concepts_modules::find_and_replace_pattern;
 use concepts::concepts_modules::find_the_prefix_common_array;
+use concepts::concepts_modules::group_the_people;
 use concepts::concepts_modules::next_greater_element;
 use concepts::concepts_modules::occurrences_of_element;
 use concepts::concepts_modules::reorg_string;
@@ -41,7 +42,8 @@ fn main() {
     //find_the_prefix_common_array(vec![1,2, 3], vec![3,2, 1]);
     //reorg_string(String::from("ogccckcwmbmxtsbmozli"));
     // next_greater_element(vec![4,1,2], vec![1,3,4,2]);
-    find_and_replace_pattern(vec!["abc","deq","mee","aqq","dkd","ccc"].iter().map(|curr_string| String::from(*curr_string)).collect(), "abb".to_string());
+    //find_and_replace_pattern(vec!["abc","deq","mee","aqq","dkd","ccc"].iter().map(|curr_string| String::from(*curr_string)).collect(), "abb".to_string());
+    group_the_people(vec![3,3,3,3,3,1,3]);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

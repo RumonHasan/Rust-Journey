@@ -4351,6 +4351,38 @@ pub mod concepts_modules {
         println!("{:?}", ans);
         ans
     }
+
+    // specialised group distributing the  numbers into group sizs
+    pub fn group_the_people(group_sizes: Vec<i32>) -> Vec<Vec<i32>> {
+        let mut map: HashMap<i32, Vec<i32>> = HashMap::new();
+        let mut ans: Vec<Vec<i32>> = Vec::new();
+        for (index, curr_num) in group_sizes.iter().enumerate(){
+            let num: i32 = *curr_num;
+            match map.get_mut(curr_num){
+                Some(oc)=>{
+                    oc.push(index as i32);
+                },
+                None=>{
+                    map.insert(num, vec![index as i32]);
+                }
+            }
+        }
+        // distribution based on value
+        for (key, value) in map{
+            let mut m_count: i32 = 0;
+            let mut sub_stack: Vec<i32> = Vec::new();
+            for item in value.iter(){
+                sub_stack.push(*item);
+                m_count += 1;
+                if m_count == key{
+                    m_count = 0;
+                    ans.push(sub_stack.clone());
+                    sub_stack = Vec::new();
+                }
+            }
+        }
+        ans
+    }
 }
 //[5,6,1,5,6,4,1,5]
 /*
