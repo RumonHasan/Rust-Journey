@@ -4358,14 +4358,7 @@ pub mod concepts_modules {
         let mut ans: Vec<Vec<i32>> = Vec::new();
         for (index, curr_num) in group_sizes.iter().enumerate(){
             let num: i32 = *curr_num;
-            match map.get_mut(curr_num){
-                Some(oc)=>{
-                    oc.push(index as i32);
-                },
-                None=>{
-                    map.insert(num, vec![index as i32]);
-                }
-            }
+            map.entry(num).or_insert_with(Vec::new).push(index as i32);
         }
         // distribution based on value
         for (key, value) in map{
@@ -4379,6 +4372,24 @@ pub mod concepts_modules {
                     ans.push(sub_stack.clone());
                     sub_stack = Vec::new();
                 }
+            }
+        }
+        ans
+    }
+
+    // min sequence not sub
+    pub fn min_subsequence(nums: Vec<i32>) -> Vec<i32> {
+        let mut vec: Vec<i32> = nums.clone();
+        let mut ans: Vec<i32> = Vec::new();
+        vec.sort_by(|a, b| b.cmp(a));
+        let total: i32 = vec.iter().fold(0, |acc, curr| acc + curr);
+        let mut sub_total: i32 = 0;
+        for curr_num in vec.iter(){
+            sub_total += *curr_num;
+            let diff: i32 = total - sub_total;
+            ans.push(*curr_num);
+            if sub_total > diff{
+                return ans
             }
         }
         ans
