@@ -4394,6 +4394,45 @@ pub mod concepts_modules {
         }
         ans
     }
+
+    // find length using double db manipulations
+    pub fn find_length_dp_sub(nums1: Vec<i32>, nums2: Vec<i32>)-> i32{
+        let mut max_len: i32 = 0;
+        // populate dp -> have to add one extra space for bottom right indices
+        let mut dp: Vec<Vec<i32>> = vec![vec![0; nums2.len() + 1]; nums1.len() + 1];
+        // iterating through the matrix to check for substrings 
+        for i in (0..dp.len() - 1).rev(){
+            let num_one: i32 = nums1[i];
+            for j in (0..dp[i].len() - 1).rev(){
+                let num_two: i32 = nums2[j];
+                if num_one == num_two{
+                    dp[i][j] += dp[i + 1][j + 1] + 1;
+                    max_len = max_len.max(dp[i][j]);
+                }
+            }
+        }
+        max_len
+    }
+    // getting min subarray length
+    pub fn min_sub_array_len(target: i32, nums: Vec<i32>) -> i32 {
+        let mut min_len: i32 = i32::MAX;
+        let mut end: usize = 0;
+        let mut start: usize = 0;
+        let mut total: i32 = 0;
+        while end < nums.len(){
+            total += nums[end];
+            while total >= target{ // to let the total reduce as soon as it hits the target or is equal to
+                min_len = min_len.min((end - start + 1) as i32);
+                total -= nums[start];
+                start += 1;
+            }
+            end += 1;
+        }
+        if min_len == 2147483647{
+            return 0;
+        }
+        min_len
+    }
 }
 //[5,6,1,5,6,4,1,5]
 /*
