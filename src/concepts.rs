@@ -4433,6 +4433,53 @@ pub mod concepts_modules {
         }
         min_len
     }
+
+    // cannot be typed words
+    pub fn can_be_typed_words(text: String, broken_letters: String) -> i32 {
+        let mut count: i32 = 0;
+        let str_vec: Vec<String> = text.split_whitespace().map(|val| val.to_string()).collect();
+        let set: HashSet<char> = broken_letters.chars().collect();
+        for word in str_vec.iter(){
+            let mut check: bool = true;
+            for curr_letter in word.chars(){
+                if set.contains(&curr_letter){
+                    check = false;
+                    break;
+                }
+            }
+            if check{
+                count += 1;
+            }
+        }
+        count
+    }
+
+    // next greater element II
+    pub fn next_greater_el_ii(nums: Vec<i32>)->Vec<i32>{
+        let mut ans: Vec<i32> = vec![-1; nums.len()];
+        let mut i: usize = 0;
+        let mut new: Vec<i32> = vec![0; nums.len() * 2];
+        for curr in new.iter_mut(){
+            *curr = nums[i];
+            i += 1;
+            if i == nums.len(){
+                i = 0;
+            }
+        }
+        for (i, curr) in new.iter().enumerate(){
+            for check_index in (i + 1)..new.len(){
+                let check_num: i32 = new[check_index];
+                if check_num > *curr{
+                    ans[i] = check_num;
+                    break;
+                }
+            }
+            if i == nums.len() - 1{
+                break;
+            }
+        }
+        ans
+    }
 }
 //[5,6,1,5,6,4,1,5]
 /*
