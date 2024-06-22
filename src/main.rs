@@ -7,6 +7,7 @@ use concepts::concepts_modules::find_and_replace_pattern;
 use concepts::concepts_modules::find_length_dp_sub;
 use concepts::concepts_modules::find_the_prefix_common_array;
 use concepts::concepts_modules::group_the_people;
+use concepts::concepts_modules::grumpy_owner;
 use concepts::concepts_modules::min_sub_array_len;
 use concepts::concepts_modules::min_subsequence;
 use concepts::concepts_modules::next_greater_el_ii;
@@ -53,7 +54,8 @@ fn main() {
     //find_length_dp_sub(vec![1,2,3,2,1], vec![3,2,1,4,7]);
     //min_sub_array_len(7, vec![2,3,1,2,4,3]);
     //can_be_typed_words(String::from("hello world"), String::from("ad"));
-    next_greater_el_ii(vec![1,2,3,4,3]);
+    //next_greater_el_ii(vec![1,2,3,4,3]);
+    grumpy_owner(vec![1,0,1,2,1,1,7,5], vec![0,1,0,1,0,1,0,1], 3);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

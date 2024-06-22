@@ -4480,6 +4480,40 @@ pub mod concepts_modules {
         }
         ans
     }
+
+
+    // grumpy bookstore owner
+    pub fn grumpy_owner(customers: Vec<i32>, grumpy: Vec<i32>, minutes: i32)-> i32{
+        let mut total_sat: i32 = 0;
+        for (i, curr_sat) in customers.iter().enumerate(){
+            let grump: i32 = grumpy[i];
+            if grump == 0{
+                total_sat += *curr_sat;
+            }
+        }
+        let mut start: usize = 0;
+        let mut curr_total_sat: i32 = 0;
+        for i in 0..minutes as usize{
+            if let Some(curr_grump) = grumpy.get(i){
+                if *curr_grump == 1{
+                    curr_total_sat += customers.get(i).unwrap();
+                }
+            }
+        }
+        let mut curr_sat_max: i32 = curr_total_sat;
+        for i in (minutes as usize)..customers.len(){
+            if grumpy[start] == 1{
+                curr_total_sat -= customers[start];
+            }
+            if grumpy[i] == 1{
+                curr_total_sat += customers[i];
+            }
+            curr_sat_max = curr_sat_max.max(curr_total_sat);
+            start += 1;
+        }
+        total_sat += curr_sat_max;
+        total_sat
+    }
 }
 //[5,6,1,5,6,4,1,5]
 /*
