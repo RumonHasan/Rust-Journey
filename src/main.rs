@@ -13,6 +13,7 @@ use concepts::concepts_modules::min_subsequence;
 use concepts::concepts_modules::next_greater_el_ii;
 use concepts::concepts_modules::next_greater_element;
 use concepts::concepts_modules::occurrences_of_element;
+use concepts::concepts_modules::remove_duplicate_char;
 use concepts::concepts_modules::reorg_string;
 
 use crate::concepts::concepts_modules::asteroid_collision;
@@ -55,7 +56,8 @@ fn main() {
     //min_sub_array_len(7, vec![2,3,1,2,4,3]);
     //can_be_typed_words(String::from("hello world"), String::from("ad"));
     //next_greater_el_ii(vec![1,2,3,4,3]);
-    grumpy_owner(vec![1,0,1,2,1,1,7,5], vec![0,1,0,1,0,1,0,1], 3);
+    //grumpy_owner(vec![1,0,1,2,1,1,7,5], vec![0,1,0,1,0,1,0,1], 3);
+    remove_duplicate_char(String::from("abcd"), 2);
 
     // in rust str is a sequence of immutable chars but String is mutable
     let mut anagram_input: Vec<String> = vec!["bat", "tea", "tan", "ate", "nat", "bat"]

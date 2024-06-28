@@ -4514,6 +4514,40 @@ pub mod concepts_modules {
         total_sat += curr_sat_max;
         total_sat
     }
+
+
+
+
+    // removing duplicates
+    pub fn remove_duplicate_char(s: String, k: i32) -> String {
+        let mut stack: Vec<(char, i32)> = Vec::new();
+        if let Some(first_char) = s.chars().next() {
+            stack.push((first_char, 1));
+        }
+        let s_vec: Vec<char> = s.chars().collect();
+        let mut res: String = String::from("");
+        for index in 1..s_vec.len(){
+            let curr_char: char = s_vec[index];
+           if let Some(last) = stack.last_mut(){
+            if last.0 == curr_char{
+                last.1 += 1;
+                if last.1 == k{
+                    stack.pop();
+                }
+            }else{
+                stack.push((curr_char, 1));
+            }
+           }else{
+            stack.push((curr_char, 1));
+           }
+        }
+        for item in stack.iter(){
+            for i in 0..item.1{
+                res.push(item.0);
+            }
+        }
+        res
+    }
 }
 //[5,6,1,5,6,4,1,5]
 /*
